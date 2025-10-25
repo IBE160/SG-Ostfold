@@ -11,10 +11,6 @@ Develop a responsive web application where shift leaders can register operationa
 - **Department Managers**: Analyze historical reports, apply filters, review KPIs
 - **Operations/Warehouse Management**: Monitor trends, detect deviations
 
-
-
-
-
 ## Core Functionality
 
 These core features are designed to replace manual workflows and enable scalable reporting across shifts and departments.
@@ -34,8 +30,20 @@ These core features address the current inefficiencies in manual reporting, whil
   - **Orders per hour**
   - **Staffing per area**
 
-
   - One trend graph (e.g., overtime trend over time)
+
+### KPI Definitions
+
+| **KPI** | **Formula / Data Source** | **Description** |
+|----------|---------------------------|-----------------|
+| **Overtime (hours)** | Σ `overtimeHrs` per shift | Total overtime logged for all employees in a selected period |
+| **Sick Leave (%)** | (Σ `sickLeaveHours` / (Σ `fixedHrs` + Σ `overtimeHrs`)) × 100 | Percentage of total working hours lost to sickness |
+| **Orders per Hour** | Σ `ordersByArea` / Σ `fixedHrs` | Average number of processed orders per hour |
+| **Staffing per Area** | Average(`staffingByArea`) | Average staffing level per defined area during the shift |
+| **Total Efficiency per Hour** | (Orders + Movements) / Fixed Hours | Efficiency metric combining order and movement activity |
+
+All KPI calculations are performed server-side to ensure data consistency across reports.
+
 
 - **Feature 5**: Field validation (e.g., required numeric inputs, date logic)
 - **Feature 6**: Export filtered reports to CSV format
@@ -82,6 +90,15 @@ Each `ShiftReport`:
 - `note`: optional, max 1000 characters
 - Conditional: `totalEffPerHr` = (orders + movements) / fixed hours
 
+### Validation Flow and User Feedback
+
+- All forms will use **real-time (client-side)** validation for immediate feedback.
+- Invalid inputs will show **inline error messages** below the field (e.g., "Value must be between 0–24").
+- On submission, **server-side validation** will run to prevent invalid data from being stored.
+- If validation fails, the user stays on the same form and receives a clear message indicating which fields need correction.
+- Successful submissions trigger a **toast notification** confirming that the report was saved.
+
+
 ## CSV Export Details
 - Export is triggered from filtered view
 - Includes flat fields (shift, KPIs, note, summary)
@@ -99,6 +116,18 @@ Each `ShiftReport`:
   - Form submission and result rendering
 - **Seed Data**:
   - Mock data generator script (5–10 reports across shifts)
+
+
+### End-to-End Testing (E2E)
+
+- E2E tests will be performed using **Playwright** (or **Cypress**) to simulate full user interactions.
+- Test scenarios will include:
+  - Logging in with different roles (Shift Leader, Manager)
+  - Creating a new shift report and validating form feedback
+  - Submitting a report and confirming AI summary appears
+  - Filtering and exporting reports to CSV
+- Tests will run automatically before deployment to ensure stability and prevent regressions.
+
 
 ## AI Integration Plan
 
@@ -120,6 +149,16 @@ Note:
 ```
 #### 🔄 Fallback Strategy
 If the GPT-4 API is unavailable or returns an error, the shift note will still be saved as normal, but the `noteSummaryAI` field will be left blank. A message will notify the user.
+
+#### 🔄 Extended Fallback Strategy
+
+If the GPT-4 API is unavailable, the system will generate a **basic local summary** instead of leaving the field blank.  
+A simple rule-based summarizer (keyword extraction + first-sentence compression) will create a short fallback note such as:
+
+> "Shift had 3 absences, 2 overtime entries, and 1 deviation reported."
+
+This ensures managers still get a quick overview, even when AI services are offline.
+
 
 ### 🧭 Application Flow – Shift and KPI Reporting Solution
 
@@ -257,6 +296,15 @@ flowchart TD
 - Authentication via **Supabase Auth** (email/password for MVP; OAuth optional)
 - Auth middleware ensures protected routes are only accessible to correct roles
 
+### User Interface and Design
+
+- The UI will be built with **Tailwind CSS** and **ShadCN/UI** components to ensure a clean, modern, and consistent design.
+- Layout follows a **dashboard pattern** with sidebar navigation and KPI cards.
+- Forms use inline validation and toast notifications for quick feedback.
+- KPI cards use color indicators (green/yellow/red) to highlight performance levels.
+- The app supports both light and dark modes for accessibility.
+
+
 
 ## Additional Considerations
 
@@ -286,4 +334,3 @@ flowchart TD
 
 ## Conclusion
 This proposal outlines a modern, scalable solution for shift and KPI reporting. By combining role-based data collection, real-time dashboards, and AI-enhanced insights, the application will reduce errors, improve visibility, and empower managers to make informed operational decisions.
-S
