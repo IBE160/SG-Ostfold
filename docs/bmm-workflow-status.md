@@ -25,6 +25,10 @@ NEXT_ACTION: Produce Project Brief
 NEXT_COMMAND: product-brief
 NEXT_AGENT: analyst
 
+## Completed Optional Workflows
+
+- brainstorm-project
+
 ## Story Backlog
 
 
