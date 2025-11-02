@@ -82,6 +82,7 @@ Each `ShiftReport`:
 
 
 ## Field Validation Rules
+- See brainstorming report: @docs/Brainstorming-data-entry-risk-thomas-md
 - `date`: required, must be today or earlier
 - `shift`: required, enum: morning/evening/night
 - `overtimeHrs`: numeric, 0–24
@@ -236,6 +237,8 @@ This section describes how users interact with the web application from login to
 
 ## 🧩 Application Flow Diagram (Mermaid.js)
 
+See brainstorming report: @docs/brainstorming-userflow-thomas.md
+
 Paste this into any markdown file supported by Mermaid (e.g., GitHub, Obsidian):
 
 ```mermaid
@@ -287,6 +290,7 @@ flowchart TD
 
 ## Technical Constraints
 
+- See research report @docs/research-technical-Thomas-md
 - Built with **Next.js (App Router)**, responsive for desktop and mobile
 - Uses **Supabase** for database and authentication
 - Includes **server-side validation**
