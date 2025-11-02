@@ -131,7 +131,7 @@ Each `ShiftReport`:
 
 
 ## AI Integration Plan
-
+- See brainstorming report: @docs/bmad-shiftapp-lean-integration-and-proposal-alignment-Rune-2025-10-29.md
 ### 🎯 Feature: Note Summarization with GPT-4
 - **Purpose**: Help managers quickly understand key events, deviations, or issues from long free-text notes
 - **Tool**: OpenAI GPT-4 via API
@@ -238,6 +238,7 @@ This section describes how users interact with the web application from login to
 ## 🧩 Application Flow Diagram (Mermaid.js)
 
 See brainstorming report: @docs/brainstorming-userflow-thomas.md
+See brainstorming report: @docs/brainstorming-BMAD-AI-feedback-userflow-review-Rune-2025-10-27.md
 
 Paste this into any markdown file supported by Mermaid (e.g., GitHub, Obsidian):
 
@@ -290,6 +291,7 @@ flowchart TD
 
 ## Technical Constraints
 
+- See research report @docs/research-shiftapp-offline-first-stack-eveluation-rune-2025-10-29.md
 - See research report @docs/research-technical-Thomas-md
 - Built with **Next.js (App Router)**, responsive for desktop and mobile
 - Uses **Supabase** for database and authentication
