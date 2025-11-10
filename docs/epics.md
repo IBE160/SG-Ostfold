@@ -11,557 +11,331 @@
 
 This document provides the complete epic and story breakdown for {{project_name}}, decomposing the requirements from the [PRD](./PRD.md) into implementable stories.
 
-This document breaks down the project into the following value-driven epics:
+This breakdown organizes the project into five distinct epics. The first three epics cover the Minimum Viable Product (MVP), delivering core functionality and insights progressively. The subsequent epics outline a clear path for post-MVP growth and advanced features.
 
-1.  **Epic 1: Project Foundation & Deployment Pipeline**
-    *   **Value:** Establish a robust and automated foundation for all future development, ensuring consistency and quality from day one.
-    *   **Scope:** Initialize project structure, set up CI/CD pipeline for automated builds and deployments, configure core dependencies, and define the initial database schema.
-
-2.  **Epic 2: Secure User Access & Roles**
-    *   **Value:** Ensure secure access to the application with appropriate permissions for different user roles.
-    *   **Scope:** User registration, login/logout functionality, and role-based access control (Shift Leader vs. Manager).
-
-3.  **Epic 3: Core Shift Reporting**
-    *   **Value:** Enable the primary function of creating and managing shift reports, replacing the manual process.
-    *   **Scope:** Create, view, and update shift reports through a validated form.
-
-4.  **Epic 4: Historical Reporting & Export**
-    *   **Value:** Provide managers with the ability to analyze past performance and export data for external use.
-    *   **Scope:** Historical report view with filtering by date, shift, and area; CSV export functionality.
-
-5.  **Epic 5: KPI Dashboard & Visualization**
-    *   **Value:** Offer at-a-glance insights into operational health through a visual dashboard.
-    *   **Scope:** Dashboard with KPI cards for the "Critical 3" MVP metrics (Orders per Hour, Overtime, Sick Leave) and one trend graph.
-
-6.  **Epic 6: Advanced Reporting & Intelligence (Growth)**
-    *   **Value:** Enhance decision-making with automated insights, alerts, and advanced analytics.
-    *   **Scope:** Manager approval workflow, threshold alerts, AI-powered note summarization, anomaly detection, and additional visualizations.
-
-7.  **Epic 7: Enterprise Integration (Vision)**
-    *   **Value:** Transform the application into a fully integrated component of the enterprise ecosystem.
-    *   **Scope:** WMS and ERP integration for two-way data synchronization.
+- **Epic 1: Foundation & Core Reporting:** Establishes the project foundation, including user authentication and the core ability for shift leaders to create, read, and update their reports.
+- **Epic 2: Management Insights & Data Export:** Empowers managers by providing a historical view of all reports with robust filtering and CSV export capabilities.
+- **Epic 3: KPI Dashboard & Visualization:** Delivers the primary "at-a-glance" value to management by introducing the dashboard with the three critical MVP KPIs and a trend graph.
+- **Epic 4: Advanced Reporting & Workflow (Post-MVP):** Introduces the first set of growth features, including the manager approval workflow and automated alerts.
+- **Epic 5: AI-Powered Intelligence (Post-MVP):** Groups future AI capabilities like automatic shift summaries, anomaly detection, and a query chatbot.
 
 ---
 
-<!-- Repeat for each epic (N = 1, 2, 3...) -->
+## Epic 1: Foundation & Core Reporting
 
-## Epic 1: Project Foundation & Deployment Pipeline
+Establishes the project foundation, including user authentication and the core ability for shift leaders to create, read, and update their reports.
 
-**Value:** Establish a robust and automated foundation for all future development, ensuring consistency and quality from day one.
-**Scope:** Initialize project structure, set up CI/CD pipeline for automated builds and deployments, configure core dependencies, and define the initial database schema.
+### Story 1.1: Project Foundation & CI/CD
 
-<!-- Repeat for each story (M = 1, 2, 3...) within epic N -->
-
-### Story 1.1: Initialize Project Repository & Structure
-
-As a developer,
-I want to set up the basic project repository and directory structure,
-So that we have a clean, organized starting point for development.
+As a **Dev Team**,
+I want **the initial project structure, database schema, and a CI/CD pipeline**,
+So that **we have a stable, automated foundation for development and deployment**.
 
 **Acceptance Criteria:**
 
-**Given** a new project,
-**When** the project is initialized,
-**Then** a Git repository is created.
-**And** a standard directory structure (e.g., `src`, `public`, `config`, `tests`, `docs`) is established.
-**And** a `.gitignore` file is configured to exclude common development artifacts.
+**Given** the project repository is initialized
+**When** the initial setup script is run
+**Then** a Next.js application is created with all specified dependencies (Supabase, TailwindCSS, ShadCN/UI).
+**And** the Supabase project is configured with the initial database schema for users and reports.
+**And** a Vercel project is configured to automatically deploy the `main` branch to production.
 
-**Prerequisites:** None.
+**Prerequisites:** None
 
-**Technical Notes:** Use `npx create-next-app` or similar for initial scaffolding.
+**Technical Notes:** Use Next.js App Router. The database schema must include tables for `reports`, `users`, and `roles`. Vercel integration should be set up for seamless deployments.
 
-### Story 1.2: Implement Basic CI/CD Pipeline
+### Story 1.2: User Authentication & Role-Based Access
 
-As a developer,
-I want to set up a basic Continuous Integration/Continuous Deployment pipeline,
-So that code changes are automatically built, linted, and deployed to a staging environment.
-
-**Acceptance Criteria:**
-
-**Given** a code commit to the main branch,
-**When** the CI/CD pipeline is triggered,
-**Then** the application code is built successfully.
-**And** code linting and formatting checks are run.
-**And** the application is deployed to a designated staging environment (e.g., Vercel).
-
-**Prerequisites:** Story 1.1.
-
-**Technical Notes:** Integrate with GitHub Actions. Focus on build and linting for now; test execution will be added in later stories.
-
-### Story 1.3: Configure Core Dependencies & Environment
-
-As a developer,
-I want to configure essential project dependencies and environment variables,
-So that the application can run locally and in deployment environments.
+As a **User**,
+I want **to securely log in and be assigned a role**,
+So that **I can access the features relevant to my position**.
 
 **Acceptance Criteria:**
 
-**Given** a fresh clone of the repository,
-**When** `npm install` (or equivalent) is run,
-**Then** all necessary frontend and backend packages are installed.
-**And** a `.env.example` file is provided with placeholders for required environment variables (e.g., Supabase API keys, database connection strings).
-**And** the application can be started locally without configuration errors.
+**Given** a user is on the login page
+**When** they enter valid credentials for a 'Shift Leader' account
+**Then** they are authenticated and redirected to the shift leader dashboard.
+**And** when they enter valid credentials for a 'Manager' account, they are redirected to the manager dashboard.
+**And** when they enter invalid credentials, an error message is displayed.
 
-**Prerequisites:** Story 1.1.
+**Prerequisites:** Story 1.1
 
-**Technical Notes:** Include Next.js, React, Supabase client libraries, Tailwind CSS, ShadCN/UI.
+**Technical Notes:** Implement using Supabase Auth. Create two roles in the system: `shift_leader` and `manager`. Secure pages based on these roles. (Covers FR-1)
 
-### Story 1.4: Define Initial Database Schema (Supabase)
+### Story 1.3: Create & Submit Shift Report
 
-As a backend developer,
-I want to define and apply the initial database schema for core entities using Supabase tools,
-So that the application has a structured and version-controlled place to store its data.
-
-**Acceptance Criteria:**
-
-**Given** a Supabase project,
-**When** the schema is applied,
-**Then** tables for `Users`, `ShiftReport`, `Absence`, and `Overtime` are created in the development environment.
-**And** primary keys, foreign keys, and basic data types are defined according to the PRD.
-**And** a migration script is generated from the Supabase Studio changes and committed to the repository.
-**And** Row Level Security (RLS) is enabled for relevant tables.
-
-**Prerequisites:** Story 1.3.
-
-**Technical Notes:** Use the Supabase Studio UI for initial table design, then use the Supabase CLI to generate and manage migration files.
-
-### Story 1.5: Set Up Basic Logging & Monitoring
-
-As a developer,
-I want to set up basic logging and monitoring for the application,
-So that we can observe application health and troubleshoot issues in the staging environment.
+As a **Shift Leader**,
+I want **an intuitive form to create and submit a new shift report**,
+So that **I can accurately capture my daily operational data with minimal effort**.
 
 **Acceptance Criteria:**
 
-**Given** the application is running in a deployed environment,
-**When** an error occurs or a significant event happens,
-**Then** a structured log message is generated and sent to a centralized logging service (e.g., Supabase logs, Vercel logs).
-**And** basic application health metrics (e.g., response times, error rates) are visible in a monitoring dashboard.
+**Given** a logged-in Shift Leader is on the "New Report" page
+**When** they fill in the required fields (e.g., Overtime, Sick Leave, Orders per Hour)
+**Then** the form provides real-time validation for numeric inputs.
+**And** when they click "Submit", the report data is saved to the database.
 
-**Prerequisites:** Story 1.2.
+**Prerequisites:** Story 1.2
 
-**Technical Notes:** Utilize the built-in logging and monitoring features of Vercel or Supabase for the MVP.
+**Technical Notes:** The form must include all fields necessary for the MVP KPIs. Implement both client-side (for responsiveness) and server-side (for security) validation. (Covers FR-2)
+
+### Story 1.4: View & Update Own Shift Reports
+
+As a **Shift Leader**,
+I want **to view a list of my past reports and edit them**,
+So that **I can correct any mistakes or update information**.
+
+**Acceptance Criteria:**
+
+**Given** a logged-in Shift Leader navigates to their report history
+**When** they view the list
+**Then** they only see reports they have created.
+**And** when they select a report, they can view its details and have an "Edit" option.
+**And** when they edit and save a report, the changes are updated in the database.
+
+**Prerequisites:** Story 1.3
+
+**Technical Notes:** The report history view should be a simple, paginated list. The editing interface can reuse the creation form, pre-filled with the selected report's data. (Covers FR-2)
 
 ---
 
-## Epic 2: Secure User Access & Roles
+## Epic 2: Management Insights & Data Export
 
-**Value:** Ensure secure access to the application with appropriate permissions for different user roles.
-**Scope:** User registration, login/logout functionality, and role-based access control (Shift Leader vs. Manager).
+Empowers managers by providing a historical view of all reports with robust filtering and CSV export capabilities.
 
-**Reasoning for this Epic's Structure:**
+### Story 2.1: Unified Historical Report View
 
-The stories in this epic are structured to prioritize security and a controlled rollout, which is critical for an internal business application.
-
--   **Invitation-Only Registration (Story 2.1):** We have deliberately chosen an invitation-based system over open registration. This prevents unauthorized access and ensures that every user is known and has a pre-assigned role before they even create an account. This is a key security consideration.
--   **Decoupled Role Management (Story 2.4):** For the MVP, the assignment of roles is handled by an administrator through backend processes (seed scripts or the Supabase dashboard), not through a UI. This simplifies the initial development effort by deferring the complexity of building a user management interface, allowing us to focus on the core value proposition first.
--   **Standard User Flows (Stories 2.2 & 2.3):** Login, logout, and password recovery are standard, expected features that are crucial for a good user experience. We are leveraging the built-in, secure functionalities of our authentication provider (Supabase Auth) to implement these efficiently.
-
-### Story 2.1 (Speedrun Version): Pre-provision Users via Seed Script
-
-As a developer,
-I want to pre-provision a set of test users with pre-defined roles using a database seed script,
-So that we can quickly begin testing the application with different user roles without building a UI for user invitation.
+As a **Manager**,
+I want **to view a list of all historical shift reports from all leaders**,
+So that **I can get a complete, centralized overview of operations**.
 
 **Acceptance Criteria:**
 
-**Given** the database is seeded,
-**When** the application starts,
-**Then** at least two users (one 'Shift Leader', one 'Manager') exist in the `auth.users` table with known passwords.
-**And** their corresponding roles are set in the database.
+**Given** a user is logged in as a 'Manager'
+**When** they navigate to the "All Reports" history page
+**Then** they see a paginated list of all reports submitted by all shift leaders, sorted by date (newest first).
 
-**Prerequisites:** Epic 1.
+**Prerequisites:** Story 1.2
 
-**Technical Notes:** Create a seed script that populates the necessary user and role information in Supabase. This bypasses the need for an invitation UI in the MVP.
+**Technical Notes:** This view requires a policy in Supabase that allows users with the 'manager' role to read all records from the `reports` table. The view should be distinct from the shift leader's personal report view. (Covers FR-1, FR-3)
 
-### Story 2.2: Implement User Login & Logout
+### Story 2.2: Advanced Filtering
 
-As a registered user,
-I want to log in and out of the application,
-So that I can access my authorized features and secure my session.
-
-**Acceptance Criteria:**
-
-**Given** I am on the login page,
-**When** I enter my registered email and password and submit the form,
-**Then** I am authenticated via Supabase Auth.
-**And** I am redirected to the application dashboard.
-**Given** I am logged in,
-**When** I click the logout button,
-**Then** my session is terminated.
-**And** I am redirected to the login page.
-
-**Prerequisites:** Story 2.1.
-
-**Technical Notes:** Use Supabase Auth for session management. Handle authentication errors gracefully.
-
-### Story 2.3 (was 2.4): Enforce Role-Based Access Control (RBAC)
-
-As a user,
-I want to only be able to see and do what my role permits,
-So that the application data remains secure and relevant to my responsibilities.
+As a **Manager**,
+I want **to filter the historical reports by date range, shift, and area**,
+So that **I can quickly narrow down the data to find specific information for analysis**.
 
 **Acceptance Criteria:**
 
-**Given** I am logged in as a 'Shift Leader',
-**When** I access the application,
-**Then** I can only view and edit my own shift reports.
-**Given** I am logged in as a 'Manager',
-**When** I access the application,
-**Then** I can view all shift reports and access filtering options.
+**Given** a Manager is on the "All Reports" history page
+**When** they apply a date range filter (e.g., last 7 days)
+**Then** the list updates to show only reports within that date range.
+**And** when they also apply a filter for 'Shift A', the list is further refined to show only 'Shift A' reports within the selected date range.
 
-**Prerequisites:** Story 2.2.
+**Prerequisites:** Story 2.1
 
-**Technical Notes:** Implement RBAC using Supabase's Row Level Security (RLS) policies.
+**Technical Notes:** Filters should be designed to be combinable. The UI must be intuitive, with clear indicators for active filters. The backend query must be updated to dynamically build the `WHERE` clause based on the filter parameters provided by the frontend. (Covers FR-3)
 
-**Deferred to Post-MVP:**
--   **User Invitation UI:** A user-friendly interface for administrators to invite new users.
--   **Self-Serve Password Recovery:** The automated "Forgot Password" email flow. (Password resets can be handled manually by an admin in the Supabase dashboard for the initial MVP).
+### Story 2.3: CSV Export
+
+As a **Manager**,
+I want **to export the currently filtered list of reports to a CSV file**,
+So that **I can perform further analysis or share the data using external tools like Excel**.
+
+**Acceptance Criteria:**
+
+**Given** a Manager has a filtered list of reports on their screen
+**When** they click the "Export to CSV" button
+**Then** a CSV file is downloaded to their computer.
+**And** the content of the CSV file exactly matches the reports and data fields shown in the filtered view.
+
+**Prerequisites:** Story 2.2
+
+**Technical Notes:** The export functionality must use the same query and filter parameters as the current view to ensure consistency. The generated file should be named descriptively, e.g., `report_export_2025-11-10.csv`. (Covers FR-3)
 
 ---
 
-## Epic 3: Core Shift Reporting
+## Epic 3: KPI Dashboard & Visualization
 
-**Value:** Enable the primary function of creating and managing shift reports, replacing the manual process.
-**Scope:** Create, view, and update shift reports through a validated form.
+Delivers the primary "at-a-glance" value to management by introducing the dashboard with the three critical MVP KPIs and a trend graph.
 
-### Story 3.1: Implement Shift Report Form UI (Basic Fields)
+### Story 3.1: Dashboard UI & Layout
 
-As a Shift Leader,
-I want to see a form with basic shift details,
-So that I can begin to record the essential information for my shift.
-
-**Acceptance Criteria:**
-
-**Given** I am logged in as a Shift Leader,
-**When** I navigate to the "New Report" page,
-**Then** a responsive form is displayed with fields for date, shift type, responsible user, and notes, with appropriate client-side validation.
-
-**Prerequisites:** Epic 2.
-
-**Technical Notes:** Implement using ShadCN/UI components.
-
-### Story 3.2: Implement Shift Report Form UI (Operational Data Fields)
-
-As a Shift Leader,
-I want to see and interact with fields for operational data on the shift report form,
-So that I can input all necessary performance metrics.
+As a **Manager**,
+I want **a dedicated dashboard page that serves as a central hub for all KPIs and visualizations**,
+So that **I have a single place to monitor operational health**.
 
 **Acceptance Criteria:**
 
-**Given** the shift report form is displayed,
-**When** I view the form,
-**Then** it includes validated numeric input fields for all operational data (e.g., overtime, orders).
+**Given** a user is logged in as a 'Manager'
+**When** they navigate to the "Dashboard"
+**Then** they see a page with a clear title (e.g., "Operations Dashboard").
+**And** the page has a grid-based layout with designated areas for KPI cards and charts.
 
-**Prerequisites:** Story 3.1.
+**Prerequisites:** Story 1.2
 
-**Technical Notes:** Consider how to handle the `ordersByArea` and `staffingByArea` inputs, perhaps with a dynamic list of input fields based on a predefined list of areas.
+**Technical Notes:** Create a new route for the dashboard (e.g., `/dashboard`). The layout should be responsive and use a grid system (e.g., CSS Grid) to accommodate multiple data visualization components. (Covers FR-4)
 
-### Story 3.3: Create API Endpoint for Report Submission
+### Story 3.2: "Critical 3" KPI Cards
 
-As a backend developer,
-I want to create a secure API endpoint for submitting new shift reports,
-So that the frontend has a way to save report data.
-
-**Acceptance Criteria:**
-
-**Given** a POST request with valid report data is sent to `/api/reports`,
-**When** the endpoint is processed,
-**Then** a new record is created in the `ShiftReport` table.
-**And** the API returns a success response with the new report's ID.
-**And** the endpoint includes robust server-side validation for all fields.
-**And** the endpoint is protected and can only be accessed by authenticated users with the 'Shift Leader' role.
-
-**Prerequisites:** Epic 1 (Database Schema).
-
-**Technical Notes:** Implement as a Next.js API route. Use Supabase client for database interaction.
-
-### Story 3.4: Connect Report Form to Submission API
-
-As a Shift Leader,
-I want to submit my completed shift report and have it saved,
-So that the data is persisted and available for review.
+As a **Manager**,
+I want **to see the "Critical 3" KPIs displayed as prominent cards on the dashboard**,
+So that **I can get an immediate snapshot of the most important metrics**.
 
 **Acceptance Criteria:**
 
-**Given** I have filled out the shift report form,
-**When** I click the "Submit" button,
-**Then** a POST request is sent to the `/api/reports` endpoint with the form data.
-**And** upon a successful response, I see a success notification and am redirected.
-**And** upon an error response, I see a relevant error message.
+**Given** a Manager is on the dashboard
+**Then** they see three distinct KPI cards: "Orders per Hour", "Overtime (hours)", and "Sick Leave (%)".
+**And** each card displays the metric's title and its current value, calculated over a default time period (e.g., last 7 days).
 
-**Prerequisites:** Story 3.2, Story 3.3.
+**Prerequisites:** Story 3.1
 
-**Technical Notes:** Handle form state and submission logic in the frontend.
+**Technical Notes:** The data for these KPIs will need to be aggregated from the `reports` table. Create a new API endpoint or server function to calculate these metrics efficiently. The UI for the cards should be clean, easy to read, and visually distinct. (Covers FR-4)
 
-### Story 3.5: Implement "View Own Reports" List
+### Story 3.3: Overtime Trend Graph
 
-As a Shift Leader,
-I want to see a list of my previously submitted reports,
-So that I can track my reporting history.
+As a **Manager**,
+I want **to see a trend graph for Overtime hours**,
+So that **I can visualize performance over time and spot trends or anomalies**.
 
 **Acceptance Criteria:**
 
-**Given** I am logged in as a Shift Leader,
-**When** I navigate to the "My Reports" page,
-**Then** an API call is made to fetch my reports.
-**And** a list of my reports (e.g., showing date and shift type) is displayed.
+**Given** a Manager is on the dashboard
+**When** they view the trend graph section
+**Then** they see a line chart showing the "Overtime (hours)" KPI plotted daily over the last 30 days.
 
-**Prerequisites:** Story 3.4.
+**Prerequisites:** Story 3.1
 
-**Technical Notes:** Create a new API endpoint `GET /api/reports/mine` that uses RLS to return only the logged-in user's reports.
+**Technical Notes:** Use a charting library like Recharts or Chart.js to render the graph. The data will need to be aggregated by day. The chart should be interactive, with tooltips showing the exact value for a given day on hover. (Covers FR-4)
 
-### Story 3.6: Implement "Edit Own Report" Functionality
+### Story 3.4: Dashboard Date Range Filter
 
-As a Shift Leader,
-I want to edit one of my previously submitted reports,
-So that I can correct mistakes.
+As a **Manager**,
+I want **to filter the entire dashboard by a specific date range**,
+So that **I can analyze operational performance during a particular period**.
 
 **Acceptance Criteria:**
 
-**Given** I am viewing my list of reports,
-**When** I click an "Edit" button on a report,
-**Then** I am taken to the report form, pre-filled with that report's data.
-**When** I change the data and click "Save Changes",
-**Then** a PUT/PATCH request is sent to an endpoint like `/api/reports/[id]`.
-**And** the report is updated in the database.
+**Given** a Manager is on the dashboard
+**When** they select a new date range using a date picker
+**Then** all KPI cards and charts on the dashboard update to reflect the data from that selected period.
 
-**Prerequisites:** Story 3.5.
+**Prerequisites:** Story 3.2, Story 3.3
 
-**Technical Notes:** Create a new API endpoint `PUT /api/reports/[id]` for updates. Ensure RLS prevents users from editing reports that are not their own.
+**Technical Notes:** This introduces interactivity. The filter component can be reused or adapted from the reports page. All data queries for the dashboard must be parameterized to use the selected date range. (Covers FR-4)
 
 ---
 
-## Epic 4: Historical Reporting & Export
+## Epic 4: Advanced Reporting & Workflow (Post-MVP)
 
-**Value:** Provide managers with the ability to analyze past performance and export data for external use.
-**Scope:** Historical report view with filtering by date, shift, and area; CSV export functionality.
+Introduces the first set of growth features, including the manager approval workflow and automated alerts.
 
-### Story 4.1: View All Reports (Manager)
+### Story 4.1: Report Approval Workflow
 
-As a Manager,
-I want to view a list of all submitted shift reports,
-So that I can oversee operational performance across all shifts.
-
-**Acceptance Criteria:**
-
-**Given** I am logged in as a Manager,
-**When** I navigate to the "All Reports" section,
-**Then** an API call is made to fetch all reports.
-**And** a list of all reports (e.g., showing date, shift type, responsible user) is displayed.
-
-**Prerequisites:** Epic 3.
-
-**Technical Notes:** Create a new API endpoint `GET /api/reports/all` that uses RLS to return all reports for Managers.
-
-### Story 4.2: Filter Reports by Date, Shift, Area
-
-As a Manager,
-I want to filter the list of reports by date range, shift type, and operational area,
-So that I can quickly find specific data for analysis.
+As a **Manager**,
+I want **to approve or reject a shift report**,
+So that **I can formally sign off on the data's accuracy and lock it from further edits**.
 
 **Acceptance Criteria:**
 
-**Given** I am viewing the list of all reports,
-**When** I apply filters for date range, shift type (morning/evening/night), or operational area,
-**Then** the displayed list of reports updates to show only those matching the criteria.
-**And** the filters are clearly visible and can be reset.
+**Given** a Manager is viewing a submitted report that is not yet approved
+**When** they view the report
+**Then** they see "Approve" and "Reject" buttons.
+**And** when they click "Approve", the report's status changes to 'Approved' and it becomes read-only for the Shift Leader.
+**And** when they click "Reject", the report's status changes to 'Rejected' and it is flagged for the Shift Leader to review and resubmit.
 
-**Prerequisites:** Story 4.1.
+**Prerequisites:** Story 2.1
 
-**Technical Notes:** Implement filter parameters for the `GET /api/reports/all` endpoint.
+**Technical Notes:** Add a `status` column to the `reports` table with possible values: 'Submitted', 'Approved', 'Rejected'. Implement UI changes to show status clearly. Access control logic must be updated to prevent edits on approved reports. (Covers FR-1)
 
-### Story 4.3: Export Filtered Reports to CSV
+### Story 4.2: Threshold-Based Alerts
 
-As a Manager,
-I want to export the currently filtered list of reports to a CSV file,
-So that I can perform further analysis in external tools or share the data.
+As a **Manager**,
+I want **to be notified when a key metric breaches a predefined threshold**,
+So that **I can proactively address potential issues without having to constantly monitor the dashboard**.
 
 **Acceptance Criteria:**
 
-**Given** I have applied filters to the reports list,
-**When** I click the "Export to CSV" button,
-**Then** a CSV file containing the filtered report data is downloaded.
-**And** nested fields (e.g., `ordersByArea`) are flattened into separate columns in the CSV.
+**Given** a threshold is configured for "Overtime (hours)" > 10
+**When** a shift report is submitted with an overtime value of 12
+**Then** an alert is generated.
+**And** the alert is displayed in a dedicated "Alerts" section on the Manager's dashboard.
 
-**Prerequisites:** Story 4.2.
+**Prerequisites:** Story 1.3, Story 3.1
 
-**Technical Notes:** Implement a new API endpoint `GET /api/reports/export-csv` that accepts filter parameters and returns a CSV file.
+**Technical Notes:** This requires a new table for `alert_thresholds` (metric, value, condition) and another for `alerts` (linking to the report and user). A mechanism, like a database trigger or a serverless function on report insert/update, is needed to check reports against these thresholds. (Covers FR-4)
+
+### Story 4.3: Report Attachments
+
+As a **Shift Leader**,
+I want **to upload attachments (e.g., images, documents) to a shift report**,
+So that **I can provide additional context or evidence for deviations and incidents**.
+
+**Acceptance Criteria:**
+
+**Given** a Shift Leader is creating or editing a shift report
+**When** they use the file upload control
+**Then** they can select a file (e.g., .png, .jpg, .pdf) to attach to the report.
+**And** when a Manager views the report, they can see a link to download the attachment.
+
+**Prerequisites:** Story 1.4
+
+**Technical Notes:** Use Supabase Storage to handle file uploads securely. The `reports` table will need a way to reference the stored files (e.g., a JSONB column containing an array of file URLs). (Covers FR-2)
 
 ---
 
-## Epic 5: KPI Dashboard & Visualization
+## Epic 5: AI-Powered Intelligence (Post-MVP)
 
-**Value:** Offer at-a-glance insights into operational health through a visual dashboard.
-**Scope:** Dashboard with KPI cards for the "Critical 3" MVP metrics (Orders per Hour, Overtime, Sick Leave) and one trend graph.
+Groups future AI capabilities like automatic shift summaries, anomaly detection, and a query chatbot.
 
-### Story 5.1: Display Critical 3 KPIs on Dashboard
+### Story 5.1: AI-Powered Shift Note Summarization
 
-As a Manager,
-I want to see the "Critical 3" KPIs (Orders per Hour, Overtime, Sick Leave) prominently displayed on a dashboard,
-So that I can quickly assess the operational health of the shifts.
-
-**Acceptance Criteria:**
-
-**Given** I am logged in as a Manager,
-**When** I navigate to the Dashboard,
-**Then** I see distinct cards for "Orders per Hour", "Overtime (hours)", and "Sick Leave (%)".
-**And** each card displays the current value for the selected period.
-**And** the data is aggregated from the submitted shift reports.
-
-**Prerequisites:** Epic 4 (Data available).
-
-**Technical Notes:** Create API endpoints to fetch aggregated KPI data. Implement frontend components to display KPI cards.
-
-### Story 5.2: Implement KPI Trend Graph
-
-As a Manager,
-I want to see a trend graph for at least one key KPI (e.g., Overtime),
-So that I can identify patterns and changes in performance over time.
+As a **Manager**,
+I want **AI to automatically summarize shift notes**,
+So that **I can quickly grasp the key points without reading through lengthy text**.
 
 **Acceptance Criteria:**
 
-**Given** I am viewing the Dashboard,
-**When** I select a KPI (e.g., Overtime),
-**Then** a line graph displays the trend of that KPI over a configurable period (e.g., last 7 days, last 30 days).
-**And** the graph is interactive (e.g., hover to see specific data points).
+**Given** a shift report contains detailed notes
+**When** the report is submitted or viewed
+**Then** an AI model (e.g., GPT-4) generates a concise summary of the notes.
+**And** the summary is displayed prominently alongside the full notes in the report view.
 
-**Prerequisites:** Story 5.1.
+**Prerequisites:** Story 1.3
 
-**Technical Notes:** Utilize a charting library (e.g., Recharts, Chart.js) for frontend visualization. Create API endpoints to fetch historical KPI data suitable for charting.
+**Technical Notes:** Integrate with an external AI service (e.g., OpenAI GPT-4 API). Implement a mechanism to send shift notes to the AI service and store the generated summary. Consider caching summaries to manage API costs and response times. (Covers FR-5)
 
----
+### Story 5.2: Anomaly Detection in KPIs
 
-## Epic 6: Advanced Reporting & Intelligence (Growth)
-
-**Value:** Enhance decision-making with automated insights, alerts, and advanced analytics.
-**Scope:** Manager approval workflow, threshold alerts, AI-powered note summarization, anomaly detection, and additional visualizations.
-
-### Story 6.1: Implement Manager Approval Workflow
-
-As a Manager,
-I want to approve or reject submitted shift reports,
-So that I can ensure data accuracy and compliance before reports are finalized.
+As a **Manager**,
+I want **the system to automatically detect statistically significant anomalies in KPI trends**,
+So that **I can be alerted to unusual operational performance and investigate proactively**.
 
 **Acceptance Criteria:**
 
-**Given** I am viewing a submitted shift report,
-**When** I click "Approve" or "Reject",
-**Then** the report's status is updated accordingly.
-**And** if rejected, the Shift Leader is notified and can resubmit.
+**Given** a KPI (e.g., Orders per Hour) shows a sudden, statistically significant deviation from its historical pattern
+**When** new report data is processed
+**Then** an anomaly alert is generated.
+**And** the alert is displayed in the "Alerts" section on the Manager's dashboard, highlighting the specific KPI and the nature of the anomaly.
 
-**Prerequisites:** Epic 3 (Shift Report Management).
+**Prerequisites:** Story 3.2
 
-**Technical Notes:** Add a `status` field to the `ShiftReport` table. Implement API endpoints for approval/rejection.
+**Technical Notes:** Implement a basic anomaly detection algorithm (e.g., z-score, moving average with standard deviation) on historical KPI data. This could be a scheduled background job or triggered by new data ingestion. (Covers FR-5)
 
-### Story 6.2: Implement Threshold Alerts
+### Story 5.3: Chatbot for Report Querying
 
-As a Manager,
-I want to receive alerts when key KPIs (e.g., overtime, sick leave) exceed predefined thresholds,
-So that I can proactively address potential issues.
-
-**Acceptance Criteria:**
-
-**Given** a shift report is submitted,
-**When** a KPI value (e.g., overtime hours) exceeds a configured threshold,
-**Then** an alert is triggered (e.g., email notification to manager).
-**And** thresholds can be configured by an administrator (via seed script for MVP).
-
-**Prerequisites:** Epic 5 (KPI data available).
-
-**Technical Notes:** Implement server-side logic to check thresholds upon report submission or on a scheduled basis.
-
-### Story 6.3: Auto-Summarize Shift Notes with AI
-
-As a Manager,
-I want to see an AI-generated summary of shift notes,
-So that I can quickly grasp key events and deviations without reading long texts.
+As a **Manager**,
+I want **to ask natural language questions about reports and KPIs**,
+So that **I can get quick, conversational answers without manually filtering or navigating complex interfaces**.
 
 **Acceptance Criteria:**
 
-**Given** a shift report with a note is submitted,
-**When** the report is saved,
-**Then** the note text is sent to an AI service (e.g., GPT-4).
-**And** an AI-generated summary is saved to the `noteSummaryAI` field in the database.
-**And** the summary is displayed alongside the original note in the report view.
+**Given** I am on the dashboard or a dedicated chat interface
+**When** I type a question like "Show me overtime trends for last month in Area B"
+**Then** the chatbot processes my query and provides a relevant graph, data summary, or direct answer.
 
-**Prerequisites:** Epic 3 (Shift Report Management).
+**Prerequisites:** Story 2.2, Story 3.3
 
-**Technical Notes:** Integrate with OpenAI GPT-4 API. Implement fallback strategy if AI service is unavailable.
-
-### Story 6.4: Implement Anomaly Detection
-
-As a Manager,
-I want the system to flag unusual patterns or outliers in operational data,
-So that I can investigate potential issues or opportunities.
-
-**Acceptance Criteria:**
-
-**Given** a new shift report is submitted,
-**When** the operational data deviates significantly from historical averages (e.g., using z-score),
-**Then** the report is flagged as potentially anomalous.
-**And** the anomaly is visible in the report view or dashboard.
-
-**Prerequisites:** Epic 5 (Historical KPI data).
-
-**Technical Notes:** Implement basic statistical anomaly detection (e.g., z-score calculation) on relevant KPI data.
-
-### Story 6.5: Implement Chatbot for Report Querying
-
-As a Manager,
-I want to ask natural language questions about shift reports and KPIs,
-So that I can get quick answers without manually filtering or navigating.
-
-**Acceptance Criteria:**
-
-**Given** I am on the dashboard or reports page,
-**When** I type a question like "show overtime trend last 4 weeks" into a chatbot interface,
-**Then** the chatbot provides a relevant answer or data visualization.
-
-**Prerequisites:** Epic 5 (KPI data), Epic 6.3 (AI integration).
-
-**Technical Notes:** Integrate with a conversational AI platform (e.g., custom GPT, LangChain).
-
----
-
-## Epic 7: Enterprise Integration (Vision)
-
-**Value:** Transform the application into a fully integrated component of the enterprise ecosystem, creating a single source of truth.
-**Scope:** WMS and ERP integration for two-way data synchronization.
-
-### Story 7.1: Integrate with WMS for Automated Data Population
-
-As a Shift Leader,
-I want the shift report form to be pre-populated with data from the Warehouse Management System (WMS),
-So that I can reduce manual data entry and minimize errors.
-
-**Acceptance Criteria:**
-
-**Given** I am creating a new shift report,
-**When** the form loads,
-**Then** fields like order numbers, employee schedules, and inventory levels are automatically populated from the WMS.
-**And** I can override the pre-populated data if necessary.
-
-**Prerequisites:** Epic 3 (Core Shift Reporting).
-
-**Technical Notes:** Requires API access to the WMS. Implement a data mapping layer to translate WMS data into the shift report format.
-
-### Story 7.2: Integrate with ERP for Two-Way Data Sync
-
-As a Manager,
-I want validated shift report data to be automatically pushed to the Enterprise Resource Planning (ERP) system,
-So that payroll and financial reporting are always based on the most accurate data.
-
-**Acceptance Criteria:**
-
-**Given** a shift report is approved,
-**When** the approval is finalized,
-**Then** key data points (e.g., actual hours worked, overtime, production numbers) are sent to the ERP system.
-**And** the ERP system confirms successful receipt of the data.
-
-**Prerequisites:** Epic 6 (Manager Approval Workflow).
-
-**Technical Notes:** Requires API access to the ERP system. Implement a robust error handling and retry mechanism for data synchronization.
+**Technical Notes:** Integrate with a natural language processing (NLP) service or build a custom intent recognition system. This will require mapping natural language queries to database queries or API calls to retrieve and present the requested data. (Covers FR-5)
 
 ---
 

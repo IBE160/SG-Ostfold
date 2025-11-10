@@ -24,12 +24,7 @@ The core value is empowering managers to make decisions based on facts, not feel
 
 This project is a standard web application for a general business domain, focusing on data entry, visualization, and reporting. The technical complexity is low, with no specialized regulatory or scientific requirements.
 
-{{#if domain_context_summary}}
 
-### Domain Context
-
-{{domain_context_summary}}
-{{/if}}
 
 ---
 
@@ -147,27 +142,11 @@ To proactively address challenges, we have identified the following risks relate
 
 ---
 
-{{#if domain_considerations}}
 
-## Domain-Specific Requirements
-
-{{domain_considerations}}
-
-This section shapes all functional and non-functional requirements below.
-{{/if}}
 
 ---
 
-{{#if innovation_patterns}}
 
-## Innovation & Novel Patterns
-
-{{innovation_patterns}}
-
-### Validation Approach
-
-{{validation_approach}}
-{{/if}}
 
 ---
 
@@ -354,9 +333,7 @@ The application must be designed for future integration with enterprise systems.
 -   **Authentication for APIs:** Secure API authentication mechanisms for system-to-system communication.
 {{/if}}
 
-{{#if no_nfrs}}
-_No specific non-functional requirements identified for this project type._
-{{/if}}
+
 
 ---
 
@@ -372,24 +349,15 @@ Requirements must be decomposed into epics and bite-sized stories (200k context 
 
 ## References
 
-{{#if product_brief_path}}
-
-- Product Brief: {{product_brief_path}}
-  {{/if}}
-  {{#if domain_brief_path}}
-- Domain Brief: {{domain_brief_path}}
-  {{/if}}
-  {{#if research_documents}}
-- Research: {{research_documents}}
-  {{/if}}
+- Product Brief: ./product-brief.md
 
 ---
 
 ## Next Steps
 
-1. **Epic & Story Breakdown** - Run: `workflow epics-stories`
-2. **UX Design** (if UI) - Run: `workflow ux-design`
-3. **Architecture** - Run: `workflow create-architecture`
+1.  **Review Epic & Story Breakdown**: The detailed implementation plan is available in [epics.md](./epics.md).
+2.  **UX Design** (if UI) - Run: `workflow ux-design`
+3.  **Architecture** - Run: `workflow create-architecture`
 
 ---
 
