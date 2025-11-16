@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ibe160 - Design Direction Showcase</title>
+    <style>
+        /* Base Styles from Theme 3 */
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --radius: 0.5rem;
+
+            --primary: #38bdf8; /* Vibrant Blue */
+            --secondary: #4b5563; /* Dark Grey */
+            --background: #111827; /* Very Dark Blue-Grey */
+            --text-primary: #d1d5db; /* Light Grey */
+            --text-secondary: #9ca3af; /* Lighter Grey */
+            --border: #374151; /* Border color */
+            --card-bg: #1f2937; /* Card background */
+            --input-bg: #1f2937; /* Input background */
+            --input-border: #4b5563; /* Input border */
+            --success: #22c55e;
+            --error: #f43f5e;
+            --warning: #fbbf24;
+            --info: #60a5fa;
+        }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
+        h1, h2, h3, h4 {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-top: 0;
+        }
+        h1 { font-size: 2.25rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;}
+        h2 { font-size: 1.875rem; margin-top: 3rem; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; }
+        h4 { font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        p { color: var(--text-secondary); }
+
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .mockup-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .mockup-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .mockup-header h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .mockup-content {
+            padding: 1.5rem;
+        }
+
+        /* Component Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid transparent;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-radius: var(--radius);
+            transition: all 0.15s ease-in-out;
+            margin-right: 0.5rem;
+            text-decoration: none;
+        }
+        .btn-primary { color: var(--background); background-color: var(--primary); border-color: var(--primary); }
+        .btn-primary:hover { background-color: #0ea5e9; border-color: #0ea5e9; }
+        .btn-secondary { color: var(--text-primary); background-color: var(--secondary); border-color: var(--secondary); }
+        .btn-secondary:hover { background-color: #374151; border-color: #374151; }
+        .btn-outline { color: var(--primary); border-color: var(--primary); background-color: transparent; }
+        .btn-outline:hover { background-color: rgba(56, 189, 248, 0.1); }
+
+        .form-group { margin-bottom: 1rem; }
+        .label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .input-field, .textarea-field, .select-field {
+            display: block;
+            width: 100%;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .input-field:focus, .textarea-field:focus, .select-field:focus {
+            border-color: var(--primary);
+            outline: 0;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+        .textarea-field { min-height: 80px; resize: vertical; }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        .kpi-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100px;
+            text-align: center;
+        }
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        .grid-3-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .chart-placeholder {
+            background-color: #2d3748;
+            border-radius: var(--radius);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border: 1px dashed var(--input-border);
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .data-table th, .data-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .data-table th {
+            background-color: #1f2937;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        .data-table td {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        .data-table tbody tr:hover {
+            background-color: #1a222f;
+        }
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .filter-bar .input-field {
+            width: auto;
+            min-width: 150px;
+        }
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .header-bar h2 {
+            margin: 0;
+            font-size: 1.875rem;
+        }
+        .icon {
+            margin-right: 0.5rem;
+        }
+        .nav-sidebar {
+            width: 220px;
+            background-color: #1f2937;
+            padding: 1.5rem 0;
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .nav-sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+        }
+        .nav-sidebar a:hover {
+            background-color: #2d3748;
+            color: var(--text-primary);
+        }
+        .nav-sidebar a.active {
+            background-color: var(--primary);
+            color: var(--background);
+            font-weight: 600;
+        }
+        .nav-sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .main-content-with-sidebar {
+            margin-left: 220px;
+            padding: 2rem;
+        }
+        .main-content-no-sidebar {
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ibe160 - Design Direction Showcase</h1>
+        <p>
+            Here are different design directions for the key screens of the ibe160 application. Each direction explores variations in layout, information hierarchy, and interaction patterns, all built upon our chosen "Modern & Tech-Forward (Dark)" theme.
+            Review these mockups to see how different approaches feel and which best aligns with our core principles of **Speed, Clarity, Frictionless Data Entry, and Insights, Not Just Data**.
+        </p>
+
+        <div class="mockup-grid">
+
+            <!-- Direction 1: Dashboard - Sidebar Nav, Card-based, Data-Dense -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h3>1. Dashboard: Sidebar Nav, Data-Dense</h3>
+                    <p><strong>Philosophy:</strong> Professional & Efficient. Designed for power users who need quick access to many metrics. Uses a fixed sidebar for navigation and a dense card-based layout for KPIs.</p>
+                </div>
+                <div class="mockup-content">
+                    <div style="display: flex;">
+                        <div class="nav-sidebar" style="position: static; height: auto; padding: 1rem 0; border-right: none;">
+                            <div class="logo" style="margin-bottom: 1rem;">ibe160</div>
+                            <a href="#" class="active"><span class="icon">📊</span>Dashboard</a>
+                            <a href="#"><span class="icon">📝</span>Shift Reports</a>
+                            <a href="#"><span class="icon">⚙️</span>Settings</a>
+                        </div>
+                        <div style="flex-grow: 1; padding-left: 1.5rem;">
+                            <div class="header-bar">
+                                <h2>Dashboard Overview</h2>
+                                <button class="btn btn-primary"><span class="icon">➕</span>New Report</button>
+                            </div>
+                            <div class="grid-3-col">
+                                <div class="card kpi-card">
+                                    <div class="kpi-value">120</div>
+                                    <div class="kpi-label">Orders/Hr</div>
+                                </div>
+                                <div class="card kpi-card">
+                                    <div class="kpi-value">8%</div>
+                                    <div class="kpi-label">Sick Leave</div>
+                                </div>
+                                <div class="card kpi-card">
+                                    <div class="kpi-value">150</div>
+                                    <div class="kpi-label">Overtime (hrs)</div>
+                                </div>
+                            </div>
+                            <div class="card" style="margin-top: 1.5rem;">
+                                <div class="card-title">Overtime Trend (Last 4 Weeks)</div>
+                                <div class="chart-placeholder">Line Chart Placeholder</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 2: Shift Report Form - Single Column, Guided Flow -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h3>2. Shift Report: Single Column, Guided</h3>
+                    <p><strong>Philosophy:</strong> Simple & Focused. Guides the Shift Leader through the report step-by-step. Ideal for ensuring all required data is captured without overwhelming the user.</p>
+                </div>
+                <div class="mockup-content main-content-no-sidebar">
+                    <div class="header-bar">
+                        <h2>New Shift Report</h2>
+                        <button class="btn btn-secondary">Cancel</button>
+                    </div>
+                    <div class="card">
+                        <div class="form-group">
+                            <label class="label">Date</label>
+                            <input type="date" class="input-field" value="2025-11-16">
+                        </div>
+                        <div class="form-group">
+                            <label class="label">Shift</label>
+                            <select class="select-field">
+                                <option>Morning (06:00-14:00)</option>
+                                <option>Evening (14:00-22:00)</option>
+                                <option>Night (22:00-06:00)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="label">Area</label>
+                            <input type="text" class="input-field" placeholder="e.g., Packing, Shipping">
+                        </div>
+                        <div class="form-group">
+                            <label class="label">Orders Processed</label>
+                            <input type="number" class="input-field" placeholder="e.g., 1200">
+                        </div>
+                        <div class="form-group">
+                            <label class="label">Notes</label>
+                            <textarea class="textarea-field" placeholder="Any incidents, issues, or observations..."></textarea>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">Submit Report</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 3: Dashboard - Top Nav, Spacious, Visual Focus -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h3>3. Dashboard: Top Nav, Spacious, Visual</h3>
+                    <p><strong>Philosophy:</strong> Modern & Approachable. Uses a top navigation bar for a cleaner, more spacious feel. Emphasizes visual clarity with larger KPI cards and prominent charts.</p>
+                </div>
+                <div class="mockup-content main-content-no-sidebar">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">ibe160</div>
+                        <div>
+                            <a href="#" class="btn btn-outline" style="margin-right: 1rem;">Shift Reports</a>
+                            <a href="#" class="btn btn-primary">Dashboard</a>
+                        </div>
+                    </div>
+                    <div class="header-bar">
+                        <h2>Operational Dashboard</h2>
+                        <button class="btn btn-primary"><span class="icon">➕</span>Add New Report</button>
+                    </div>
+                    <div class="grid-2-col">
+                        <div class="card kpi-card" style="height: 120px;">
+                            <div class="kpi-value">120</div>
+                            <div class="kpi-label">Orders per Hour</div>
+                        </div>
+                        <div class="card kpi-card" style="height: 120px;">
+                            <div class="kpi-value">8%</div>
+                            <div class="kpi-label">Sick Leave Rate</div>
+                        </div>
+                        <div class="card" style="grid-column: span 2;">
+                            <div class="card-title">Overtime Trend (Last 4 Weeks)</div>
+                            <div class="chart-placeholder">Larger Line Chart Placeholder</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 4: Shift Report Form - Two Column, Quick Entry -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h3>4. Shift Report: Two Column, Quick Entry</h3>
+                    <p><strong>Philosophy:</strong> Fast & Efficient. Designed for experienced Shift Leaders to quickly fill out reports. Uses a two-column layout to minimize scrolling and keep related fields visible.</p>
+                </div>
+                <div class="mockup-content main-content-no-sidebar">
+                    <div class="header-bar">
+                        <h2>New Shift Report</h2>
+                        <button class="btn btn-secondary">Discard</button>
+                    </div>
+                    <div class="card">
+                        <div class="grid-2-col">
+                            <div class="form-group">
+                                <label class="label">Date</label>
+                                <input type="date" class="input-field" value="2025-11-16">
+                            </div>
+                            <div class="form-group">
+                                <label class="label">Shift</label>
+                                <select class="select-field">
+                                    <option>Morning (06:00-14:00)</option>
+                                    <option>Evening (14:00-22:00)</option>
+                                    <option>Night (22:00-06:00)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="label">Area</label>
+                                <input type="text" class="input-field" placeholder="e.g., Packing, Shipping">
+                            </div>
+                            <div class="form-group">
+                                <label class="label">Staffing Count</label>
+                                <input type="number" class="input-field" placeholder="e.g., 15">
+                            </div>
+                            <div class="form-group">
+                                <label class="label">Orders Processed</label>
+                                <input type="number" class="input-field" placeholder="e.g., 1200">
+                            </div>
+                            <div class="form-group">
+                                <label class="label">Overtime Hours</label>
+                                <input type="number" class="input-field" placeholder="e.g., 10">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 1.5rem;">
+                            <label class="label">Notes</label>
+                            <textarea class="textarea-field" placeholder="Any incidents, issues, or observations..."></textarea>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">Save & Submit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 5: Historical Reports - Filter-first, Table-centric -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h3>5. Historical Reports: Filter-First, Table</h3>
+                    <p><strong>Philosophy:</strong> Data-Driven & Analytical. Prioritizes filtering and a clear, sortable table view for managers to quickly find specific reports and export data.</p>
+                </div>
+                <div class="mockup-content main-content-no-sidebar">
+                    <div class="header-bar">
+                        <h2>Historical Shift Reports</h2>
+                        <button class="btn btn-outline"><span class="icon">⬇️</span>Export CSV</button>
+                    </div>
+                    <div class="filter-bar">
+                        <input type="date" class="input-field" value="2025-11-01">
+                        <input type="date" class="input-field" value="2025-11-16">
+                        <select class="select-field">
+                            <option>All Shifts</option>
+                            <option>Morning</option>
+                        </select>
+                        <input type="text" class="input-field" placeholder="Filter by Area">
+                        <button class="btn btn-primary">Apply Filters</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Shift</th>
+                                    <th>Area</th>
+                                    <th>Orders</th>
+                                    <th>Overtime</th>
+                                    <th>Sick Leave</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2025-11-16</td>
+                                    <td>Morning</td>
+                                    <td>Packing</td>
+                                    <td>1200</td>
+                                    <td>10 hrs</td>
+                                    <td>0%</td>
+                                    <td><a href="#" style="color: var(--primary);">View</a></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-11-15</td>
+                                    <td>Evening</td>
+                                    <td>Shipping</td>
+                                    <td>950</td>
+                                    <td>5 hrs</td>
+                                    <td>5%</td>
+                                    <td><a href="#" style="color: var(--primary);">View</a></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-11-14</td>
+                                    <td>Night</td>
+                                    <td>Assembly</td>
+                                    <td>800</td>
+                                    <td>20 hrs</td>
+                                    <td>0%</td>
+                                    <td><a href="#" style="color: var(--primary);">View</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 6: Dashboard - Minimalist, Focus on Trends -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h3>6. Dashboard: Minimalist, Trend Focus</h3>
+                    <p><strong>Philosophy:</strong> Clean & Insightful. Reduces visual noise to highlight key trends and deviations. Uses a minimalist layout with a strong emphasis on data visualization.</p>
+                </div>
+                <div class="mockup-content main-content-no-sidebar">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">ibe160</div>
+                        <div>
+                            <a href="#" class="btn btn-outline" style="margin-right: 1rem;">Reports</a>
+                            <a href="#" class="btn btn-primary">Dashboard</a>
+                        </div>
+                    </div>
+                    <div class="header-bar">
+                        <h2>Performance Overview</h2>
+                        <select class="select-field" style="width: auto; min-width: 180px;">
+                            <option>Last 30 Days</option>
+                            <option>Last 7 Days</option>
+                            <option>This Quarter</option>
+                        </select>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Orders per Hour: Trend & Forecast</div>
+                        <div class="chart-placeholder" style="height: 250px;">Advanced Line Chart with Forecast Placeholder</div>
+                    </div>
+                    <div class="grid-2-col" style="margin-top: 1.5rem;">
+                        <div class="card kpi-card">
+                            <div class="kpi-value" style="color: var(--success);">↓ 2%</div>
+                            <div class="kpi-label">Sick Leave (vs. Avg)</div>
+                        </div>
+                        <div class="card kpi-card">
+                            <div class="kpi-value" style="color: var(--error);">↑ 15%</div>
+                            <div class="kpi-label">Overtime (vs. Avg)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 7: REFINED - Sidebar Nav, Insight-Focused -->
+            <div class="mockup-card" style="border: 2px solid var(--primary);">
+                <div class="mockup-header">
+                    <h3 style="color: var(--success);">7. REFINED: Sidebar Nav, Insight-Focused</h3>
+                    <p><strong>Philosophy:</strong> Structured & Insightful. This hybrid approach combines the professional sidebar navigation of Direction #1 with the clean, trend-focused dashboard of Direction #6 for a balanced, powerful experience.</p>
+                </div>
+                <div class="mockup-content">
+                    <div style="display: flex;">
+                        <div class="nav-sidebar" style="position: static; height: auto; padding: 1rem 0; border-right: none;">
+                            <div class="logo" style="margin-bottom: 1rem;">ibe160</div>
+                            <a href="#" class="active"><span class="icon">📊</span>Dashboard</a>
+                            <a href="#"><span class="icon">📝</span>Shift Reports</a>
+                            <a href="#"><span class="icon">⚙️</span>Settings</a>
+                        </div>
+                        <div style="flex-grow: 1; padding-left: 1.5rem;">
+                            <div class="header-bar">
+                                <h2>Performance Overview</h2>
+                                <select class="select-field" style="width: auto; min-width: 180px;">
+                                    <option>Last 30 Days</option>
+                                    <option>Last 7 Days</option>
+                                    <option>This Quarter</option>
+                                </select>
+                            </div>
+                            <div class="card">
+                                <div class="card-title">Orders per Hour: Trend & Forecast</div>
+                                <div class="chart-placeholder" style="height: 250px;">Advanced Line Chart with Forecast Placeholder</div>
+                            </div>
+                            <div class="grid-2-col" style="margin-top: 1.5rem;">
+                                <div class="card kpi-card">
+                                    <div class="kpi-value" style="color: var(--success);">↓ 2%</div>
+                                    <div class="kpi-label">Sick Leave (vs. Avg)</div>
+                                </div>
+                                <div class="card kpi-card">
+                                    <div class="kpi-value" style="color: var(--error);">↑ 15%</div>
+                                    <div class="kpi-label">Overtime (vs. Avg)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
