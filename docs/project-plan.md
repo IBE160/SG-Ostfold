@@ -15,7 +15,7 @@
 - [x ] Planning
   - [x] /run-agent-task pm *prd
   - [x ] /run-agent-task pm *validate-prd
-  - [x] /run-agent-task ux-designer *create-ux-design {prompt / user-input-file}
+  - [x] /run-agent-task ux-designer *create-ux-design "Make sure you run this command in interactive mode"
   - [ ] /run-agent-task ux-designer *validate-ux-design {prompt / user-input-file}
   - [ ] /run-agent-task tea *framework {prompt / user-input-file}
   - [ ] /run-agent-task tea *ci {prompt / user-input-file}
