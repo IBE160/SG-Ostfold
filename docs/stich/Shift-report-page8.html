@@ -1,239 +1,230 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Review and Submit Shift Report</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Review and Submit Shift Report</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
                         "primary": "#3abff8",
-                        "background-light": "#f5f7f8",
                         "background-dark": "#101d23",
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
                     },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
                 },
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
-            font-variation-settings:
-                'FILL' 0,
-                'wght' 400,
-                'GRAD' 0,
-                'opsz' 24;
-            font-size: 24px;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
+<body class="bg-background-dark font-display text-white">
 <div class="relative flex min-h-screen w-full">
-<!-- SideNavBar -->
-<aside class="flex h-screen w-64 flex-col bg-[#0b1418] p-4 sticky top-0">
-<div class="flex flex-col gap-4">
-<div class="flex items-center gap-3">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBojbKdhutS7xqMvG5ELhKXDA7_nmnrOUCaXf_tlmVFRaEzhFNnLSnlDq_L6qxDJ2zzucG095INJML84EbVSCL8poI8TXZeRLrkjv2KXmBN-Ft2EWdfSc5vBSeTXMeqDaUrt470otz2qe6PGmtVi-ON84A9sWwnjkynQTH4Ept23c7mUgsBFOQHwfDOr0MvwVRXInNUNYXDvxsXVTVGT1ZXmdAJHgU1B3o5sGrnS7EAZRCaQusEs-LWyThePzGwXbVmTmeRtc9BK7s");'></div>
-<div class="flex flex-col">
-<h1 class="text-white text-base font-medium leading-normal">ibe160</h1>
-<p class="text-[#8fb9cc] text-sm font-normal leading-normal">Operations</p>
-</div>
-</div>
-<div class="flex flex-col gap-2 mt-4">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/70 hover:bg-[#223d49] hover:text-white transition-colors" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<p class="text-sm font-medium leading-normal">Dashboard</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#223d49] text-white" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">article</span>
-<p class="text-sm font-medium leading-normal">Shift Reports</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/70 hover:bg-[#223d49] hover:text-white transition-colors" href="#">
-<span class="material-symbols-outlined">group</span>
-<p class="text-sm font-medium leading-normal">Employees</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/70 hover:bg-[#223d49] hover:text-white transition-colors" href="#">
-<span class="material-symbols-outlined">bar_chart</span>
-<p class="text-sm font-medium leading-normal">Analytics</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/70 hover:bg-[#223d49] hover:text-white transition-colors" href="#">
-<span class="material-symbols-outlined">settings</span>
-<p class="text-sm font-medium leading-normal">Settings</p>
-</a>
-</div>
-</div>
-<div class="mt-auto flex flex-col gap-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/70 hover:bg-[#223d49] hover:text-white transition-colors" href="#">
-<span class="material-symbols-outlined">help</span>
-<p class="text-sm font-medium leading-normal">Help Center</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/70 hover:bg-[#223d49] hover:text-white transition-colors" href="#">
-<span class="material-symbols-outlined">logout</span>
-<p class="text-sm font-medium leading-normal">Log Out</p>
-</a>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="flex-1 p-8">
-<div class="mx-auto max-w-4xl">
-<!-- PageHeading -->
-<div class="flex flex-wrap justify-between gap-3 mb-8">
-<div class="flex min-w-72 flex-col gap-3">
-<p class="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Review and Submit Shift Report</p>
-<p class="text-[#8fb9cc] text-base font-normal leading-normal">Please verify all information before submitting.</p>
-</div>
-</div>
-<!-- Main Review Card -->
-<div class="bg-[#19272e] rounded-xl p-6 md:p-8 space-y-8 border border-[#305869]/50">
-<!-- Report Criteria Section -->
-<div>
-<div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Report Criteria</h2>
-<button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
-<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
-                                Edit
-                            </button>
-</div>
-<div class="p-4 grid grid-cols-[1fr_3fr] md:grid-cols-[20%_1fr] gap-x-6 bg-[#101d23] rounded-lg">
-<div class="col-span-2 grid grid-cols-subgrid py-3">
-<p class="text-[#8fb9cc] text-sm font-normal leading-normal">Date</p>
-<p class="text-white text-sm font-normal leading-normal">2023-10-27</p>
-</div>
-<div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#305869] py-3">
-<p class="text-[#8fb9cc] text-sm font-normal leading-normal">Shift</p>
-<p class="text-white text-sm font-normal leading-normal">Day Shift (06:00 - 14:00)</p>
-</div>
-</div>
-</div>
-<!-- Employee Staffing Section -->
-<div>
-<div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Employee Staffing</h2>
-<button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
-<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
-                                Edit
-                            </button>
-</div>
-<div class="bg-[#101d23] rounded-lg p-4 space-y-4">
-<div class="flex items-center justify-between">
-<p class="text-[#8fb9cc] text-sm">Absent Employees</p>
-<p class="text-white text-sm font-medium">4</p>
-</div>
-<div class="flex items-center justify-between">
-<p class="text-[#8fb9cc] text-sm">Hired Employees</p>
-<p class="text-white text-sm font-medium">2</p>
-</div>
-<div class="flex items-center justify-between">
-<p class="text-[#8fb9cc] text-sm">Hired Out Employees</p>
-<p class="text-white text-sm font-medium">1</p>
-</div>
-<div class="flex items-center justify-between">
-<p class="text-[#8fb9cc] text-sm">Overtime Employees</p>
-<p class="text-white text-sm font-medium">8</p>
-</div>
-</div>
-</div>
-<!-- Area Performance Section -->
-<div>
-<div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Area Performance</h2>
-<button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
-<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
-                                Edit
-                            </button>
-</div>
-<div class="bg-[#101d23] rounded-lg p-4">
-<div class="grid grid-cols-4 gap-4 text-sm text-[#8fb9cc] mb-3 px-4">
-<span>Area</span>
-<span class="text-right">Orderlines</span>
-<span class="text-right">Moves</span>
-<span class="text-right">Hours</span>
-</div>
-<div class="space-y-2">
-<div class="grid grid-cols-4 gap-4 text-sm text-white bg-[#19272e] p-4 rounded-md">
-<span>A-Block</span>
-<span class="text-right">1,230</span>
-<span class="text-right">450</span>
-<span class="text-right">16.0</span>
-</div>
-<div class="grid grid-cols-4 gap-4 text-sm text-white bg-[#19272e] p-4 rounded-md">
-<span>B-Block</span>
-<span class="text-right">980</span>
-<span class="text-right">320</span>
-<span class="text-right">14.5</span>
-</div>
-<div class="grid grid-cols-4 gap-4 text-sm text-white bg-[#19272e] p-4 rounded-md">
-<span>C-Block</span>
-<span class="text-right">1,560</span>
-<span class="text-right">610</span>
-<span class="text-right">20.0</span>
-</div>
-<div class="grid grid-cols-4 gap-4 text-sm text-white font-bold border-t border-[#305869] mt-3 pt-3 px-4">
-<span>Total</span>
-<span class="text-right">3,770</span>
-<span class="text-right">1,380</span>
-<span class="text-right">50.5</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Sampakk & Issues Section -->
-<div>
-<div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Sampakk &amp; Issues</h2>
-<button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
-<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
-                                Edit
-                            </button>
-</div>
-<div class="bg-[#101d23] rounded-lg p-4">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-<p class="text-[#8fb9cc] text-sm">Sampakk Scans</p>
-<p class="text-white text-sm">4,512</p>
-<p class="text-[#8fb9cc] text-sm">Sampakk Hours Worked</p>
-<p class="text-white text-sm">8.0</p>
-<p class="text-[#8fb9cc] text-sm col-span-1 md:col-span-2 mt-2">Significant Issues/Delays</p>
-<p class="text-white text-sm col-span-1 md:col-span-2">- Conveyor belt malfunction in B-Block from 09:15 to 09:45.<br/>- System outage for 10 minutes at 11:00.</p>
-</div>
-</div>
-</div>
-<!-- General Notes Section -->
-<div>
-<div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">General Notes</h2>
-<button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
-<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
-                                Edit
-                            </button>
-</div>
-<div class="bg-[#101d23] rounded-lg p-4">
-<p class="text-white text-sm leading-relaxed">
-                                Overall a productive shift despite the minor technical issues. Team morale is high. Noted a significant increase in efficiency in C-Block due to the new scanner deployment. Follow-up required on the conveyor belt maintenance ticket.
-                            </p>
-</div>
-</div>
-<!-- Action Buttons -->
-<div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-[#305869]">
-<button id="back-button" class="px-6 py-2.5 rounded-lg text-white font-medium bg-transparent border border-[#305869] hover:bg-[#223d49] transition-colors">Back</button>
-<button class="px-6 py-2.5 rounded-lg text-slate-900 font-medium bg-primary hover:bg-primary/90 transition-colors">Submit Final Report</button>
-</div>
-</div>
-</div>
-</main>
+    <!-- SideNavBar -->
+    <aside class="flex w-64 flex-col bg-[#101d23] p-4 border-r border-white/10 h-screen sticky top-0 justify-between">
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyKrKzNZ2dzHCiPU5hpsTon_I7CMbryH7wdM2h_7p4NsM8qCzbDF3wlU3BaGRqQyDI2Cbpa5nfBSPlSrB8UZ88NDMRD6ybP-gbuFOhd-TwIw7rCPcepyTnuZKgftfDU6vJJpiYUlvIuhTxvyHJulTigwpAVJSB7KpWpJWlZvadOOI3AU-h8H0wjOjqH_jplu7K1nWU27kgGacEnFNSuQbA8ZBnA7FPQRy9a7RvT3JfRdasTivgc8LW5KmwZyUEpPKdyHnij0TXYVQ");'></div>
+                <div class="flex flex-col">
+                    <h1 class="text-white text-base font-medium leading-normal">ibe160</h1>
+                    <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Shift Management</p>
+                </div>
+            </div>
+            <nav class="flex flex-col gap-2">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">dashboard</span>
+                    <p class="text-sm font-medium leading-normal">Dashboard</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#223d49] text-white" href="#">
+                    <span class="material-symbols-outlined fill" style="font-size: 24px;">assessment</span>
+                    <p class="text-sm font-medium leading-normal">Shift Reports</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
+                    <p class="text-sm font-medium leading-normal">Operations</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">bar_chart</span>
+                    <p class="text-sm font-medium leading-normal">Analytics</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">tune</span>
+                    <p class="text-sm font-medium leading-normal">Settings</p>
+                </a>
+            </nav>
+        </div>
+        <div class="flex flex-col gap-1">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                <span class="material-symbols-outlined" style="font-size: 24px;">help</span>
+                <p class="text-sm font-medium leading-normal">Help</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                <span class="material-symbols-outlined" style="font-size: 24px;">logout</span>
+                <p class="text-sm font-medium leading-normal">Logout</p>
+            </a>
+        </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <div class="mx-auto max-w-4xl">
+            <!-- PageHeading -->
+            <div class="flex flex-wrap justify-between gap-3 mb-8">
+                <div class="flex min-w-72 flex-col gap-3">
+                    <p class="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Review and Submit Shift Report</p>
+                    <p class="text-[#8fb9cc] text-base font-normal leading-normal">Please verify all information before submitting.</p>
+                </div>
+            </div>
+            <!-- Main Review Card -->
+            <div class="bg-[#182c34] rounded-xl p-6 md:p-8 space-y-8 border border-[#305869]">
+                <!-- Report Criteria Section -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Report Criteria</h2>
+                        <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                            Edit
+                        </button>
+                    </div>
+                    <div class="p-4 grid grid-cols-[1fr_3fr] md:grid-cols-[20%_1fr] gap-x-6 bg-[#101d23] rounded-lg">
+                        <div class="col-span-2 grid grid-cols-subgrid py-3">
+                            <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Date</p>
+                            <p class="text-white text-sm font-normal leading-normal">2023-10-27</p>
+                        </div>
+                        <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#305869] py-3">
+                            <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Shift</p>
+                            <p class="text-white text-sm font-normal leading-normal">Day Shift (06:00 - 14:00)</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Employee Staffing Section -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Employee Staffing</h2>
+                        <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                            Edit
+                        </button>
+                    </div>
+                    <div class="bg-[#101d23] rounded-lg p-4 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[#8fb9cc] text-sm">Absent Employees</p>
+                            <p class="text-white text-sm font-medium">4</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-[#8fb9cc] text-sm">Hired Employees</p>
+                            <p class="text-white text-sm font-medium">2</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-[#8fb9cc] text-sm">Hired Out Employees</p>
+                            <p class="text-white text-sm font-medium">1</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-[#8fb9cc] text-sm">Overtime Employees</p>
+                            <p class="text-white text-sm font-medium">8</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Area Performance Section -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Area Performance</h2>
+                        <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                            Edit
+                        </button>
+                    </div>
+                    <div class="bg-[#101d23] rounded-lg p-4">
+                        <div class="grid grid-cols-4 gap-4 text-sm text-[#8fb9cc] mb-3 px-4">
+                            <span>Area</span>
+                            <span class="text-right">Orderlines</span>
+                            <span class="text-right">Moves</span>
+                            <span class="text-right">Hours</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="grid grid-cols-4 gap-4 text-sm text-white bg-[#182c34] p-4 rounded-md">
+                                <span>A-Block</span>
+                                <span class="text-right">1,230</span>
+                                <span class="text-right">450</span>
+                                <span class="text-right">16.0</span>
+                            </div>
+                            <div class="grid grid-cols-4 gap-4 text-sm text-white bg-[#182c34] p-4 rounded-md">
+                                <span>B-Block</span>
+                                <span class="text-right">980</span>
+                                <span class="text-right">320</span>
+                                <span class="text-right">14.5</span>
+                            </div>
+                            <div class="grid grid-cols-4 gap-4 text-sm text-white bg-[#182c34] p-4 rounded-md">
+                                <span>C-Block</span>
+                                <span class="text-right">1,560</span>
+                                <span class="text-right">610</span>
+                                <span class="text-right">20.0</span>
+                            </div>
+                            <div class="grid grid-cols-4 gap-4 text-sm text-white font-bold border-t border-[#305869] mt-3 pt-3 px-4">
+                                <span>Total</span>
+                                <span class="text-right">3,770</span>
+                                <span class="text-right">1,380</span>
+                                <span class="text-right">50.5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sampakk & Issues Section -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Sampakk & Issues</h2>
+                        <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                            Edit
+                        </button>
+                    </div>
+                    <div class="bg-[#101d23] rounded-lg p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
+                            <p class="text-[#8fb9cc] text-sm">Sampakk Scans</p>
+                            <p class="text-white text-sm">4,512</p>
+                            <p class="text-[#8fb9cc] text-sm">Sampakk Hours Worked</p>
+                            <p class="text-white text-sm">8.0</p>
+                            <p class="text-[#8fb9cc] text-sm col-span-1 md:col-span-2 mt-2">Significant Issues/Delays</p>
+                            <p class="text-white text-sm col-span-1 md:col-span-2">- Conveyor belt malfunction in B-Block from 09:15 to 09:45.<br/>- System outage for 10 minutes at 11:00.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- General Notes Section -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">General Notes</h2>
+                        <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                            Edit
+                        </button>
+                    </div>
+                    <div class="bg-[#101d23] rounded-lg p-4">
+                        <p class="text-white text-sm leading-relaxed">
+                            Overall a productive shift despite the minor technical issues. Team morale is high. Noted a significant increase in efficiency in C-Block due to the new scanner deployment. Follow-up required on the conveyor belt maintenance ticket.
+                        </p>
+                    </div>
+                </div>
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-[#305869]">
+                    <button id="back-button" class="px-6 py-2.5 rounded-lg text-white font-semibold bg-[#305869] hover:bg-[#3b6f87] transition-colors">Back</button>
+                    <button class="px-6 py-2.5 rounded-lg text-[#101d23] font-semibold bg-primary hover:bg-primary/90 transition-colors">Submit Final Report</button>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
 <script>
     document.getElementById('back-button').addEventListener('click', function(e) {
@@ -245,4 +236,5 @@
         }, '*');
     });
 </script>
-</body></html>
+</body>
+</html>
