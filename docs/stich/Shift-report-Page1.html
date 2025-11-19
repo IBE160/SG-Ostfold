@@ -122,7 +122,7 @@
 </div>
 <!-- Continue Button -->
 <div class="flex">
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
+<button id="continue-button" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
 <span class="truncate">Continue</span>
 </button>
 </div>
@@ -130,4 +130,18 @@
 </div>
 </main>
 </div>
+<script>
+    document.getElementById('continue-button').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default button action
+        
+        // Navigate the iframe to the next page
+        window.location.href = 'Shift-report-page-2-bedre-forslag.html';
+
+        // Notify the parent window to update the active menu item
+        window.parent.postMessage({
+            type: 'setActiveLink',
+            href: './stich/Shift-report-page-2-bedre-forslag.html'
+        }, '*');
+    });
+</script>
 </body></html>
