@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orderlines by Area - ibe160 Shift Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3abff8",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101d23",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-row">
+<!-- SideNavBar -->
+<aside class="flex h-screen w-64 flex-col bg-[#101d23] p-4 sticky top-0">
+<div class="flex flex-col gap-4 mb-auto">
+<div class="flex items-center gap-3 p-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture for John Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtF8bfaorQo_sT30sleIpwPdsIVR4i60v7UHenYNiRPMm1wDBgHfayM2i95dRZE0iwOjbxLh15gRbqSJ9CuGapqROg0T7-04T2nQ3VIxgFxIcdywt2KARbwzTLqZUEluH2Q4yqkIx7rv-H8Fg8-L1-o3zvJqHymqVEx9SQ8OutMH7_seO04WmVRYwpwLUM9p_pxZpxAVifio0n7N5oYMqZ3YHDP-uickGC1zuTtcgdniVTYzwSnSkLWM_ZpCS7YBKyfjuvcMOmQCQ");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-medium leading-normal">John Doe</h1>
+<p class="text-[#8fb9cc] text-sm font-normal leading-normal">Shift Manager</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#223d49] text-white" href="#">
+<span class="material-symbols-outlined fill">article</span>
+<p class="text-sm font-medium leading-normal">Shift Reports</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium leading-normal">Analytics</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium leading-normal">Team</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<p class="text-sm font-medium leading-normal">Help</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium leading-normal">Logout</p>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-8">
+<div class="w-full max-w-4xl mx-auto flex flex-col gap-6">
+<!-- Breadcrumbs & Page Heading -->
+<header class="flex flex-col gap-4">
+<div class="flex flex-wrap gap-2">
+<a class="text-[#8fb9cc] text-base font-medium leading-normal hover:text-white" href="#">Shift Reports</a>
+<span class="text-[#8fb9cc] text-base font-medium leading-normal">/</span>
+<a class="text-[#8fb9cc] text-base font-medium leading-normal hover:text-white" href="#">Create New</a>
+<span class="text-[#8fb9cc] text-base font-medium leading-normal">/</span>
+<span class="text-white text-base font-medium leading-normal">Orderlines by Area</span>
+</div>
+<div class="flex flex-wrap justify-between gap-3">
+<p class="text-white text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">New Shift Report</p>
+</div>
+</header>
+<!-- Form Card -->
+<div class="bg-[#182c34] rounded-xl p-6 md:p-8">
+<form>
+<div class="flex flex-col gap-8">
+<!-- Section Header -->
+<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] border-b border-[#305869] pb-4">Orderlines Picked by Area</h2>
+<!-- Input Fields Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+<label class="flex flex-col">
+<p class="text-white text-base font-medium leading-normal pb-2">Pallelager Orderlines</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-background-dark focus:border-primary h-14 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" min="0" placeholder="Enter number" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-white text-base font-medium leading-normal pb-2">Transitt Orderlines</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-background-dark focus:border-primary h-14 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" min="0" placeholder="Enter number" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-white text-base font-medium leading-normal pb-2">Heis Orderlines</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-background-dark focus:border-primary h-14 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" min="0" placeholder="Enter number" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-white text-base font-medium leading-normal pb-2">Høytlager Orderlines</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-background-dark focus:border-primary h-14 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" min="0" placeholder="Enter number" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-white text-base font-medium leading-normal pb-2">OSR Orderlines</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-background-dark focus:border-primary h-14 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" min="0" placeholder="Enter number" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-white text-base font-medium leading-normal pb-2">Ute Orderlines</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-background-dark focus:border-primary h-14 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" min="0" placeholder="Enter number" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-white text-base font-medium leading-normal pb-2">Rørhall Orderlines</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-background-dark focus:border-primary h-14 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" min="0" placeholder="Enter number" type="number" value=""/>
+</label>
+</div>
+<!-- Total Display -->
+<div class="flex justify-between items-center bg-background-dark p-4 rounded-lg">
+<p class="text-white text-lg font-bold leading-normal">Total Orderlines Picked</p>
+<span class="text-primary text-2xl font-black">0</span>
+</div>
+<!-- Action Buttons -->
+<div class="flex justify-end items-center gap-4 pt-4 border-t border-[#305869]">
+<button class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-white bg-[#305869] hover:bg-[#3b6f87] transition-colors" type="button">Back</button>
+<button class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-background-dark bg-primary hover:bg-primary/90 transition-colors" type="submit">Continue</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</main>
+</div>
+</body></html>
