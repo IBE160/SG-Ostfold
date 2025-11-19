@@ -70,10 +70,15 @@ To consistently deliver on the vision of "getting information within minutes" an
 **Rationale:** This dark theme provides a sleek, professional aesthetic that reduces eye strain, making it ideal for prolonged use in operational environments. The high contrast and vibrant accent color ensure data visualizations and key actions stand out, contributing to a sense of efficiency and empowerment.
 
 **Color Palette:**
-*   **Primary Accent:** `#38bdf8` (Vibrant Blue - for key actions, interactive elements, and highlighting important data)
-*   **Secondary:** `#4b5563` (Dark Grey - for supporting elements, borders, and subtle backgrounds)
-*   **Background:** `#111827` (Very Dark Blue-Grey - main application background)
-*   **Text/Icons:** `#d1d5db` (Light Grey - for primary text and icons, ensuring readability on dark backgrounds)
+*   **Primary Accent:** `#3abff8` (Vibrant Blue - for key actions, interactive elements, and highlighting important data)
+*   **App Background:** `#101d23` (The main dark background for the application)
+*   **Sidebar Background:** `#0d171c` (The darkest shade, used for the primary navigation area)
+*   **Content/Card Background:** `#1f2937` or `#182c34` (Slightly lighter backgrounds for content areas and cards)
+*   **Secondary/Hover:** `#223d49` (Used for navigation link hover states and other secondary elements)
+*   **Text Primary:** `#ffffff` or `#d1d5db` (For main headings and body text)
+*   **Text Secondary:** `#8fb9cc` or `#9ca3af` (For labels, helper text, and muted information)
+*   **Border:** `#374151` (For general, non-interactive component borders)
+*   **Interactive Border:** `#305869` (For dividers and borders on interactive elements)
 *   **Success:** `#22c55e` (Green - for positive feedback, confirmations)
 *   **Error:** `#f43f5e` (Red - for critical alerts, validation errors)
 *   **Warning:** `#fbbf24` (Amber - for cautionary messages)
@@ -82,13 +87,16 @@ To consistently deliver on the vision of "getting information within minutes" an
 **Typography System:**
 To maintain a professional and highly readable interface, we will use a sans-serif font system.
 *   **Font Family:** `Inter` (or a similar modern, highly legible sans-serif like `Roboto`, `Segoe UI`) for all text. This ensures consistency and readability across various screen sizes and content types.
-*   **Type Scale:** A modular type scale will be implemented to ensure visual hierarchy and consistency.
-    *   `H1`: 2.25rem (36px) - Page Titles
-    *   `H2`: 1.875rem (30px) - Section Titles
-    *   `H3`: 1.5rem (24px) - Subsection Titles
-    *   `Body Large`: 1.125rem (18px) - Emphasized text, lead paragraphs
-    *   `Body Base`: 1rem (16px) - Standard text, form labels
-    *   `Body Small`: 0.875rem (14px) - Helper text, captions, metadata
+*   **Type Scale:** The type scale is based on Tailwind's default naming convention to align with the implementation.
+    *   `text-4xl` (2.25rem / 36px): Main page titles (e.g., "Review and Submit Shift Report").
+    *   `text-3xl` (1.875rem / 30px): Large headlines.
+    *   `text-2xl` (1.5rem / 24px): Section titles within a page.
+    *   `text-[22px]` (1.375rem / 22px): Custom size for prominent section headers.
+    *   `text-xl` (1.25rem / 20px): Sub-section titles.
+    *   `text-lg` (1.125rem / 18px): Emphasized text.
+    *   `text-base` (1rem / 16px): Standard body text and form inputs.
+    *   `text-sm` (0.875rem / 14px): Secondary text, labels, and navigation items.
+    *   `text-xs` (0.75rem / 12px): The smallest text, used for table headers or tertiary info.
 *   **Font Weights:** Primarily `Regular (400)`, `Medium (500)`, and `Semi-Bold (600)` to differentiate information without excessive visual noise.
 
 **Spacing and Layout Foundation:**

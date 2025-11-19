@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ibe160 - Color Theme Explorer</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --radius: 0.5rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
         }
         body {
             font-family: var(--font-sans);
@@ -32,13 +35,13 @@
 
         .theme-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
             gap: 2rem;
         }
 
         .theme-card {
             background-color: #ffffff;
-            border-radius: var(--radius);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-md);
             overflow: hidden;
             transition: transform 0.2s ease;
@@ -56,7 +59,8 @@
         }
 
         .palette {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
             padding: 0 1.5rem;
             gap: 0.5rem;
         }
@@ -69,8 +73,13 @@
             justify-content: center;
             padding-bottom: 0.25rem;
             font-size: 0.75rem;
-            color: rgba(255,255,255,0.8);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            font-weight: 500;
+        }
+        .swatch-light-text {
+             color: rgba(0,0,0,0.7);
+             text-shadow: none;
         }
 
         .components-preview {
@@ -82,40 +91,32 @@
         /* Component Styles */
         .btn {
             display: inline-block;
-            font-weight: 600;
+            font-weight: 700;
             text-align: center;
             vertical-align: middle;
             cursor: pointer;
             border: 1px solid transparent;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             font-size: 0.875rem;
-            line-height: 1.5;
-            border-radius: var(--radius);
+            line-height: 1.25;
+            border-radius: var(--radius-md);
             transition: all 0.15s ease-in-out;
             margin-right: 0.5rem;
         }
         .input {
             display: block;
-            width: calc(100% - 2rem);
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
+            width: calc(100% - 2.5rem);
+            padding: 0.875rem 1.25rem;
+            font-size: 1rem;
             line-height: 1.5;
             border: 1px solid;
-            border-radius: var(--radius);
+            border-radius: var(--radius-md);
             margin-top: 1rem;
-        }
-        .alert {
-            padding: 1rem;
-            margin-top: 1rem;
-            border-radius: var(--radius);
-            font-size: 0.875rem;
-            border: 1px solid;
         }
         .card {
-            padding: 1rem;
+            padding: 1.5rem;
             margin-top: 1rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
+            border-radius: var(--radius-lg);
             border: 1px solid;
         }
 
@@ -126,12 +127,10 @@
         .theme-1 .palette .error { background-color: #dc2626; }
         .theme-1 .btn-primary { color: #fff; background-color: #2563eb; border-color: #2563eb; }
         .theme-1 .btn-primary:hover { background-color: #1d4ed8; border-color: #1d4ed8; }
-        .theme-1 .btn-secondary { color: #fff; background-color: #64748b; border-color: #64748b; }
-        .theme-1 .btn-secondary:hover { background-color: #475569; border-color: #475569; }
+        .theme-1 .btn-secondary { color: #334155; background-color: transparent; border-color: #cbd5e1; }
+        .theme-1 .btn-secondary:hover { background-color: #f1f5f9; }
         .theme-1 .input { border-color: #cbd5e1; }
-        .theme-1 .input:focus { border-color: #2563eb; outline: 0; box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2); }
-        .theme-1 .alert-success { color: #14532d; background-color: #dcfce7; border-color: #86efac; }
-        .theme-1 .alert-error { color: #7f1d1d; background-color: #fee2e2; border-color: #fca5a5; }
+        .theme-1 .input:focus { border-color: #2563eb; outline: 0; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
         .theme-1 .card { background-color: #fff; border-color: #e2e8f0; }
 
         /* Theme 2: Calm & Clear */
@@ -141,45 +140,30 @@
         .theme-2 .palette .error { background-color: #dc2626; }
         .theme-2 .btn-primary { color: #fff; background-color: #059669; border-color: #059669; }
         .theme-2 .btn-primary:hover { background-color: #047857; border-color: #047857; }
-        .theme-2 .btn-secondary { color: #fff; background-color: #6b7280; border-color: #6b7280; }
-        .theme-2 .btn-secondary:hover { background-color: #4b5563; border-color: #4b5563; }
+        .theme-2 .btn-secondary { color: #4b5563; background-color: transparent; border-color: #d1d5db; }
+        .theme-2 .btn-secondary:hover { background-color: #f3f4f6; }
         .theme-2 .input { border-color: #d1d5db; }
-        .theme-2 .input:focus { border-color: #059669; outline: 0; box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2); }
-        .theme-2 .alert-success { color: #064e3b; background-color: #d1fae5; border-color: #6ee7b7; }
-        .theme-2 .alert-error { color: #7f1d1d; background-color: #fee2e2; border-color: #fca5a5; }
+        .theme-2 .input:focus { border-color: #059669; outline: 0; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1); }
         .theme-2 .card { background-color: #fff; border-color: #e5e7eb; }
 
-        /* Theme 3: Modern & Tech-Forward (Dark) */
-        .theme-3 { background-color: #111827; color: #d1d5db; }
+        /* Theme 3: Modern & Tech-Forward (Dark) - UPDATED */
+        .theme-3 { background-color: #101d23; color: #d1d5db; }
         .theme-3 h3, .theme-3 p { color: #d1d5db; }
-        .theme-3 .palette .primary { background-color: #38bdf8; }
-        .theme-3 .palette .secondary { background-color: #4b5563; }
-        .theme-3 .palette .success { background-color: #22c55e; }
-        .theme-3 .palette .error { background-color: #f43f5e; }
-        .theme-3 .btn-primary { color: #0c4a6e; background-color: #38bdf8; border-color: #38bdf8; }
-        .theme-3 .btn-primary:hover { background-color: #0ea5e9; border-color: #0ea5e9; }
-        .theme-3 .btn-secondary { color: #e5e7eb; background-color: #4b5563; border-color: #4b5563; }
-        .theme-3 .btn-secondary:hover { background-color: #374151; border-color: #374151; }
-        .theme-3 .input { background-color: #1f2937; border-color: #4b5563; color: #d1d5db; }
-        .theme-3 .input:focus { border-color: #38bdf8; outline: 0; box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
-        .theme-3 .alert-success { color: #a7f3d0; background-color: #052e16; border-color: #10b981; }
-        .theme-3 .alert-error { color: #fecdd3; background-color: #5f101d; border-color: #f43f5e; }
-        .theme-3 .card { background-color: #1f2937; border-color: #374151; }
-
-        /* Theme 4: Energetic & Action-Oriented */
-        .theme-4 .palette .primary { background-color: #14b8a6; }
-        .theme-4 .palette .secondary { background-color: #64748b; }
-        .theme-4 .palette .success { background-color: #16a34a; }
-        .theme-4 .palette .error { background-color: #dc2626; }
-        .theme-4 .btn-primary { color: #fff; background-color: #14b8a6; border-color: #14b8a6; }
-        .theme-4 .btn-primary:hover { background-color: #0d9488; border-color: #0d9488; }
-        .theme-4 .btn-secondary { color: #fff; background-color: #64748b; border-color: #64748b; }
-        .theme-4 .btn-secondary:hover { background-color: #475569; border-color: #475569; }
-        .theme-4 .input { border-color: #cbd5e1; }
-        .theme-4 .input:focus { border-color: #14b8a6; outline: 0; box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2); }
-        .theme-4 .alert-success { color: #047857; background-color: #ccfbf1; border-color: #5eead4; }
-        .theme-4 .alert-error { color: #7f1d1d; background-color: #fee2e2; border-color: #fca5a5; }
-        .theme-4 .card { background-color: #fff; border-color: #e2e8f0; }
+        .theme-3 .components-preview { border-top-color: #305869; }
+        .theme-3 .palette .primary { background-color: #3abff8; }
+        .theme-3 .palette .text-primary { background-color: #ffffff; }
+        .theme-3 .palette .text-secondary { background-color: #8fb9cc; }
+        .theme-3 .palette .content-bg { background-color: #182c34; }
+        .theme-3 .palette .border { background-color: #305869; }
+        .theme-3 .btn-primary { color: #101d23; background-color: #3abff8; border-color: #3abff8; }
+        .theme-3 .btn-primary:hover { opacity: 0.9; }
+        .theme-3 .btn-secondary { color: #ffffff; background-color: transparent; border-color: #305869; }
+        .theme-3 .btn-secondary:hover { background-color: #223d49; }
+        .theme-3 .input { background-color: #101d23; border-color: #305869; color: #ffffff; }
+        .theme-3 .input::placeholder { color: #8fb9cc; }
+        .theme-3 .input:focus { border-color: #3abff8; outline: 0; box-shadow: 0 0 0 3px rgba(58, 191, 248, 0.2); }
+        .theme-3 .card { background-color: #182c34; border-color: #305869; }
+        .theme-3 .card p { color: #8fb9cc; }
 
     </style>
 </head>
@@ -188,11 +172,35 @@
     <div class="container">
         <h1>ibe160 - Color Theme Explorer</h1>
         <p>
-            Below are four distinct color theme directions for the application. Each theme is designed to evoke a different personality while maintaining clarity and professionalism.
-            Review the palettes and the live component examples to see how each theme feels in practice. Consider which one best aligns with the goal of making users feel <strong>empowered, efficient, and productive</strong>.
+            Below are distinct color theme directions for the application. Each theme is designed to evoke a different personality while maintaining clarity and professionalism.
+            The chosen theme, "Modern & Tech-Forward," has been updated to reflect the latest design refinements.
         </p>
 
         <div class="theme-grid">
+            <!-- Theme 3 Card - UPDATED -->
+            <div class="theme-card theme-3">
+                <div class="theme-header">
+                    <h3>3. Modern & Tech-Forward (Dark) - Refined</h3>
+                    <p>A sleek dark theme that reduces eye strain and makes data visualizations pop. The bright blue accent creates a high-tech, focused atmosphere. This version reflects the latest, more nuanced design.</p>
+                </div>
+                <div class="palette">
+                    <div class="swatch primary swatch-light-text">#3abff8</div>
+                    <div class="swatch text-primary swatch-light-text">#ffffff</div>
+                    <div class="swatch text-secondary">#8fb9cc</div>
+                    <div class="swatch content-bg">#182c34</div>
+                    <div class="swatch border">#305869</div>
+                </div>
+                <div class="components-preview">
+                    <button class="btn btn-primary">Continue</button>
+                    <button class="btn btn-secondary">Back</button>
+                    <input type="text" class="input" placeholder="Enter number...">
+                    <div class="card">
+                        <h4 style="margin: 0 0 0.5rem 0; font-size: 1.1rem; color: #ffffff; font-weight: 700;">Total Orderlines</h4>
+                        <p style="margin: 0; font-size: 2rem; color: #3abff8; font-weight: 900;">1,234</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Theme 1 Card -->
             <div class="theme-card theme-1">
                 <div class="theme-header">
@@ -201,17 +209,16 @@
                 </div>
                 <div class="palette">
                     <div class="swatch primary">#2563eb</div>
-                    <div class="swatch secondary">#64748b</div>
-                    <div class="swatch success">#16a34a</div>
-                    <div class="swatch error">#dc2626</div>
+                    <div class="swatch secondary" style="background-color: #94a3b8;">#94a3b8</div>
+                    <div class="swatch" style="background-color: #f1f5f9;"></div>
+                    <div class="swatch" style="background-color: #e2e8f0;"></div>
+                    <div class="swatch" style="background-color: #cbd5e1;"></div>
                 </div>
                 <div class="components-preview">
                     <button class="btn btn-primary">Primary Action</button>
                     <button class="btn btn-secondary">Secondary</button>
                     <input type="text" class="input" placeholder="Enter data here...">
-                    <div class="alert alert-success">Success! Your report has been saved.</div>
-                    <div class="alert alert-error">Error! A required field is missing.</div>
-                    <div class="card">This is a card component.</div>
+                    <div class="card"><p style="color: #334155;">This is a card component.</p></div>
                 </div>
             </div>
 
@@ -223,63 +230,19 @@
                 </div>
                 <div class="palette">
                     <div class="swatch primary">#059669</div>
-                    <div class="swatch secondary">#6b7280</div>
-                    <div class="swatch success">#16a34a</div>
-                    <div class="swatch error">#dc2626</div>
+                    <div class="swatch secondary" style="background-color: #9ca3af;">#9ca3af</div>
+                    <div class="swatch" style="background-color: #f3f4f6;"></div>
+                    <div class="swatch" style="background-color: #e5e7eb;"></div>
+                    <div class="swatch" style="background-color: #d1d5db;"></div>
                 </div>
                 <div class="components-preview">
                     <button class="btn btn-primary">Primary Action</button>
                     <button class="btn btn-secondary">Secondary</button>
                     <input type="text" class="input" placeholder="Enter data here...">
-                    <div class="alert alert-success">Success! Your report has been saved.</div>
-                    <div class="alert alert-error">Error! A required field is missing.</div>
-                    <div class="card">This is a card component.</div>
+                    <div class="card"><p style="color: #4b5563;">This is a card component.</p></div>
                 </div>
             </div>
 
-            <!-- Theme 3 Card -->
-            <div class="theme-card theme-3">
-                <div class="theme-header">
-                    <h3>3. Modern & Tech-Forward (Dark)</h3>
-                    <p>A sleek dark theme that reduces eye strain and makes data visualizations pop. The bright blue accent creates a high-tech, focused atmosphere.</p>
-                </div>
-                <div class="palette">
-                    <div class="swatch primary">#38bdf8</div>
-                    <div class="swatch secondary">#4b5563</div>
-                    <div class="swatch success">#22c55e</div>
-                    <div class="swatch error">#f43f5e</div>
-                </div>
-                <div class="components-preview">
-                    <button class="btn btn-primary">Primary Action</button>
-                    <button class="btn btn-secondary">Secondary</button>
-                    <input type="text" class="input" placeholder="Enter data here...">
-                    <div class="alert alert-success">Success! Your report has been saved.</div>
-                    <div class="alert alert-error">Error! A required field is missing.</div>
-                    <div class="card">This is a card component.</div>
-                </div>
-            </div>
-
-            <!-- Theme 4 Card -->
-            <div class="theme-card theme-4">
-                <div class="theme-header">
-                    <h3>4. Energetic & Action-Oriented</h3>
-                    <p>This theme uses a vibrant teal to draw attention to key actions. It feels modern and energetic, encouraging users to engage and complete tasks efficiently.</p>
-                </div>
-                <div class="palette">
-                    <div class="swatch primary">#14b8a6</div>
-                    <div class="swatch secondary">#64748b</div>
-                    <div class="swatch success">#16a34a</div>
-                    <div class="swatch error">#dc2626</div>
-                </div>
-                <div class="components-preview">
-                    <button class="btn btn-primary">Primary Action</button>
-                    <button class="btn btn-secondary">Secondary</button>
-                    <input type="text" class="input" placeholder="Enter data here...">
-                    <div class="alert alert-success">Success! Your report has been saved.</div>
-                    <div class="alert alert-error">Error! A required field is missing.</div>
-                    <div class="card">This is a card component.</div>
-                </div>
-            </div>
         </div>
     </div>
 
