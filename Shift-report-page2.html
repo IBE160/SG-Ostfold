@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Shift Report - Select Criteria</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#3abff8",
+              "background-light": "#f5f7f8",
+              "background-dark": "#111827",
+              "content-dark": "#1f2937",
+              "text-primary-dark": "#d1d5db",
+              "text-secondary-dark": "#9ca3af",
+              "border-dark": "#374151"
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display" style="--select-button-svg: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(156,163,175)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e%3c/path%3e%3c/svg%3e');">
+<div class="relative flex h-auto min-h-screen w-full flex-row">
+<!-- SideNavBar -->
+<aside class="flex h-screen w-64 flex-col justify-between border-r border-border-dark bg-content-dark p-4 sticky top-0">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_7l6XvFrIyDRrHcXpuy64h-xNyPTGTPA-lqIjpAS49h6hLFPWfKMMLbAcVXc8ZKqwH-lQiIuSOgUYMkujIV8eelmm_2OcMInFP7Te_eBQeRURZTq8ksuYaynQ2iTr4HCh1PinKpL7TE9euOpAalzPCkTrz7JscnAZ3cHX2t6dqhbZN3JGkjWRyZl-URLS5hHUNU1Jz_JL7mfVK8CX8YwVpns0Gz8MKo0P4Cf9KzY8Is1WHa1fjaLFvogEeD2I85XSuu_RP4rWApM");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-primary-dark text-base font-medium leading-normal">ibe160</h1>
+<p class="text-text-secondary-dark text-sm font-normal leading-normal">Operations</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/20 px-3 py-2 text-primary" href="#">
+<span class="material-symbols-outlined fill text-2xl">description</span>
+<p class="text-sm font-medium leading-normal">Shift Reports</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">playlist_add_check</span>
+<p class="text-sm font-medium leading-normal">Operations Log</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">bar_chart</span>
+<p class="text-sm font-medium leading-normal">Analytics</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">help</span>
+<p class="text-sm font-medium leading-normal">Help</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">logout</span>
+<p class="text-sm font-medium leading-normal">Logout</p>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex flex-1 flex-col items-center justify-center p-8">
+<div class="w-full max-w-lg rounded-lg border border-border-dark bg-content-dark p-8 shadow-lg">
+<div class="flex flex-col gap-8">
+<!-- PageHeading -->
+<div>
+<h2 class="text-text-primary-dark text-2xl font-bold leading-tight">Select Report Criteria</h2>
+<p class="text-text-secondary-dark mt-1">Choose the date and shift to start a new report.</p>
+</div>
+<!-- Form Fields -->
+<div class="flex flex-col gap-6">
+<!-- Date TextField -->
+<label class="flex flex-col w-full">
+<p class="text-text-secondary-dark text-sm font-medium leading-normal pb-2">Date *</p>
+<div class="relative flex w-full flex-1 items-stretch">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-dark bg-background-dark text-text-primary-dark h-12 placeholder:text-text-secondary-dark px-4 text-base font-normal leading-normal focus:border-primary focus:ring-1 focus:ring-primary" type="text" value="2023-10-27"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3 text-text-secondary-dark">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+</div>
+</label>
+<!-- Shift Select Field -->
+<label class="flex flex-col w-full">
+<p class="text-text-secondary-dark text-sm font-medium leading-normal pb-2">Shift *</p>
+<select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-dark bg-background-dark text-text-primary-dark h-12 bg-[image:--select-button-svg] bg-right-4 bg-no-repeat bg-[length:1.25rem] px-4 text-base font-normal leading-normal focus:border-primary focus:ring-1 focus:ring-primary appearance-none">
+<option disabled="" selected="">Select a shift</option>
+<option value="morning">Morning (06:00-14:00)</option>
+<option value="evening">Evening (14:00-22:00)</option>
+<option value="night">Night (22:00-06:00)</option>
+</select>
+</label>
+</div>
+<!-- Continue Button -->
+<div class="flex">
+<a href="Shift-report-Page1.html" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 mr-4 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
+<span class="truncate">New report</span>
+</a>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
+<span class="truncate">Continue</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
