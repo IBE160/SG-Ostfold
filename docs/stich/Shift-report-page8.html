@@ -228,11 +228,21 @@
 </div>
 <!-- Action Buttons -->
 <div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-[#305869]">
-<button class="px-6 py-2.5 rounded-lg text-white font-medium bg-transparent border border-[#305869] hover:bg-[#223d49] transition-colors">Back</button>
+<button id="back-button" class="px-6 py-2.5 rounded-lg text-white font-medium bg-transparent border border-[#305869] hover:bg-[#223d49] transition-colors">Back</button>
 <button class="px-6 py-2.5 rounded-lg text-slate-900 font-medium bg-primary hover:bg-primary/90 transition-colors">Submit Final Report</button>
 </div>
 </div>
 </div>
 </main>
 </div>
+<script>
+    document.getElementById('back-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'Shift-report-page7.html';
+        window.parent.postMessage({
+            type: 'setActiveLink',
+            href: './stich/Shift-report-page7.html'
+        }, '*');
+    });
+</script>
 </body></html>
