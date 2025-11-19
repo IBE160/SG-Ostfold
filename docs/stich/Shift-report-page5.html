@@ -133,11 +133,30 @@
 </div>
 <!-- Action Buttons -->
 <div class="mt-8 flex justify-end gap-4">
-<button class="flex items-center justify-center h-12 px-6 rounded-lg text-white font-semibold bg-white/5 hover:bg-white/10 transition-colors">Back</button>
-<button class="flex items-center justify-center h-12 px-6 rounded-lg text-[#101d23] font-semibold bg-primary hover:bg-primary/90 transition-colors">Continue</button>
+<button id="back-button" class="flex items-center justify-center h-12 px-6 rounded-lg text-white font-semibold bg-white/5 hover:bg-white/10 transition-colors">Back</button>
+<button id="continue-button" class="flex items-center justify-center h-12 px-6 rounded-lg text-[#101d23] font-semibold bg-primary hover:bg-primary/90 transition-colors">Continue</button>
 </div>
 </div>
 </div>
 </main>
 </div>
+<script>
+    document.getElementById('continue-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'Shift-report-page6.html';
+        window.parent.postMessage({
+            type: 'setActiveLink',
+            href: './stich/Shift-report-page6.html'
+        }, '*');
+    });
+
+    document.getElementById('back-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'Shift-report-page4.html';
+        window.parent.postMessage({
+            type: 'setActiveLink',
+            href: './stich/Shift-report-page4.html'
+        }, '*');
+    });
+</script>
 </body></html>

@@ -156,10 +156,10 @@
 </div>
 <!-- Action Buttons -->
 <div class="flex justify-end gap-4 mt-8">
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent border border-[#305869] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#223d49] transition-colors" type="button">
+<button id="back-button" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent border border-[#305869] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#223d49] transition-colors" type="button">
 <span class="truncate">Back</span>
 </button>
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" type="submit">
+<button id="continue-button" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" type="submit">
 <span class="truncate">Continue</span>
 </button>
 </div>
@@ -169,4 +169,23 @@
 </main>
 </div>
 </div>
+<script>
+    document.getElementById('continue-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'Shift-report-page5.html';
+        window.parent.postMessage({
+            type: 'setActiveLink',
+            href: './stich/Shift-report-page5.html'
+        }, '*');
+    });
+
+    document.getElementById('back-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'Shift-report-Page3.html';
+        window.parent.postMessage({
+            type: 'setActiveLink',
+            href: './stich/Shift-report-Page3.html'
+        }, '*');
+    });
+</script>
 </body></html>

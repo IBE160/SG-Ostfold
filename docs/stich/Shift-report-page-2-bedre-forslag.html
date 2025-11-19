@@ -246,7 +246,7 @@
 
 </div>
 <div class="mt-8 pt-6 border-t border-border-light dark:border-border-dark">
-<button class="w-full bg-primary text-white font-medium py-3 px-4 rounded-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-content-light dark:focus:ring-offset-content-dark transition-colors text-base" type="submit">
+<button id="continue-button" class="w-full bg-primary text-white font-medium py-3 px-4 rounded-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-content-light dark:focus:ring-offset-content-dark transition-colors text-base" type="submit">
                                 Continue
                             </button>
 </div>
@@ -255,4 +255,18 @@
 </div>
 </main>
 </div>
+<script>
+    document.getElementById('continue-button').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default button action
+        
+        // Navigate the iframe to the next page
+        window.location.href = 'Shift-report-Page3.html';
+
+        // Notify the parent window to update the active menu item
+        window.parent.postMessage({
+            type: 'setActiveLink',
+            href: './stich/Shift-report-Page3.html'
+        }, '*');
+    });
+</script>
 </body></html>
