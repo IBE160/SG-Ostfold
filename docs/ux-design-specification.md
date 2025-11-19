@@ -131,7 +131,7 @@ A consistent 8-pixel grid system will be used for all spacing, padding, and marg
 
 - Design Direction Showcase Mockups from stich: [shift-report-page1.html](./shif-report-page1.html)
 - Design Direction Showcase Mockups from stich: [shift-report-page2.html](./shif-report-page2.html)
-- Design Direction Showcase Mockups from stich: [shift-report-page2-bedre-forslag.html](./shif-report-page2-bedre-forslag.html)
+- Design Direction Showcase Mockups from stich: [shift-report-page0.html](./shif-report-page0.html)
 - Design Direction Showcase Mockups from stich: [shift-report-page3.html](./shif-report-page3.html)
 - Design Direction Showcase Mockups from stich: [shift-report-page4.html](./shif-report-page4.html)
 - Design Direction Showcase Mockups from stich: [shift-report-page5.html](./shif-report-page5.html)

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Draft Shift Reports - ibe160</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#3abff8",
+            "background-light": "#f5f7f8",
+            "background-dark": "#101d23",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full">
+<aside class="flex-shrink-0 w-64 bg-[#101d23] border-r border-r-[#305869]/50">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3 p-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDcgvBSuaU1BtIyqcwUDqal8y6Yfx8JGSJ5LwaIyPHXEJkTa9DJ7_W2kwcbLL4YVMeIyRNVhyQ3QpWUuV3ISmnFGbjY9nZASP-AY69C5Y4agK-BvXnFTPvzg3GndqW3b1YmKREhvZ7eEdG2kCi662Dfn8nruooyj87gtW20t72FD5qk_n18aJ_JFC87cXFxcVp8kT9Z4EXnciGjjqTHYerRhC66Rg-n03_IZwf-zBnNud6uHPkuwPG8kGjfRITK9Wh5rgL7VesVfcs");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-medium leading-normal">ibe160</h1>
+<p class="text-[#8fb9cc] text-sm font-normal leading-normal">Operations</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-white/70">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#223d49] text-white" href="#">
+<span class="material-symbols-outlined text-white">description</span>
+<p class="text-sm font-medium leading-normal">Shift Reports</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-white/70">group</span>
+<p class="text-sm font-medium leading-normal">Team</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-white/70">bar_chart</span>
+<p class="text-sm font-medium leading-normal">Analytics</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-white/70">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-white/70">help</span>
+<p class="text-sm font-medium leading-normal">Help</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-white/70">logout</span>
+<p class="text-sm font-medium leading-normal">Logout</p>
+</a>
+</div>
+</div>
+</aside>
+<main class="flex-1 p-6 lg:p-8 overflow-y-auto">
+<div class="max-w-7xl mx-auto space-y-8">
+<div class="flex flex-col rounded-lg bg-[#182c34] shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+<div class="flex items-center justify-between p-4 sm:p-6 border-b border-b-[#305869]/50">
+<h2 class="text-white text-xl font-bold leading-tight">Draft Shift Reports</h2>
+<button class="flex items-center justify-center gap-2 min-w-[84px] cursor-pointer overflow-hidden rounded-lg h-10 px-4 bg-primary text-background-dark text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-base">add</span>
+<span class="truncate">New Report</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="border-b border-b-[#305869]/50">
+<tr>
+<th class="px-6 py-4 text-left text-white/70 w-[20%] text-xs font-medium uppercase tracking-wider">Date</th>
+<th class="px-6 py-4 text-left text-white/70 w-[15%] text-xs font-medium uppercase tracking-wider">Shift</th>
+<th class="px-6 py-4 text-left text-white/70 w-[25%] text-xs font-medium uppercase tracking-wider">Last Edited</th>
+<th class="px-6 py-4 text-left text-white/70 w-[15%] text-xs font-medium uppercase tracking-wider">Progress</th>
+<th class="px-6 py-4 text-left text-white/70 w-[25%] text-xs font-medium uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-b-[#305869]/50 hover:bg-[#223d49]/40 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">2023-10-26</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Morning</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#a0a0a0] text-sm font-normal">2 hours ago</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#3b82f6]/20 text-[#60a5fa]">
+                      In Progress
+                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-4">
+<a class="text-primary hover:text-primary/80 font-semibold transition-colors" href="#">Continue Editing</a>
+<button class="text-red-500 hover:text-red-400 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-b-[#305869]/50 hover:bg-[#223d49]/40 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">2023-10-25</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Night</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#a0a0a0] text-sm font-normal">1 day ago</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#f59e0b]/20 text-[#fbbf24]">
+                      Partially Filled
+                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-4">
+<a class="text-primary hover:text-primary/80 font-semibold transition-colors" href="#">Continue Editing</a>
+<button class="text-red-500 hover:text-red-400 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-[#223d49]/40 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">2023-10-25</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Evening</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#a0a0a0] text-sm font-normal">1 day ago</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#3b82f6]/20 text-[#60a5fa]">
+                      In Progress
+                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-4">
+<a class="text-primary hover:text-primary/80 font-semibold transition-colors" href="#">Continue Editing</a>
+<button class="text-red-500 hover:text-red-400 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex flex-col rounded-lg bg-[#182c34] shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+<div class="flex items-center justify-between p-4 sm:p-6 border-b border-b-[#305869]/50">
+<h2 class="text-white text-xl font-bold leading-tight">Latest Submitted Reports</h2>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="border-b border-b-[#305869]/50">
+<tr>
+<th class="px-6 py-4 text-left text-white/70 w-[25%] text-xs font-medium uppercase tracking-wider">Date</th>
+<th class="px-6 py-4 text-left text-white/70 w-[25%] text-xs font-medium uppercase tracking-wider">Shift</th>
+<th class="px-6 py-4 text-left text-white/70 w-[30%] text-xs font-medium uppercase tracking-wider">Submitted By</th>
+<th class="px-6 py-4 text-left text-white/70 w-[20%] text-xs font-medium uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-b-[#305869]/50 hover:bg-[#223d49]/40 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">2023-10-26</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Night</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Alice Johnson</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-primary/80 font-semibold transition-colors" href="#">View</a>
+</td>
+</tr>
+<tr class="border-b border-b-[#305869]/50 hover:bg-[#223d49]/40 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">2023-10-26</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Evening</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Bob Williams</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-primary/80 font-semibold transition-colors" href="#">View</a>
+</td>
+</tr>
+<tr class="border-b border-b-[#305869]/50 hover:bg-[#223d49]/40 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">2023-10-26</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Morning</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Charlie Brown</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-primary/80 font-semibold transition-colors" href="#">View</a>
+</td>
+</tr>
+<tr class="border-b border-b-[#305869]/50 hover:bg-[#223d49]/40 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">2023-10-25</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Night</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Diana Miller</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-primary/80 font-semibold transition-colors" href="#">View</a>
+</td>
+</tr>
+<tr class="hover:bg-[#223d49]/40 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">2023-10-25</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Evening</td>
+<td class="px-6 py-4 whitespace-nowrap text-[#e0e0e0] text-sm font-normal">Eve Davis</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-primary/80 font-semibold transition-colors" href="#">View</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
