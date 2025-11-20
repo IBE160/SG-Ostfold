@@ -126,12 +126,21 @@
 </div>
 <!-- Continue Button -->
 <div class="flex">
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
+<a id="continue-btn" href="docs/stich/Shift-report-page2.html" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
 <span class="truncate">Continue</span>
-</button>
+</a>
 </div>
 </div>
 </div>
 </main>
 </div>
+<script>
+document.getElementById('continue-btn').addEventListener('click', function(e) {
+    // Check if we are inside an iframe
+    if (window.top !== window.self) {
+        e.preventDefault();
+        window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page2.html' }, '*');
+    }
+});
+</script>
 </body></html>

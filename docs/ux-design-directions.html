@@ -123,12 +123,13 @@
     </aside>
 
     <main class="iframe-container">
-        <iframe name="mockup-frame" src="./stich/Shift-report-Page1.html"></iframe>
+        <iframe name="mockup-frame" src="./stich/Shift-report-page0.html"></iframe>
     </main>
 
     <script>
         const menu = document.getElementById('sitemap-menu');
         const links = menu.getElementsByTagName('a');
+        const iframe = document.querySelector('iframe[name="mockup-frame"]');
 
         // Function to set the active link
         function setActiveLink(href) {
@@ -140,9 +141,9 @@
             }
         }
 
-        // Set the first link as active by default
-        if (links.length > 0) {
-            links[0].classList.add('active');
+        // Set the active link based on the iframe's src when the page loads
+        if (iframe) {
+            setActiveLink(iframe.getAttribute('src'));
         }
 
         // Handle clicks on the main menu
@@ -153,9 +154,12 @@
             }
         });
 
-        // Listen for messages from the iframe to update the active link
+        // Listen for messages from the iframe to update the active link and iframe content
         window.addEventListener('message', function(event) {
             if (event.data && event.data.type === 'setActiveLink' && event.data.href) {
+                if(iframe) {
+                    iframe.src = event.data.href;
+                }
                 setActiveLink(event.data.href);
             }
         });

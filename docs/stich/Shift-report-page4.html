@@ -83,12 +83,15 @@
 <button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em]">
 <span class="truncate">New Report</span>
 </button>
-<div class="flex flex-col gap-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-<span class="material-symbols-outlined" style="font-size: 24px;">help</span>
-<p class="text-sm font-medium leading-normal">Help</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+        <div class="flex flex-col gap-1">
+            <a id="new-report-btn" class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="Shift-report-page0.html">
+                <span class="material-symbols-outlined" style="font-size: 24px;">add_circle</span>
+                <p class="text-sm font-medium leading-normal">New Report</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                <span class="material-symbols-outlined" style="font-size: 24px;">help</span>
+                <p class="text-sm font-medium leading-normal">Help</p>
+            </a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
 <span class="material-symbols-outlined" style="font-size: 24px;">logout</span>
 <p class="text-sm font-medium leading-normal">Logout</p>
 </a>
@@ -171,21 +174,30 @@
 </div>
 <script>
     document.getElementById('continue-button').addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = 'Shift-report-page5.html';
-        window.parent.postMessage({
-            type: 'setActiveLink',
-            href: './stich/Shift-report-page5.html'
-        }, '*');
+        if (window.top !== window.self) {
+            e.preventDefault();
+            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page5.html' }, '*');
+        } else {
+            window.location.href = 'Shift-report-page5.html';
+        }
     });
 
     document.getElementById('back-button').addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = 'Shift-report-Page3.html';
-        window.parent.postMessage({
-            type: 'setActiveLink',
-            href: './stich/Shift-report-Page3.html'
-        }, '*');
+        if (window.top !== window.self) {
+            e.preventDefault();
+            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-Page3.html' }, '*');
+        } else {
+            window.location.href = 'Shift-report-Page3.html';
+        }
+    });
+
+    document.getElementById('new-report-btn').addEventListener('click', function(e) {
+        if (window.top !== window.self) {
+            e.preventDefault();
+            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page0.html' }, '*');
+        } else {
+            window.location.href = 'Shift-report-page0.html';
+        }
     });
 </script>
 </body></html>

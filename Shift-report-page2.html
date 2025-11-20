@@ -68,7 +68,7 @@
             </nav>
         </div>
         <div class="flex flex-col gap-1">
-            <a id="new-report-btn" class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="Shift-report-page0.html">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="../Shift-report-Page1.html">
                 <span class="material-symbols-outlined" style="font-size: 24px;">add_circle</span>
                 <p class="text-sm font-medium leading-normal">New Report</p>
             </a>
@@ -263,25 +263,16 @@
 </div>
 <script>
     document.getElementById('continue-button').addEventListener('click', function(e) {
-        // Check if we are inside an iframe
-        if (window.top !== window.self) {
-            e.preventDefault();
-            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-Page3.html' }, '*');
-        } else {
-            // Standalone navigation
-            window.location.href = 'Shift-report-Page3.html';
-        }
-    });
+        e.preventDefault(); // Prevent default button action
+        
+        // Navigate the iframe to the next page
+        window.location.href = 'Shift-report-Page3.html';
 
-    document.getElementById('new-report-btn').addEventListener('click', function(e) {
-        // Check if we are inside an iframe
-        if (window.top !== window.self) {
-            e.preventDefault();
-            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page0.html' }, '*');
-        } else {
-            // Standalone navigation
-            window.location.href = 'Shift-report-page0.html';
-        }
+        // Notify the parent window to update the active menu item
+        window.parent.postMessage({
+            type: 'setActiveLink',
+            href: './stich/Shift-report-Page3.html'
+        }, '*');
     });
 </script>
 </body>

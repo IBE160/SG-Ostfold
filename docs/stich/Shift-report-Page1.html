@@ -75,9 +75,9 @@
             </nav>
         </div>
         <div class="flex flex-col gap-4">
-            <button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em]">
+            <a id="new-report-btn" href="Shift-report-page0.html" class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em]">
                 <span class="truncate">New Report</span>
-            </button>
+            </a>
             <div class="flex flex-col gap-1">
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
                     <span class="material-symbols-outlined" style="font-size: 24px;">help</span>
@@ -124,27 +124,30 @@
                 </div>
                 <!-- Continue Button -->
                 <div class="flex">
-                    <button id="continue-button" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-[#101d23] text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
+                    <a id="continue-btn" href="Shift-report-page2.html" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-[#101d23] text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
                         <span class="truncate">Continue</span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
     </main>
 </div>
 <script>
-    document.getElementById('continue-button').addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent default button action
-        
-        // Navigate the iframe to the next page
-        window.location.href = 'Shift-report-page-2-bedre-forslag.html';
+document.getElementById('continue-btn').addEventListener('click', function(e) {
+    // Check if we are inside an iframe
+    if (window.top !== window.self) {
+        e.preventDefault();
+        window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page2.html' }, '*');
+    }
+});
 
-        // Notify the parent window to update the active menu item
-        window.parent.postMessage({
-            type: 'setActiveLink',
-            href: './stich/Shift-report-page-2-bedre-forslag.html'
-        }, '*');
-    });
+document.getElementById('new-report-btn').addEventListener('click', function(e) {
+    // Check if we are inside an iframe
+    if (window.top !== window.self) {
+        e.preventDefault();
+        window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page0.html' }, '*');
+    }
+});
 </script>
 </body>
 </html>

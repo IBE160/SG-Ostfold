@@ -228,12 +228,4 @@
 </div>
 </main>
 </div>
-<script>
-document.getElementById('new-report-main-btn').addEventListener('click', function(e) {
-    if (window.top !== window.self) {
-        e.preventDefault();
-        window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-Page1.html' }, '*');
-    }
-});
-</script>
 </body></html>
