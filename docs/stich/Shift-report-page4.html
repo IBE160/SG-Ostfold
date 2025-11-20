@@ -80,11 +80,8 @@
 </nav>
 </div>
 <div class="flex flex-col gap-4">
-<button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em]">
-<span class="truncate">New Report</span>
-</button>
         <div class="flex flex-col gap-1">
-            <a id="new-report-btn" class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="Shift-report-page0.html">
+            <a href="Shift-report-page0.html" target="mockup-frame" class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors">
                 <span class="material-symbols-outlined" style="font-size: 24px;">add_circle</span>
                 <p class="text-sm font-medium leading-normal">New Report</p>
             </a>
@@ -159,12 +156,12 @@
 </div>
 <!-- Action Buttons -->
 <div class="flex justify-end gap-4 mt-8">
-<button id="back-button" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent border border-[#305869] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#223d49] transition-colors" type="button">
+<a href="Shift-report-Page3.html" target="mockup-frame" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent border border-[#305869] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#223d49] transition-colors">
 <span class="truncate">Back</span>
-</button>
-<button id="continue-button" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" type="submit">
+</a>
+<a href="Shift-report-page5.html" target="mockup-frame" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
 <span class="truncate">Continue</span>
-</button>
+</a>
 </div>
 </form>
 </div>
@@ -172,32 +169,4 @@
 </main>
 </div>
 </div>
-<script>
-    document.getElementById('continue-button').addEventListener('click', function(e) {
-        if (window.top !== window.self) {
-            e.preventDefault();
-            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page5.html' }, '*');
-        } else {
-            window.location.href = 'Shift-report-page5.html';
-        }
-    });
-
-    document.getElementById('back-button').addEventListener('click', function(e) {
-        if (window.top !== window.self) {
-            e.preventDefault();
-            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-Page3.html' }, '*');
-        } else {
-            window.location.href = 'Shift-report-Page3.html';
-        }
-    });
-
-    document.getElementById('new-report-btn').addEventListener('click', function(e) {
-        if (window.top !== window.self) {
-            e.preventDefault();
-            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page0.html' }, '*');
-        } else {
-            window.location.href = 'Shift-report-page0.html';
-        }
-    });
-</script>
 </body></html>

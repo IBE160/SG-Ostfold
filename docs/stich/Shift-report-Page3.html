@@ -68,7 +68,7 @@
             </nav>
         </div>
         <div class="flex flex-col gap-1">
-            <a id="new-report-btn" class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="Shift-report-page0.html">
+            <a href="Shift-report-page0.html" target="mockup-frame" class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors">
                 <span class="material-symbols-outlined" style="font-size: 24px;">add_circle</span>
                 <p class="text-sm font-medium leading-normal">New Report</p>
             </a>
@@ -142,8 +142,8 @@
                         </div>
                         <!-- Action Buttons -->
                         <div class="flex justify-end items-center gap-4 pt-4 border-t border-[#305869]">
-                            <button id="back-button" class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-white bg-[#305869] hover:bg-[#3b6f87] transition-colors" type="button">Back</button>
-                            <button id="continue-button" class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-[#101d23] bg-primary hover:bg-primary/90 transition-colors" type="submit">Continue</button>
+                            <a href="Shift-report-page2.html" target="mockup-frame" class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-white bg-[#305869] hover:bg-[#3b6f87] transition-colors">Back</a>
+                            <a href="Shift-report-page4.html" target="mockup-frame" class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-[#101d23] bg-primary hover:bg-primary/90 transition-colors">Continue</a>
                         </div>
                     </div>
                 </form>
@@ -151,33 +151,5 @@
         </div>
     </main>
 </div>
-<script>
-    document.getElementById('continue-button').addEventListener('click', function(e) {
-        if (window.top !== window.self) {
-            e.preventDefault();
-            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page4.html' }, '*');
-        } else {
-            window.location.href = 'Shift-report-page4.html';
-        }
-    });
-
-    document.getElementById('back-button').addEventListener('click', function(e) {
-        if (window.top !== window.self) {
-            e.preventDefault();
-            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page2.html' }, '*');
-        } else {
-            window.location.href = 'Shift-report-page2.html';
-        }
-    });
-
-    document.getElementById('new-report-btn').addEventListener('click', function(e) {
-        if (window.top !== window.self) {
-            e.preventDefault();
-            window.parent.postMessage({ type: 'setActiveLink', href: './stich/Shift-report-page0.html' }, '*');
-        } else {
-            window.location.href = 'Shift-report-page0.html';
-        }
-    });
-</script>
 </body>
 </html>
