@@ -71,11 +71,14 @@ To consistently deliver on the vision of "getting information within minutes" an
 
 **Color Palette:**
 *   **Primary Accent:** `#3abff8` (Vibrant Blue - for key actions, interactive elements, and highlighting important data)
-*   **App Background (Body):** `#101d23` (The main dark background for the application body)
-*   **Content Background:** `#182c34` (Slightly lighter background for cards, modals, and content containers)
-*   **Primary Text:** `#ffffff` (For main headings and prominent text)
-*   **Secondary Text:** `#8fb9cc` (For labels, helper text, and muted information)
-*   **Border / Interactive Border:** `#305869` (For dividers and component borders)
+*   **App Background:** `#101d23` (The main dark background for the application)
+*   **Sidebar Background:** `#0d171c` (The darkest shade, used for the primary navigation area)
+*   **Content/Card Background:** `#1f2937` or `#182c34` (Slightly lighter backgrounds for content areas and cards)
+*   **Secondary/Hover:** `#223d49` (Used for navigation link hover states and other secondary elements)
+*   **Text Primary:** `#ffffff` or `#d1d5db` (For main headings and body text)
+*   **Text Secondary:** `#8fb9cc` or `#9ca3af` (For labels, helper text, and muted information)
+*   **Border:** `#374151` (For general, non-interactive component borders)
+*   **Interactive Border:** `#305869` (For dividers and borders on interactive elements)
 *   **Success:** `#22c55e` (Green - for positive feedback, confirmations)
 *   **Error:** `#f43f5e` (Red - for critical alerts, validation errors)
 *   **Warning:** `#fbbf24` (Amber - for cautionary messages)
@@ -126,15 +129,21 @@ A consistent 8-pixel grid system will be used for all spacing, padding, and marg
 
 **Interactive Mockups:**
 
-- Design Direction Showcase Mockups from stich: [shift-report-page1.html](./shif-report-page1.html)
-- Design Direction Showcase Mockups from stich: [shift-report-page2.html](./shif-report-page2.html)
-- Design Direction Showcase Mockups from stich: [shift-report-page0.html](./shif-report-page0.html)
-- Design Direction Showcase Mockups from stich: [shift-report-page3.html](./shif-report-page3.html)
-- Design Direction Showcase Mockups from stich: [shift-report-page4.html](./shif-report-page4.html)
-- Design Direction Showcase Mockups from stich: [shift-report-page5.html](./shif-report-page5.html)
-- Design Direction Showcase Mockups from stich: [shift-report-page6.html](./shif-report-page6.html)
-- Design Direction Showcase Mockups from stich: [shift-report-page7.html](./shif-report-page7.html)
-- Design Direction Showcase Mockups from stich: [shift-report-page8.html](./shif-report-page8.html)
+- 
+- Design Direction Showcase Mockups from stich: [Mockup-Common-Layout.html](./Mockup-Common Layout.html)
+- Design Direction Showcase Mockups from stich: [Mockup-Dashboard.html](./Mockup-Dashboard.html)
+- Design Direction Showcase Mockups from stich: [Mockup-Historical.html](./Mockup-Hostorical.html)
+- Design Direction Showcase Mockups from stich: [Mockup-SR1.html](./Mockup-SR1.html)
+- Design Direction Showcase Mockups from stich: [Mockup-SR2.html](./Mockup-SR2.html)
+- Design Direction Showcase Mockups from stich: [Mockup-SR3.html](./Mockup-SR3.html)
+- Design Direction Showcase Mockups from stich: [Mockup-SR4.html](./Mockup-SR4.html)
+- Design Direction Showcase Mockups from stich: [Mockup-SR5.html](./Mockup-SR5.html)
+- Design Direction Showcase Mockups from stich: [Mockup-SR6.html](./Mockup-SR6.html)
+- Design Direction Showcase Mockups from stich: [Mockup-SR7.html](./Mockup-SR7.html)
+- Design Direction Showcase Mockups from stich: [Mockup-SR8.html](./Mockup-SR8.html)
+- Design Direction Showcase Mockups from stich: [Mockup-SR9.html](./Mockup-SR9.html)
+
+
 
 ---
 
