@@ -1,153 +1,57 @@
-<!DOCTYPE html>
-<html class="dark" lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>ibe160 - Area Efficiency Summary</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#3abff8",
-                        "background-light": "#f5f7f8",
-                        "background-dark": "#101d23",
-                    },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .material-symbols-outlined.fill {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
-</head>
-<body class="bg-background-light dark:bg-background-dark font-display text-white">
-    <div class="relative flex h-auto min-h-screen w-full flex-row">
-        <!-- SideNavBar (from ux-design-directions.html / Shift-report-Page1.html) -->
-        <aside class="flex w-64 flex-col bg-[#101d23] p-4 border-r border-white/10 h-screen sticky top-0 justify-between">
-            <div class="flex flex-col gap-4">
-                <div class="flex items-center gap-3">
-                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyKrKzNZ2dzHCiPU5hpsTon_I7CMbryH7wdM2h_7p4NsM8qCzbDF3wlU3BaGRqQyDI2Cbpa5nfBSPlSrB8UZ88NDMRD6ybP-gbuFOhd-TwIw7rCPcepyTnuZKgftfDU6vJJpiYUlvIuhTxvyHJulTigwpAVJSB7KpWpJWlZvadOOI3AU-h8H0wjOjqH_jplu7K1nWU27kgGacEnFNSuQbA8ZBnA7FPQRy9a7RvT3JfRdasTivgc8LW5KmwZyUEpPKdyHnij0TXYVQ");'></div>
-                    <div class="flex flex-col">
-                        <h1 class="text-white text-base font-medium leading-normal">ibe160</h1>
-                        <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Shift Management</p>
-                    </div>
-                </div>
-                <nav class="flex flex-col gap-2">
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                        <span class="material-symbols-outlined" style="font-size: 24px;">dashboard</span>
-                        <p class="text-sm font-medium leading-normal">Dashboard</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#223d49] text-white" href="#">
-                        <span class="material-symbols-outlined fill" style="font-size: 24px;">assessment</span>
-                        <p class="text-sm font-medium leading-normal">Shift Reports</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                        <span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
-                        <p class="text-sm font-medium leading-normal">Operations</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                        <span class="material-symbols-outlined" style="font-size: 24px;">bar_chart</span>
-                        <p class="text-sm font-medium leading-normal">Analytics</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                        <span class="material-symbols-outlined" style="font-size: 24px;">tune</span>
-                        <p class="text-sm font-medium leading-normal">Settings</p>
-                    </a>
-                </nav>
+<main class="flex-1 p-8">
+        <div class="max-w-4xl mx-auto flex flex-col h-full">
+            <!-- Header -->
+            <div class="flex flex-wrap justify-between items-baseline gap-3 mb-8">
+                <h1 class="text-white text-3xl font-black leading-tight tracking-[-0.03em]">Area Efficiency Summary</h1>
             </div>
-            <div class="flex flex-col gap-4">
-                <a href="Shift-report-page0.html" target="mockup-frame" class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em]">
-                    <span class="truncate">New Report</span>
-                </a>
-                <div class="flex flex-col gap-1">
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                        <span class="material-symbols-outlined" style="font-size: 24px;">help</span>
-                        <p class="text-sm font-medium leading-normal">Help</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                        <span class="material-symbols-outlined" style="font-size: 24px;">logout</span>
-                        <p class="text-sm font-medium leading-normal">Logout</p>
-                    </a>
-                </div>
-            </div>
-        </aside>
-        <!-- Main Content -->
-        <main class="flex-1 p-8">
-            <div class="max-w-4xl mx-auto flex flex-col h-full">
-                <!-- Header -->
-                <div class="flex flex-wrap justify-between items-baseline gap-3 mb-8">
-                    <h1 class="text-white text-3xl font-black leading-tight tracking-[-0.03em]">Area Efficiency Summary</h1>
-                </div>
-                <!-- Card -->
-                <div class="bg-[#182c34] rounded-xl flex-grow flex flex-col border border-[#305869]">
-                    <div class="p-6 sm:p-8 flex-grow">
-                        <!-- Data List -->
-                        <div class="space-y-2">
-                            <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
-                                <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Pallelager</p>
-                                <p class="text-white text-sm font-medium leading-normal text-right">15.2 units/hour</p>
-                            </div>
-                            <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
-                                <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Transitt</p>
-                                <p class="text-white text-sm font-medium leading-normal text-right">12.8 units/hour</p>
-                            </div>
-                            <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
-                                <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Heis</p>
-                                <p class="text-white text-sm font-medium leading-normal text-right">18.1 units/hour</p>
-                            </div>
-                            <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
-                                <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Høytlager</p>
-                                <p class="text-white text-sm font-medium leading-normal text-right">20.5 units/hour</p>
-                            </div>
-                            <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
-                                <p class="text-[#8fb9cc] text-sm font-normal leading-normal">OSR</p>
-                                <p class="text-primary text-sm font-bold leading-normal text-right">25.0 units/hour</p>
-                            </div>
-                            <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
-                                <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Ute</p>
-                                <p class="text-white text-sm font-medium leading-normal text-right">9.7 units/hour</p>
-                            </div>
-                            <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
-                                <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Rørhall</p>
-                                <p class="text-white text-sm font-medium leading-normal text-right">11.3 units/hour</p>
-                            </div>
-                            <div class="flex justify-between gap-x-6 py-4 mt-4">
-                                <p class="text-white text-base font-bold leading-normal">Total/Overall Efficiency</p>
-                                <p class="text-primary text-base font-bold leading-normal text-right">16.1 units/hour</p>
-                            </div>
+            <!-- Card -->
+            <div class="bg-[#182c34] rounded-xl flex-grow flex flex-col border border-[#305869]">
+                <div class="p-6 sm:p-8 flex-grow">
+                    <!-- Data List -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
+                            <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Pallelager</p>
+                            <p class="text-white text-sm font-medium leading-normal text-right">15.2 units/hour</p>
+                        </div>
+                        <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
+                            <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Transitt</p>
+                            <p class="text-white text-sm font-medium leading-normal text-right">12.8 units/hour</p>
+                        </div>
+                        <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
+                            <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Heis</p>
+                            <p class="text-white text-sm font-medium leading-normal text-right">18.1 units/hour</p>
+                        </div>
+                        <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
+                            <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Høytlager</p>
+                            <p class="text-white text-sm font-medium leading-normal text-right">20.5 units/hour</p>
+                        </div>
+                        <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
+                            <p class="text-[#8fb9cc] text-sm font-normal leading-normal">OSR</p>
+                            <p class="text-primary text-sm font-bold leading-normal text-right">25.0 units/hour</p>
+                        </div>
+                        <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
+                            <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Ute</p>
+                            <p class="text-white text-sm font-medium leading-normal text-right">9.7 units/hour</p>
+                        </div>
+                        <div class="flex justify-between gap-x-6 py-3 border-b border-[#305869]">
+                            <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Rørhall</p>
+                            <p class="text-white text-sm font-medium leading-normal text-right">11.3 units/hour</p>
+                        </div>
+                        <div class="flex justify-between gap-x-6 py-4 mt-4">
+                            <p class="text-white text-base font-bold leading-normal">Total/Overall Efficiency</p>
+                            <p class="text-primary text-base font-bold leading-normal text-right">16.1 units/hour</p>
                         </div>
                     </div>
-                    <!-- Button Group -->
-                    <div class="flex flex-1 gap-3 flex-wrap p-6 sm:p-8 justify-end items-end border-t border-[#305869] mt-auto">
-                        <a href="Shift-report-page5.html" target="mockup-frame" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[#305869] hover:bg-[#3b6f87] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-                            <span class="truncate">Back</span>
-                        </a>
-                        <a href="Shift-report-page7.html" target="mockup-frame" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                            <span class="truncate">Continue</span>
-                        </a>
-                    </div>
+                </div>
+                <!-- Button Group -->
+                <div class="flex flex-1 gap-3 flex-wrap p-6 sm:p-8 justify-end items-end border-t border-[#305869] mt-auto">
+                    <a href="Shift-report-page5.html" target="mockup-frame" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[#305869] hover:bg-[#3b6f87] text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                        <span class="truncate">Back</span>
+                    </a>
+                    <a href="Shift-report-page7.html" target="mockup-frame" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+                        <span class="truncate">Continue</span>
+                    </a>
                 </div>
             </div>
-        </main>
-    </div>
-</body>
-</html>
+        </div>
+    </main>
