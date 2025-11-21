@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UX Design Directions - Mockup Viewer</title>
+    <title>ibe160 - UX Design Directions</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -15,155 +14,73 @@
                     colors: {
                         "primary": "#3abff8",
                         "background-dark": "#101d23",
-                        "content-dark": "#182c34",
-                        "sidebar-dark": "#0d171c",
+                        "content-bg": "#182c34",
+                        "border": "#305869",
                         "text-primary": "#ffffff",
                         "text-secondary": "#8fb9cc",
-                        "border-dark": "#305869"
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
                     }
-                },
-            },
+                }
+            }
         }
     </script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            display: flex;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
         }
-        .sidebar {
-            width: 280px;
-            flex-shrink: 0;
-            background-color: #0d171c;
-            border-right: 1px solid #305869;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            overflow-y: auto;
-        }
-        .sidebar-header h1 {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #ffffff;
-        }
-        .sidebar-header p {
-            font-size: 0.875rem;
-            color: #8fb9cc;
-        }
-        .menu-section h2 {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #8fb9cc;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.75rem;
-        }
-        .menu-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-        .menu-list a {
-            display: block;
-            padding: 0.6rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #ffffff;
-            text-decoration: none;
-            transition: background-color 0.2s ease;
-        }
-        .menu-list a:hover {
+        .menu-link.active {
             background-color: #223d49;
-        }
-        .menu-list a.active {
-            background-color: #3abff8;
-            color: #101d23;
-        }
-        .iframe-container {
-            flex-grow: 1;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+            font-weight: 700;
         }
     </style>
 </head>
-<body class="bg-background-dark">
+<body class="bg-background-dark text-text-primary">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-72 bg-content-bg p-4 border-r border-border flex flex-col">
+            <h1 class="text-2xl font-bold mb-6 pb-4 border-b border-border">UX Design Directions</h1>
+            <nav id="mockup-menu" class="flex flex-col gap-2 overflow-y-auto">
+                <a href="./stich/Mockup-Common-Layout.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Common Layout</a>
+                <a href="./stich/Mockup-Dashboard.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Dashboard</a>
+                <a href="./stich/Mockup-Historical.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Historical</a>
+                <a href="./stich/Mockup-SR1.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Shift Report 1</a>
+                <a href="./stich/Mockup-SR2.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Shift Report 2</a>
+                <a href="./stich/Mockup-SR3.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Shift Report 3</a>
+                <a href="./stich/Mockup-SR4.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Shift Report 4</a>
+                <a href="./stich/Mockup-SR5.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Shift Report 5</a>
+                <a href="./stich/Mockup-SR6.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Shift Report 6</a>
+                <a href="./stich/Mockup-SR7.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Shift Report 7</a>
+                <a href="./stich/Mockup-SR8.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Shift Report 8</a>
+                <a href="./stich/Mockup-SR9.html" target="mockup-frame" class="menu-link px-3 py-2 rounded-lg text-sm hover:bg-[#223d49] transition-colors">Shift Report 9</a>
+            </nav>
+        </aside>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h1>ibe160 Mockups</h1>
-            <p>A central hub for all application mockups and user flows.</p>
-        </div>
-        <nav class="menu-section">
-            <h2>Shift Report Flow</h2>
-            <ul class="menu-list" id="sitemap-menu">
-                <li><a href="./stich/Shift-report-page0.html" target="mockup-frame">0. Draft Shift Reports</a></li>
-                <li><a href="./stich/Shift-report-Page1.html" target="mockup-frame">1. Select Criteria</a></li>
-                <li><a href="./stich/Shift-report-page2.html" target="mockup-frame">2. Staffing Overview</a></li>
-                <li><a href="./stich/Shift-report-Page3.html" target="mockup-frame">3. Orderlines by Area</a></li>
-                <li><a href="./stich/Shift-report-page4.html" target="mockup-frame">4. Moves by Area</a></li>
-                <li><a href="./stich/Shift-report-page5.html" target="mockup-frame">5. Hours by Area</a></li>
-                <li><a href="./stich/Shift-report-page6.html" target="mockup-frame">6. Efficiency Summary</a></li>
-                <li><a href="./stich/Shift-report-page7.html" target="mockup-frame">7. Sampakk & Issues</a></li>
-                <li><a href="./stich/Shift-report-page8.html" target="mockup-frame">8. Review & Submit</a></li>
-            </ul>
-        </nav>
-    </aside>
-
-    <main class="iframe-container">
-        <iframe name="mockup-frame" src="./stich/Shift-report-page0.html"></iframe>
-    </main>
-
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
+            <iframe name="mockup-frame" src="./stich/Mockup-Dashboard.html" class="w-full h-full border-none"></iframe>
+        </main>
+    </div>
     <script>
-        const menu = document.getElementById('sitemap-menu');
-        const links = menu.getElementsByTagName('a');
-        const iframe = document.querySelector('iframe[name="mockup-frame"]');
-
-        // Function to set the active link
-        function setActiveLink(href) {
-            for (let i = 0; i < links.length; i++) {
-                links[i].classList.remove('active');
-                if (links[i].getAttribute('href') === href) {
-                    links[i].classList.add('active');
-                }
-            }
+        const menu = document.getElementById('mockup-menu');
+        const links = menu.getElementsByClassName('menu-link');
+        
+        // Set the second link as active by default since dashboard is loaded
+        if (links.length > 1) {
+            links[1].classList.add('active');
         }
 
-        // Set the active link based on the iframe's src when the page loads
-        if (iframe) {
-            setActiveLink(iframe.getAttribute('src'));
-        }
-
-        // Handle clicks on the main menu
         menu.addEventListener('click', function(e) {
-            if (e.target.tagName === 'A') {
-                const href = e.target.getAttribute('href');
-                setActiveLink(href);
-            }
-        });
-
-        // Listen for messages from the iframe to update the active link and iframe content
-        window.addEventListener('message', function(event) {
-            if (event.data && event.data.type === 'setActiveLink' && event.data.href) {
-                if(iframe) {
-                    iframe.src = event.data.href;
+            if (e.target.classList.contains('menu-link')) {
+                // Remove active class from all links
+                for (let i = 0; i < links.length; i++) {
+                    links[i].classList.remove('active');
                 }
-                setActiveLink(event.data.href);
+                // Add active class to the clicked link
+                e.target.classList.add('active');
             }
         });
     </script>
-
 </body>
 </html>
