@@ -14,10 +14,17 @@
                 extend: {
                     colors: {
                         "primary": "#3abff8",
+                        "background-light": "#f5f7f8",
                         "background-dark": "#101d23",
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
                     },
                 },
             },
@@ -32,234 +39,236 @@
         }
     </style>
 </head>
-<body class="bg-background-dark font-display">
-<div class="flex min-h-screen">
-    <!-- SideNavBar -->
-    <aside class="flex w-64 flex-col bg-[#101d23] p-4 border-r border-white/10 h-screen sticky top-0 justify-between">
-        <div class="flex flex-col gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyKrKzNZ2dzHCiPU5hpsTon_I7CMbryH7wdM2h_7p4NsM8qCzbDF3wlU3BaGRqQyDI2Cbpa5nfBSPlSrB8UZ88NDMRD6ybP-gbuFOhd-TwIw7rCPcepyTnuZKgftfDU6vJJpiYUlvIuhTxvyHJulTigwpAVJSB7KpWpJWlZvadOOI3AU-h8H0wjOjqH_jplu7K1nWU27kgGacEnFNSuQbA8ZBnA7FPQRy9a7RvT3JfRdasTivgc8LW5KmwZyUEpPKdyHnij0TXYVQ");'></div>
-                <div class="flex flex-col">
-                    <h1 class="text-white text-base font-medium leading-normal">ibe160</h1>
-                    <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Shift Management</p>
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative flex h-auto min-h-screen w-full flex-row">
+        <!-- SideNavBar (from ux-design-directions.html / Shift-report-Page1.html) -->
+        <aside class="flex w-64 flex-col bg-[#101d23] p-4 border-r border-white/10 h-screen sticky top-0 justify-between">
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyKrKzNZ2dzHCiPU5hpsTon_I7CMbryH7wdM2h_7p4NsM8qCzbDF3wlU3BaGRqQyDI2Cbpa5nfBSPlSrB8UZ88NDMRD6ybP-gbuFOhd-TwIw7rCPcepyTnuZKgftfDU6vJJpiYUlvIuhTxvyHJulTigwpAVJSB7KpWpJWlZvadOOI3AU-h8H0wjOjqH_jplu7K1nWU27kgGacEnFNSuQbA8ZBnA7FPQRy9a7RvT3JfRdasTivgc8LW5KmwZyUEpPKdyHnij0TXYVQ");'></div>
+                    <div class="flex flex-col">
+                        <h1 class="text-white text-base font-medium leading-normal">ibe160</h1>
+                        <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Shift Management</p>
+                    </div>
+                </div>
+                <nav class="flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                        <span class="material-symbols-outlined" style="font-size: 24px;">dashboard</span>
+                        <p class="text-sm font-medium leading-normal">Dashboard</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#223d49] text-white" href="#">
+                        <span class="material-symbols-outlined fill" style="font-size: 24px;">assessment</span>
+                        <p class="text-sm font-medium leading-normal">Shift Reports</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                        <span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
+                        <p class="text-sm font-medium leading-normal">Operations</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                        <span class="material-symbols-outlined" style="font-size: 24px;">bar_chart</span>
+                        <p class="text-sm font-medium leading-normal">Analytics</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                        <span class="material-symbols-outlined" style="font-size: 24px;">tune</span>
+                        <p class="text-sm font-medium leading-normal">Settings</p>
+                    </a>
+                </nav>
+            </div>
+            <div class="flex flex-col gap-4">
+                <a href="Shift-report-page0.html" target="mockup-frame" class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em]">
+                    <span class="truncate">New Report</span>
+                </a>
+                <div class="flex flex-col gap-1">
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                        <span class="material-symbols-outlined" style="font-size: 24px;">help</span>
+                        <p class="text-sm font-medium leading-normal">Help</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                        <span class="material-symbols-outlined" style="font-size: 24px;">logout</span>
+                        <p class="text-sm font-medium leading-normal">Logout</p>
+                    </a>
                 </div>
             </div>
-            <nav class="flex flex-col gap-2">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                    <span class="material-symbols-outlined" style="font-size: 24px;">dashboard</span>
-                    <p class="text-sm font-medium leading-normal">Dashboard</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#223d49] text-white" href="#">
-                    <span class="material-symbols-outlined fill" style="font-size: 24px;">assessment</span>
-                    <p class="text-sm font-medium leading-normal">Shift Reports</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                    <span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
-                    <p class="text-sm font-medium leading-normal">Operations</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                    <span class="material-symbols-outlined" style="font-size: 24px;">bar_chart</span>
-                    <p class="text-sm font-medium leading-normal">Analytics</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                    <span class="material-symbols-outlined" style="font-size: 24px;">tune</span>
-                    <p class="text-sm font-medium leading-normal">Settings</p>
-                </a>
-            </nav>
-        </div>
-        <div class="flex flex-col gap-1">
-            <a href="Shift-report-page0.html" target="mockup-frame" class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors">
-                <span class="material-symbols-outlined" style="font-size: 24px;">add_circle</span>
-                <p class="text-sm font-medium leading-normal">New Report</p>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                <span class="material-symbols-outlined" style="font-size: 24px;">help</span>
-                <p class="text-sm font-medium leading-normal">Help</p>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
-                <span class="material-symbols-outlined" style="font-size: 24px;">logout</span>
-                <p class="text-sm font-medium leading-normal">Logout</p>
-            </a>
-        </div>
-    </aside>
-    <main class="flex-1 p-8 overflow-y-auto">
-        <div class="max-w-4xl mx-auto">
-            <header class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-white">New Shift Report</h2>
-                <button class="px-4 py-2 text-sm font-medium rounded-md border border-[#305869] text-white bg-[#182c34] hover:bg-[#223d49] transition-all" type="button">
-                    Cancel
-                </button>
-            </header>
-            <div class="bg-[#182c34] p-8 rounded-xl border border-[#305869]">
-                <form>
-                    <div class="space-y-8">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
-                            <div>
-                                <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5" for="date">Date *</label>
-                                <input class="block w-full rounded-lg border-[#305869] bg-[#101d23] placeholder:text-[#8fb9cc] focus:border-primary focus:ring-primary text-sm text-white" id="date" name="date" type="date" value="2023-10-27"/>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="max-w-4xl mx-auto">
+                <header class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-white">New Shift Report</h2>
+                    <button class="px-4 py-2 text-sm font-medium rounded-md border border-[#305869] text-white bg-[#182c34] hover:bg-[#223d49] transition-all" type="button">
+                        Cancel
+                    </button>
+                </header>
+                <div class="bg-[#182c34] p-8 rounded-xl border border-[#305869]">
+                    <form>
+                        <div class="space-y-8">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5" for="date">Date *</label>
+                                    <input class="block w-full rounded-lg border-[#305869] bg-[#101d23] placeholder:text-[#8fb9cc] focus:border-primary focus:ring-primary text-sm text-white" id="date" name="date" type="date" value="2023-10-27"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5" for="shift">Shift *</label>
+                                    <select class="block w-full rounded-lg border-[#305869] bg-[#101d23] focus:border-primary focus:ring-primary text-sm text-white" id="shift" name="shift">
+                                        <option>Morning (06:00-14:00)</option>
+                                        <option selected>Evening (14:00-22:00)</option>
+                                        <option>Night (22:00-06:00)</option>
+                                    </select>
+                                </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5" for="shift">Shift *</label>
-                                <select class="block w-full rounded-lg border-[#305869] bg-[#101d23] focus:border-primary focus:ring-primary text-sm text-white" id="shift" name="shift">
-                                    <option>Morning (06:00-14:00)</option>
-                                    <option selected>Evening (14:00-22:00)</option>
-                                    <option>Night (22:00-06:00)</option>
-                                </select>
+                                <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5">Absent Employees</label>
+                                <div class="rounded-lg border border-[#305869] bg-[#101d23]">
+                                    <div class="flow-root">
+                                        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                                                <table class="min-w-full divide-y divide-[#305869]">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
+                                                        <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Absent Code</th>
+                                                        <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Hours Absent</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-[#305869]">
+                                                    <tr>
+                                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Jane Doe</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">SICK</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">8</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">John Smith</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">PTO</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">8</td>
+                                                    </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0" colspan="2">Total Absent Hours</td>
+                                                        <td class="px-3 py-3 text-left text-sm font-semibold text-white">16</td>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5">Absent Employees</label>
-                            <div class="rounded-lg border border-[#305869] bg-[#101d23]">
-                                <div class="flow-root">
-                                    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                                            <table class="min-w-full divide-y divide-[#305869]">
-                                                <thead>
-                                                <tr>
-                                                    <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
-                                                    <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Absent Code</th>
-                                                    <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Hours Absent</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody class="divide-y divide-[#305869]">
-                                                <tr>
-                                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Jane Doe</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">SICK</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">8</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">John Smith</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">PTO</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">8</td>
-                                                </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                <tr>
-                                                    <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0" colspan="2">Total Absent Hours</td>
-                                                    <td class="px-3 py-3 text-left text-sm font-semibold text-white">16</td>
-                                                </tr>
-                                                </tfoot>
-                                            </table>
+                            <div>
+                                <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5">Hired Employees</label>
+                                <div class="rounded-lg border border-[#305869] bg-[#101d23]">
+                                    <div class="flow-root">
+                                        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                                                <table class="min-w-full divide-y divide-[#305869]">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider sm:pl-0">Full Name</th>
+                                                        <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Shift Hired From</th>
+                                                        <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Hours Worked</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-[#305869]">
+                                                    <tr>
+                                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Mike Johnson</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">Morning (06:00-14:00)</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">4</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Sarah Miller</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">Morning (06:00-14:00)</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">8</td>
+                                                    </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0" colspan="2">Total Hired Hours</td>
+                                                        <td class="px-3 py-3 text-left text-sm font-semibold text-white">12</td>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5">Hired Out Employees</label>
+                                <div class="rounded-lg border border-[#305869] bg-[#101d23]">
+                                    <div class="flow-root">
+                                        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                                                <table class="min-w-full divide-y divide-[#305869]">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
+                                                        <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Shift Hired To</th>
+                                                        <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Hours Hired Out</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-[#305869]">
+                                                    <tr>
+                                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Emily White</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">Night (22:00-06:00)</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">4</td>
+                                                    </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0" colspan="2">Total Hours Hired Out</td>
+                                                        <td class="px-3 py-3 text-left text-sm font-semibold text-white">4</td>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5">Overtime Employees</label>
+                                <div class="rounded-lg border border-[#305869] bg-[#101d23]">
+                                    <div class="flow-root">
+                                        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                                                <table class="min-w-full divide-y divide-[#305869]">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider sm:pl-0">Full Name</th>
+                                                        <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Hours Worked Overtime</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-[#305869]">
+                                                    <tr>
+                                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Chris Green</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">David Brown</td>
+                                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">3</td>
+                                                    </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">Total Overtime Hours</td>
+                                                        <td class="px-3 py-3 text-left text-sm font-semibold text-white">5</td>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5">Hired Employees</label>
-                            <div class="rounded-lg border border-[#305869] bg-[#101d23]">
-                                <div class="flow-root">
-                                    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                                            <table class="min-w-full divide-y divide-[#305869]">
-                                                <thead>
-                                                <tr>
-                                                    <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider sm:pl-0">Full Name</th>
-                                                    <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Shift Hired From</th>
-                                                    <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Hours Worked</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody class="divide-y divide-[#305869]">
-                                                <tr>
-                                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Mike Johnson</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">Morning (06:00-14:00)</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">4</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Sarah Miller</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">Morning (06:00-14:00)</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">8</td>
-                                                </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                <tr>
-                                                    <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0" colspan="2">Total Hired Hours</td>
-                                                    <td class="px-3 py-3 text-left text-sm font-semibold text-white">12</td>
-                                                </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5">Hired Out Employees</label>
-                            <div class="rounded-lg border border-[#305869] bg-[#101d23]">
-                                <div class="flow-root">
-                                    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                                            <table class="min-w-full divide-y divide-[#305869]">
-                                                <thead>
-                                                <tr>
-                                                    <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
-                                                    <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Shift Hired To</th>
-                                                    <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Hours Hired Out</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody class="divide-y divide-[#305869]">
-                                                <tr>
-                                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Emily White</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">Night (22:00-06:00)</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">4</td>
-                                                </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                <tr>
-                                                    <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0" colspan="2">Total Hours Hired Out</td>
-                                                    <td class="px-3 py-3 text-left text-sm font-semibold text-white">4</td>
-                                                </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-[#8fb9cc] mb-1.5">Overtime Employees</label>
-                            <div class="rounded-lg border border-[#305869] bg-[#101d23]">
-                                <div class="flow-root">
-                                    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                                            <table class="min-w-full divide-y divide-[#305869]">
-                                                <thead>
-                                                <tr>
-                                                    <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider sm:pl-0">Full Name</th>
-                                                    <th class="px-3 py-3.5 text-left text-xs font-semibold text-[#8fb9cc] uppercase tracking-wider" scope="col">Hours Worked Overtime</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody class="divide-y divide-[#305869]">
-                                                <tr>
-                                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">Chris Green</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">2</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">David Brown</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-[#8fb9cc]">3</td>
-                                                </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                <tr>
-                                                    <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">Total Overtime Hours</td>
-                                                    <td class="px-3 py-3 text-left text-sm font-semibold text-white">5</td>
-                                                </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-8 pt-6 border-t border-[#305869]">
-                    <a href="Shift-report-Page3.html" target="mockup-frame" class="w-full bg-primary text-[#101d23] font-bold py-3 px-4 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-[#182c34] transition-colors text-base text-center">
-                    Continue
-                    </a>
-                    </div>                </form>
+                        <div class="mt-8 pt-6 border-t border-[#305869]">
+                        <a href="Shift-report-Page3.html" target="mockup-frame" class="w-full bg-primary text-[#101d23] font-bold py-3 px-4 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-[#182c34] transition-colors text-base text-center">
+                        Continue
+                        </a>
+                        </div>                </form>
+                </div>
             </div>
-        </div>
-    </main>
-</div>
+        </main>
+    </div>
 </body>
 </html>
