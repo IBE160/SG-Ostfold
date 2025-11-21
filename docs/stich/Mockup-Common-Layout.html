@@ -15,12 +15,13 @@
             theme: {
                 extend: {
                     colors: {
-                        background: '#111827',
-                        card: '#1f2937',
-                        primary: '#38bdf8',
-                        'primary-text': '#d1d5db',
-                        'secondary-text': '#9ca3af',
-                        border: '#374151',
+                        "primary": "#3abff8",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101d23",
+                        "content-dark": "#182c34",
+                        "border-dark": "#305869",
+                        "text-primary-dark": "#e0e0e0",
+                        "text-secondary-dark": "#a0a0a0",
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -32,13 +33,6 @@
     <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-
-        main > div { /* This targets the container for your main content */
-            border: 2px dashed #38bdf8; /* A dashed border using the primary color */
-            border-radius: 0.5rem; /* A slight rounding of corners */
-            padding: 1rem; /* Some internal spacing */
-            min-height: calc(100vh - 4rem); /* Ensure it's visible and takes up most of the screen height */
         }
 
         #sidebar {
@@ -57,7 +51,6 @@
                 transform: translateX(0);
             }
         }
-
 
         #sidebar.collapsed {
             width: 80px;
@@ -85,61 +78,61 @@
         }
     </style>
 </head>
-<body class="bg-background font-sans text-primary-text">
+<body class="bg-background-light dark:bg-background-dark font-sans text-text-primary-dark">
     
     <div class="relative min-h-screen md:flex">
         <!-- Mobile menu button -->
-        <div class="bg-background text-primary-text flex justify-between md:hidden sticky top-0 z-30 border-b border-border">
+        <div class="bg-background-dark text-text-primary-dark flex justify-between md:hidden sticky top-0 z-30 border-b border-border-dark">
             <a href="#" class="block p-4 font-bold">ibe160</a>
-            <button id="mobile-menu-button" class="p-4 focus:outline-none focus:bg-card">
+            <button id="mobile-menu-button" class="p-4 focus:outline-none focus:bg-content-dark">
                 <span class="material-symbols-outlined">menu</span>
             </button>
         </div>
 
         <!-- Sidebar -->
-        <aside id="sidebar" class="w-[220px] bg-background border-r border-border flex-col p-4 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out md:flex z-40 hidden">
+        <aside id="sidebar" class="w-[220px] bg-background-dark border-r border-border-dark flex-col p-4 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out md:flex z-40 hidden">
             <div class="flex items-center gap-3 mb-8 logo-container">
                 <div class="w-10 h-10 rounded-full bg-cover bg-center flex-shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyKrKzNZ2dzHCiPU5hpsTon_I7CMbryH7wdM2h_7p4NsM8qCzbDF3wlU3BaGRqQyDI2Cbpa5nfBSPlSrB8UZ88NDMRD6ybP-gbuFOhd-TwIw7rCPcepyTnuZKgftfDU6vJJpiYUlvIuhTxvyHJulTigwpAVJSB7KpWpJWlZvadOOI3AU-h8H0wjOjqH_jplu7K1nWU27kgGacEnFNSuQbA8ZBnA7FPQRy9a7RvT3JfRdasTivgc8LW5KmwZyUEpPKdyHnij0TXYVQ");'></div>
                 <div class="user-info">
-                    <h1 class="font-bold text-primary-text">ibe160</h1>
-                    <p class="text-xs text-secondary-text">Shift Management</p>
+                    <h1 class="font-bold text-text-primary-dark">ibe160</h1>
+                    <p class="text-xs text-text-secondary-dark">Shift Management</p>
                 </div>
             </div>
             <nav class="flex flex-col flex-grow gap-2">
-                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-                    <span class="material-symbols-outlined text-secondary-text">dashboard</span>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-content-dark transition-colors" href="#">
+                    <span class="material-symbols-outlined text-text-secondary-dark">dashboard</span>
                     <span class="sidebar-text font-medium text-sm">Dashboard</span>
                 </a>
-                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-                    <span class="material-symbols-outlined text-secondary-text">assignment</span>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-content-dark transition-colors" href="#">
+                    <span class="material-symbols-outlined text-text-secondary-dark">assignment</span>
                     <span class="sidebar-text font-medium text-sm">Shift Reports</span>
                 </a>
-                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-                    <span class="material-symbols-outlined text-secondary-text">history</span>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-content-dark transition-colors" href="#">
+                    <span class="material-symbols-outlined text-text-secondary-dark">history</span>
                     <span class="sidebar-text font-medium text-sm">Historical</span>
                 </a>
 
-                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-                    <span class="material-symbols-outlined text-secondary-text">settings</span>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-content-dark transition-colors" href="#">
+                    <span class="material-symbols-outlined text-text-secondary-dark">settings</span>
                     <span class="sidebar-text font-medium text-sm">Settings</span>
                 </a>
             </nav>
             <div class="flex flex-col gap-2">
-                <button class="w-full h-10 px-4 flex items-center justify-center bg-primary text-background font-bold text-sm rounded-md hover:bg-primary/90 transition-colors">
+                <button class="w-full h-10 px-4 flex items-center justify-center bg-primary text-background-dark font-bold text-sm rounded-md hover:bg-primary/90 transition-colors">
                     <span class="new-report-icon material-symbols-outlined">add</span>
                     <span class="new-report-text">New Report</span>
                 </button>
-                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-                    <span class="material-symbols-outlined text-secondary-text">help_outline</span>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-content-dark transition-colors" href="#">
+                    <span class="material-symbols-outlined text-text-secondary-dark">help_outline</span>
                     <span class="sidebar-text font-medium text-sm">Help</span>
                 </a>
-                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-                    <span class="material-symbols-outlined text-secondary-text">logout</span>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-content-dark transition-colors" href="#">
+                    <span class="material-symbols-outlined text-text-secondary-dark">logout</span>
                     <span class="sidebar-text font-medium text-sm">Logout</span>
                 </a>
             </div>
-             <div class="border-t border-border mt-4 pt-4 hidden md:block">
-                <button id="sidebar-toggle" class="w-full flex items-center justify-center text-secondary-text hover:text-primary-text">
+             <div class="border-t border-border-dark mt-4 pt-4 hidden md:block">
+                <button id="sidebar-toggle" class="w-full flex items-center justify-center text-text-secondary-dark hover:text-text-primary-dark">
                     <span class="material-symbols-outlined sidebar-toggle-icon transition-transform duration-300">chevron_left</span>
                 </button>
             </div>
@@ -148,7 +141,7 @@
         <!-- Overlay -->
         <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-30 hidden"></div>
         
-        <main class="flex-1 p-4 md:p-8 bg-background">
+        <main class="flex-1 p-4 md:p-8 bg-background-dark">
             <div class="mx-auto px-4">
                 <!-- Your main content goes here -->
             </div>
