@@ -44,6 +44,20 @@
         #sidebar {
             transition: width 0.3s ease-in-out;
         }
+        
+        @media (max-width: 767px) {
+            #sidebar {
+                transition: transform 0.3s ease-in-out;
+                transform: translateX(-100%);
+                position: fixed;
+                height: 100%;
+                z-index: 40;
+            }
+            #sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
 
         #sidebar.collapsed {
             width: 80px;
@@ -72,8 +86,18 @@
     </style>
 </head>
 <body class="bg-background font-sans text-primary-text">
-    <div class="flex min-h-screen">
-        <aside id="sidebar" class="w-[220px] bg-background border-r border-border flex flex-col p-4">
+    
+    <div class="relative min-h-screen md:flex">
+        <!-- Mobile menu button -->
+        <div class="bg-background text-primary-text flex justify-between md:hidden sticky top-0 z-30 border-b border-border">
+            <a href="#" class="block p-4 font-bold">ibe160</a>
+            <button id="mobile-menu-button" class="p-4 focus:outline-none focus:bg-card">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-[220px] bg-background border-r border-border flex-col p-4 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out md:flex z-40 hidden">
             <div class="flex items-center gap-3 mb-8 logo-container">
                 <div class="w-10 h-10 rounded-full bg-cover bg-center flex-shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyKrKzNZ2dzHCiPU5hpsTon_I7CMbryH7wdM2h_7p4NsM8qCzbDF3wlU3BaGRqQyDI2Cbpa5nfBSPlSrB8UZ88NDMRD6ybP-gbuFOhd-TwIw7rCPcepyTnuZKgftfDU6vJJpiYUlvIuhTxvyHJulTigwpAVJSB7KpWpJWlZvadOOI3AU-h8H0wjOjqH_jplu7K1nWU27kgGacEnFNSuQbA8ZBnA7FPQRy9a7RvT3JfRdasTivgc8LW5KmwZyUEpPKdyHnij0TXYVQ");'></div>
                 <div class="user-info">
@@ -114,13 +138,17 @@
                     <span class="sidebar-text font-medium text-sm">Logout</span>
                 </a>
             </div>
-             <div class="border-t border-border mt-4 pt-4">
+             <div class="border-t border-border mt-4 pt-4 hidden md:block">
                 <button id="sidebar-toggle" class="w-full flex items-center justify-center text-secondary-text hover:text-primary-text">
                     <span class="material-symbols-outlined sidebar-toggle-icon transition-transform duration-300">chevron_left</span>
                 </button>
             </div>
         </aside>
-        <main class="flex-1 p-8 bg-background">
+
+        <!-- Overlay -->
+        <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-30 hidden"></div>
+        
+        <main class="flex-1 p-4 md:p-8 bg-background">
             <div class="mx-auto px-4">
                 <!-- Your main content goes here -->
             </div>
@@ -129,11 +157,32 @@
 
     <script>
         const sidebar = document.getElementById('sidebar');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const overlay = document.getElementById('overlay');
         const sidebarToggle = document.getElementById('sidebar-toggle');
 
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-        });
+        // Desktop sidebar collapse
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
+            });
+        }
+
+        // Mobile sidebar toggle
+        if(mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('hidden');
+            });
+        }
+        
+        if(overlay) {
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.add('hidden');
+            });
+        }
     </script>
 
 </body>
