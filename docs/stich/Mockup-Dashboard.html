@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ibe160 Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ibe160 Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
         theme: {
@@ -33,84 +34,100 @@
 </head>
 <body class="font-display bg-background-light dark:bg-background-dark">
 <div class="relative flex h-auto min-h-screen w-full flex-col">
-<div class="flex h-full grow">
+    <div class="flex h-full grow">
+        <main class="flex flex-1 flex-col transition-all duration-300 ease-in-out">
+            <div class="flex-1 p-8">
+                <header class="flex flex-col gap-6 mb-8">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <h1 class="text-text-primary-dark text-4xl font-black leading-tight tracking-[-0.033em]">Dashboard</h1>
+                        <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-content-dark pl-4 pr-3 border border-border-dark hover:border-primary/50 transition-colors duration-200">
+                            <p class="text-text-primary-dark text-sm font-medium leading-normal">Last 30 Days</p>
+                            <span class="material-symbols-outlined text-text-secondary-dark" style="font-size: 20px;">expand_more</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="px-4 py-2 rounded-lg bg-primary/20 text-primary text-sm font-medium transition-colors duration-200">Totalt</button>
+                        <button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 1</button>
+                        <button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 2</button>
+                        <button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 3</button>
+                    </div>
+                </header>
 
-<main class="flex flex-1 flex-col transition-all duration-300 ease-in-out">
-<div class="flex-1 p-8 space-y-8">
-<header class="flex flex-col gap-6">
-<div class="flex flex-wrap items-center justify-between gap-4">
-<h1 class="text-text-primary-dark text-4xl font-black leading-tight tracking-[-0.033em]">Dashboard</h1>
-<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-content-dark pl-4 pr-3 border border-border-dark hover:border-primary/50 transition-colors duration-200">
-<p class="text-text-primary-dark text-sm font-medium leading-normal">Last 30 Days</p>
-<span class="material-symbols-outlined text-text-secondary-dark" style="font-size: 20px;">expand_more</span>
-</button>
+                <div class="grid grid-cols-4 gap-8">
+                    <div class="col-span-1 space-y-8">
+                        <div id="kpi-sick-leave" class="kpi-card flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark cursor-pointer">
+                            <p class="text-text-secondary-dark text-base font-medium leading-normal">Sick Leave (vs. Avg)</p>
+                            <p class="text-success tracking-light text-4xl font-bold leading-tight">↓ 2%</p>
+                        </div>
+                        <div id="kpi-overtime" class="kpi-card flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark cursor-pointer">
+                            <p class="text-text-secondary-dark text-base font-medium leading-normal">Overtime (vs. Avg)</p>
+                            <p class="text-error tracking-light text-4xl font-bold leading-tight">↑ 15%</p>
+                        </div>
+                        <div id="kpi-avg-orders" class="kpi-card flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark cursor-pointer">
+                            <p class="text-text-secondary-dark text-base font-medium leading-normal">Avg. Orders/Hr</p>
+                            <p class="text-primary tracking-light text-4xl font-bold leading-tight">120</p>
+                        </div>
+                    </div>
+
+                    <div class="col-span-2">
+                        <section id="main-graph-container" class="bg-content-dark p-6 rounded-lg border border-border-dark h-full">
+                            <div class="flex flex-col gap-2 h-full">
+                                <p id="main-graph-title" class="text-text-primary-dark text-base font-medium leading-normal">Orders per Hour: Trend & Forecast</p>
+                                <div id="main-graph" class="flex min-h-[220px] flex-1 flex-col justify-end pt-4">
+                                    <svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 130C18.1538 130 18.1538 100 36.3077 100C54.4615 100 54.4615 85 72.6154 85C90.7692 85 90.7692 93 108.923 93C127.077 93 127.077 63 145.231 63C163.385 63 163.385 71 181.538 71C199.692 71 199.692 51 217.846 51C236 51 236 45 254.154 45C272.308 45 272.308 31 290.462 31C308.615 31 308.615 25 326.769 25C344.923 25 344.923 1 363.077 1C381.231 1 381.231 11 399.385 11C417.538 11 417.538 29 435.692 29C453.846 29 453.846 15 472 15V150H0V130Z" fill="url(#paint0_linear_chart)"></path>
+                                        <path d="M0 130C18.1538 130 18.1538 100 36.3077 100C54.4615 100 54.4615 85 72.6154 85C90.7692 85 90.7692 93 108.923 93C127.077 93 127.077 63 145.231 63C163.385 63 163.385 71 181.538 71C199.692 71 199.692 51 217.846 51C236 51 236 45 254.154 45C272.308 45 272.308 31 290.462 31C308.615 31 308.615 25 326.769 25C344.923 25 344.923 1 363.077 1C381.231 1 381.231 11 399.385 11C417.538 11 417.538 29 435.692 29C453.846 29 453.846 15 472 15" stroke="#38bdf8" stroke-linecap="round" stroke-width="3"></path>
+                                        <defs>
+                                            <linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_chart" x1="236" x2="236" y1="1" y2="149">
+                                                <stop stop-color="#38bdf8" stop-opacity="0.3"></stop>
+                                                <stop offset="1" stop-color="#38bdf8" stop-opacity="0"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-span-1 space-y-8">
+                        <div id="kpi-satisfaction" class="kpi-card flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark cursor-pointer">
+                            <p class="text-text-secondary-dark text-base font-medium leading-normal">Customer Satisfaction</p>
+                            <p class="text-primary tracking-light text-4xl font-bold leading-tight">95%</p>
+                        </div>
+                        <div id="kpi-new-users" class="kpi-card flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark cursor-pointer">
+                            <p class="text-text-secondary-dark text-base font-medium leading-normal">New Users</p>
+                            <p class="text-success tracking-light text-4xl font-bold leading-tight">↑ 10%</p>
+                        </div>
+                        <div id="kpi-tickets" class="kpi-card flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark cursor-pointer">
+                            <p class="text-text-secondary-dark text-base font-medium leading-normal">Support Tickets (Closed)</p>
+                            <p class="text-primary tracking-light text-4xl font-bold leading-tight">85</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 </div>
-<div class="flex items-center gap-2">
-<button class="px-4 py-2 rounded-lg bg-primary/20 text-primary text-sm font-medium transition-colors duration-200">Totalt</button>
-<button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 1</button>
-<button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 2</button>
-<button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 3</button>
-</div>
-</header>
-<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
-<p class="text-text-secondary-dark text-base font-medium leading-normal">Sick Leave (vs. Avg)</p>
-<p class="text-success tracking-light text-4xl font-bold leading-tight">↓ 2%</p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
-<p class="text-text-secondary-dark text-base font-medium leading-normal">Overtime (vs. Avg)</p>
-<p class="text-error tracking-light text-4xl font-bold leading-tight">↑ 15%</p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
-<p class="text-text-secondary-dark text-base font-medium leading-normal">Avg. Orders/Hr</p>
-<p class="text-primary tracking-light text-4xl font-bold leading-tight">120</p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
-<p class="text-text-secondary-dark text-base font-medium leading-normal">Customer Satisfaction</p>
-<p class="text-primary tracking-light text-4xl font-bold leading-tight">95%</p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
-<p class="text-text-secondary-dark text-base font-medium leading-normal">New Users</p>
-<p class="text-success tracking-light text-4xl font-bold leading-tight">↑ 10%</p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
-<p class="text-text-secondary-dark text-base font-medium leading-normal">Support Tickets (Closed)</p>
-<p class="text-primary tracking-light text-4xl font-bold leading-tight">85</p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
-<p class="text-text-secondary-dark text-base font-medium leading-normal">Server Uptime</p>
-<p class="text-success tracking-light text-4xl font-bold leading-tight">99.9%</p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
-<p class="text-text-secondary-dark text-base font-medium leading-normal">Revenue Growth</p>
-<p class="text-success tracking-light text-4xl font-bold leading-tight">↑ 5%</p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
-<p class="text-text-secondary-dark text-base font-medium leading-normal">Active Projects</p>
-<p class="text-primary tracking-light text-4xl font-bold leading-tight">12</p>
-</div>
-</section>
-<section class="bg-content-dark p-6 rounded-lg border border-border-dark">
-<div class="flex flex-col gap-2">
-<p class="text-text-primary-dark text-base font-medium leading-normal">Orders per Hour: Trend &amp; Forecast</p>
-<div class="flex min-h-[220px] flex-1 flex-col justify-end pt-4">
-<svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 130C18.1538 130 18.1538 100 36.3077 100C54.4615 100 54.4615 85 72.6154 85C90.7692 85 90.7692 93 108.923 93C127.077 93 127.077 63 145.231 63C163.385 63 163.385 71 181.538 71C199.692 71 199.692 51 217.846 51C236 51 236 45 254.154 45C272.308 45 272.308 31 290.462 31C308.615 31 308.G15 25 326.769 25C344.923 25 344.923 1 363.077 1C381.231 1 381.231 11 399.385 11C417.538 11 417.538 29 435.692 29C453.846 29 453.846 15 472 15V150H0V130Z" fill="url(#paint0_linear_chart)"></path>
-<path d="M0 130C18.1538 130 18.1538 100 36.3077 100C54.4615 100 54.4615 85 72.6154 85C90.7692 85 90.7692 93 108.923 93C127.077 93 127.077 63 145.231 63C163.385 63 163.385 71 181.538 71C199.692 71 199.692 51 217.846 51C236 51 236 45 254.154 45C272.308 45 272.308 31 290.462 31C308.615 31 308.615 25 326.769 25C344.923 25 344.923 1 363.077 1C381.231 1 381.231 11 399.385 11C417.538 11 417.538 29 435.692 29C453.846 29 453.846 15 472 15" stroke="#38bdf8" stroke-linecap="round" stroke-width="3"></path>
-<defs>
-<linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_chart" x1="236" x2="236" y1="1" y2="149">
-<stop stop-color="#38bdf8" stop-opacity="0.3"></stop>
-<stop offset="1" stop-color="#38bdf8" stop-opacity="0"></stop>
-</linearGradient>
-</defs>
-</svg>
-</div>
-</div>
-</section>
-</div>
-</main>
-</div>
-</div>
+<script>
+    const kpiCards = document.querySelectorAll('.kpi-card');
+    const mainGraph = document.getElementById('main-graph');
+    const mainGraphTitle = document.getElementById('main-graph-title');
+    const initialGraphContent = mainGraph.innerHTML;
+    const initialGraphTitle = mainGraphTitle.textContent;
+
+    kpiCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const kpiLabel = card.querySelector('p:first-child').textContent;
+            const kpiValue = card.querySelector('p:last-child').textContent;
+            
+            mainGraphTitle.textContent = `${kpiLabel}: Trend`;
+            mainGraph.innerHTML = `<div class="flex items-center justify-center h-full text-2xl">${kpiValue}</div>`;
+
+            kpiCards.forEach(c => c.style.borderColor = 'var(--border-dark)');
+            card.style.borderColor = 'var(--primary)';
+        });
+    });
+</script>
 <script defer="" src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-</body></html>
+</body>
+</html>

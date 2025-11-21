@@ -148,11 +148,6 @@
             color: var(--text-secondary);
             margin-top: 0.5rem;
         }
-        .grid-3-col {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
         .grid-2-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -251,7 +246,7 @@
 
         <main class="main-content">
             <!-- Screen 1: Dashboard -->
-            <div id="dashboard-screen">
+<div id="dashboard-screen">
                 <div class="header-bar">
                     <h1>Dashboard</h1>
                     <select class="select-field" style="width: auto;">
@@ -260,20 +255,24 @@
                         <option>This Quarter</option>
                     </select>
                 </div>
-                <div class="card">
-                    <div class="card-title">Orders per Hour: Trend & Forecast</div>
-                    <div class="chart-placeholder">Advanced Line Chart with Forecast Placeholder</div>
-                </div>
-                <div class="grid-3-col">
-                    <div class="card kpi-card">
+
+                <div class="dashboard-grid">
+                    <div id="kpi-sick-leave" class="card kpi-card">
                         <div class="kpi-value" style="color: var(--success);">↓ 2%</div>
                         <div class="kpi-label">Sick Leave (vs. Avg)</div>
                     </div>
-                    <div class="card kpi-card">
+
+                    <div id="main-graph-container" class="card">
+                        <div class="card-title">Orders per Hour: Trend & Forecast</div>
+                        <div id="main-graph" class="chart-placeholder">Advanced Line Chart with Forecast Placeholder</div>
+                    </div>
+
+                    <div id="kpi-overtime" class="card kpi-card">
                         <div class="kpi-value" style="color: var(--error);">↑ 15%</div>
                         <div class="kpi-label">Overtime (vs. Avg)</div>
                     </div>
-                    <div class="card kpi-card">
+
+                    <div id="kpi-avg-orders" class="card kpi-card">
                         <div class="kpi-value">120</div>
                         <div class="kpi-label">Avg. Orders/Hr</div>
                     </div>
