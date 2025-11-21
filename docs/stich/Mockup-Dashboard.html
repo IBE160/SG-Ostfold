@@ -47,10 +47,10 @@
                         </button>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button class="px-4 py-2 rounded-lg bg-primary/20 text-primary text-sm font-medium transition-colors duration-200">Totalt</button>
-                        <button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 1</button>
-                        <button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 2</button>
-                        <button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 3</button>
+                        <button class="shift-button px-4 py-2 rounded-lg bg-primary/20 text-primary text-sm font-medium transition-colors duration-200" data-shift="Totalt">Totalt</button>
+                        <button class="shift-button px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200" data-shift="Drift 1">Drift 1</button>
+                        <button class="shift-button px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200" data-shift="Drift 2">Drift 2</button>
+                        <button class="shift-button px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200" data-shift="Drift 3">Drift 3</button>
                     </div>
                 </header>
 
@@ -118,22 +118,63 @@
 </div>
 <script>
     const kpiData = {
-        'kpi-sick-leave': Array.from({length: 30}, () => Math.floor(Math.random() * 5)),
-        'kpi-overtime': Array.from({length: 30}, () => Math.floor(Math.random() * 20)),
-        'kpi-avg-orders': Array.from({length: 30}, () => Math.floor(Math.random() * 50) + 100),
-        'kpi-satisfaction': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 90),
-        'kpi-new-users': Array.from({length: 30}, () => Math.floor(Math.random() * 20) + 50),
-        'kpi-tickets': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 80),
-        'kpi-efficiency': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 85),
-        'kpi-downtime': Array.from({length: 30}, () => Math.floor(Math.random() * 5)),
-        'kpi-quality': Array.from({length: 30}, () => Math.floor(Math.random() * 5) + 95),
-        'kpi-maintenance': Array.from({length: 30}, () => Math.floor(Math.random() * 7)),
+        'Totalt': {
+            'kpi-efficiency': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 85),
+            'kpi-downtime': Array.from({length: 30}, () => Math.floor(Math.random() * 5)),
+            'kpi-sick-leave': Array.from({length: 30}, () => Math.floor(Math.random() * 5)),
+            'kpi-overtime': Array.from({length: 30}, () => Math.floor(Math.random() * 20)),
+            'kpi-avg-orders': Array.from({length: 30}, () => Math.floor(Math.random() * 50) + 100),
+            'kpi-quality': Array.from({length: 30}, () => Math.floor(Math.random() * 5) + 95),
+            'kpi-maintenance': Array.from({length: 30}, () => Math.floor(Math.random() * 7)),
+            'kpi-satisfaction': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 90),
+            'kpi-new-users': Array.from({length: 30}, () => Math.floor(Math.random() * 20) + 50),
+            'kpi-tickets': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 80),
+        },
+        'Drift 1': {
+            'kpi-efficiency': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 80),
+            'kpi-downtime': Array.from({length: 30}, () => Math.floor(Math.random() * 3)),
+            'kpi-sick-leave': Array.from({length: 30}, () => Math.floor(Math.random() * 2)),
+            'kpi-overtime': Array.from({length: 30}, () => Math.floor(Math.random() * 10)),
+            'kpi-avg-orders': Array.from({length: 30}, () => Math.floor(Math.random() * 30) + 80),
+            'kpi-quality': Array.from({length: 30}, () => Math.floor(Math.random() * 3) + 97),
+            'kpi-maintenance': Array.from({length: 30}, () => Math.floor(Math.random() * 4)),
+            'kpi-satisfaction': Array.from({length: 30}, () => Math.floor(Math.random() * 5) + 95),
+            'kpi-new-users': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 40),
+            'kpi-tickets': Array.from({length: 30}, () => Math.floor(Math.random() * 5) + 70),
+        },
+        'Drift 2': {
+            'kpi-efficiency': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 82),
+            'kpi-downtime': Array.from({length: 30}, () => Math.floor(Math.random() * 4)),
+            'kpi-sick-leave': Array.from({length: 30}, () => Math.floor(Math.random() * 3)),
+            'kpi-overtime': Array.from({length: 30}, () => Math.floor(Math.random() * 15)),
+            'kpi-avg-orders': Array.from({length: 30}, () => Math.floor(Math.random() * 40) + 90),
+            'kpi-quality': Array.from({length: 30}, () => Math.floor(Math.random() * 4) + 96),
+            'kpi-maintenance': Array.from({length: 30}, () => Math.floor(Math.random() * 5)),
+            'kpi-satisfaction': Array.from({length: 30}, () => Math.floor(Math.random() * 7) + 92),
+            'kpi-new-users': Array.from({length: 30}, () => Math.floor(Math.random() * 15) + 45),
+            'kpi-tickets': Array.from({length: 30}, () => Math.floor(Math.random() * 8) + 75),
+        },
+        'Drift 3': {
+            'kpi-efficiency': Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 88),
+            'kpi-downtime': Array.from({length: 30}, () => Math.floor(Math.random() * 2)),
+            'kpi-sick-leave': Array.from({length: 30}, () => Math.floor(Math.random() * 1)),
+            'kpi-overtime': Array.from({length: 30}, () => Math.floor(Math.random() * 5)),
+            'kpi-avg-orders': Array.from({length: 30}, () => Math.floor(Math.random() * 60) + 110),
+            'kpi-quality': Array.from({length: 30}, () => Math.floor(Math.random() * 2) + 98),
+            'kpi-maintenance': Array.from({length: 30}, () => Math.floor(Math.random() * 2)),
+            'kpi-satisfaction': Array.from({length: 30}, () => Math.floor(Math.random() * 3) + 97),
+            'kpi-new-users': Array.from({length: 30}, () => Math.floor(Math.random() * 25) + 55),
+            'kpi-tickets': Array.from({length: 30}, () => Math.floor(Math.random() * 12) + 85),
+        },
     };
 
     const kpiCards = document.querySelectorAll('.kpi-card');
     const mainGraphTitle = document.getElementById('main-graph-title');
+    const shiftButtons = document.querySelectorAll('.shift-button');
     const ctx = document.getElementById('main-chart').getContext('2d');
     let myChart;
+    let currentShift = 'Totalt';
+    let currentKpi = 'kpi-avg-orders';
 
     const renderChart = (data, label) => {
         if (myChart) {
@@ -176,26 +217,52 @@
             }
         });
     }
+    
+    const updateDashboard = () => {
+        // Update KPI cards
+        kpiCards.forEach(card => {
+            const kpiId = card.id;
+            const data = kpiData[currentShift][kpiId];
+            const lastValue = data[data.length - 1];
+            // This is a simplification, in a real app you would have a more sophisticated way to display the KPI value
+            card.querySelector('p:last-child').textContent = lastValue;
+        });
+
+        // Update graph
+        const kpiLabel = document.querySelector(`#${currentKpi} p:first-child`).textContent;
+        mainGraphTitle.textContent = `${kpiLabel}: Last 30 Days (${currentShift})`;
+        renderChart(kpiData[currentShift][currentKpi], kpiLabel);
+
+        // Update active card
+        kpiCards.forEach(c => c.style.borderColor = 'var(--border-dark)');
+        document.getElementById(currentKpi).style.borderColor = 'var(--primary)';
+    };
 
     kpiCards.forEach(card => {
         card.addEventListener('click', () => {
-            const kpiId = card.id;
-            const kpiLabel = card.querySelector('p:first-child').textContent;
-            
-            mainGraphTitle.textContent = `${kpiLabel}: Last 30 Days`;
-            renderChart(kpiData[kpiId], kpiLabel);
-
-            kpiCards.forEach(c => c.style.borderColor = 'var(--border-dark)');
-            card.style.borderColor = 'var(--primary)';
+            currentKpi = card.id;
+            updateDashboard();
         });
     });
 
-    // Initial chart render
-    const initialKpiId = 'kpi-avg-orders';
-    const initialKpiLabel = document.querySelector(`#${initialKpiId} p:first-child`).textContent;
-    mainGraphTitle.textContent = `${initialKpiLabel}: Last 30 Days`;
-    renderChart(kpiData[initialKpiId], initialKpiLabel);
-    document.getElementById(initialKpiId).style.borderColor = 'var(--primary)';
+    shiftButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            currentShift = button.dataset.shift;
+            
+            // Update button styles
+            shiftButtons.forEach(btn => {
+                btn.classList.remove('bg-primary/20', 'text-primary');
+                btn.classList.add('text-text-secondary-dark', 'hover:bg-content-dark');
+            });
+            button.classList.add('bg-primary/20', 'text-primary');
+            button.classList.remove('text-text-secondary-dark', 'hover:bg-content-dark');
+            
+            updateDashboard();
+        });
+    });
+    
+    // Initial dashboard render
+    updateDashboard();
 
 </script>
 <script defer="" src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
