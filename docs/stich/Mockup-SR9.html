@@ -16,6 +16,10 @@
                         "primary": "#3abff8",
                         "background-light": "#f5f7f8",
                         "background-dark": "#101d23",
+                        "content-dark": "#182c34",
+                        "border-dark": "#305869",
+                        "text-primary-dark": "#e0e0e0",
+                        "text-secondary-dark": "#a0a0a0",
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -46,96 +50,96 @@
 <!-- PageHeading -->
 <div class="flex flex-wrap justify-between gap-3 mb-8">
 <div class="flex min-w-72 flex-col gap-3">
-<p class="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Review and Submit Shift Report</p>
-<p class="text-[#8fb9cc] text-base font-normal leading-normal">Please verify all information before submitting.</p>
+<p class="text-text-primary-dark text-4xl font-black leading-tight tracking-[-0.033em]">Review and Submit Shift Report</p>
+<p class="text-text-secondary-dark text-base font-normal leading-normal">Please verify all information before submitting.</p>
 </div>
 </div>
 <!-- Main Review Card -->
-<div class="bg-[#19272e] rounded-xl p-6 md:p-8 space-y-8 border border-[#305869]/50">
+<div class="bg-content-dark rounded-xl p-6 md:p-8 space-y-8 border border-border-dark/50">
 <!-- Report Criteria Section -->
 <div>
 <div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Report Criteria</h2>
+<h2 class="text-text-primary-dark text-[22px] font-bold leading-tight tracking-[-0.015em]">Report Criteria</h2>
 <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
 <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                 Edit
                             </button>
 </div>
-<div class="p-4 grid grid-cols-[1fr_3fr] md:grid-cols-[20%_1fr] gap-x-6 bg-[#101d23] rounded-lg">
+<div class="p-4 grid grid-cols-[1fr_3fr] md:grid-cols-[20%_1fr] gap-x-6 bg-background-dark rounded-lg">
 <div class="col-span-2 grid grid-cols-subgrid py-3">
-<p class="text-[#8fb9cc] text-sm font-normal leading-normal">Date</p>
-<p class="text-white text-sm font-normal leading-normal">2023-10-27</p>
+<p class="text-text-secondary-dark text-sm font-normal leading-normal">Date</p>
+<p class="text-text-primary-dark text-sm font-normal leading-normal">2023-10-27</p>
 </div>
-<div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#305869] py-3">
-<p class="text-[#8fb9cc] text-sm font-normal leading-normal">Shift</p>
-<p class="text-white text-sm font-normal leading-normal">Day Shift (06:00 - 14:00)</p>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-t-border-dark py-3">
+<p class="text-text-secondary-dark text-sm font-normal leading-normal">Shift</p>
+<p class="text-text-primary-dark text-sm font-normal leading-normal">Day Shift (06:00 - 14:00)</p>
 </div>
 </div>
 </div>
 <!-- Employee Staffing Section -->
 <div>
 <div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Employee Staffing</h2>
+<h2 class="text-text-primary-dark text-[22px] font-bold leading-tight tracking-[-0.015em]">Employee Staffing</h2>
 <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
 <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                 Edit
                             </button>
 </div>
-<div class="bg-[#101d23] rounded-lg p-4 space-y-4">
+<div class="bg-background-dark rounded-lg p-4 space-y-4">
 <div class="flex items-center justify-between">
-<p class="text-[#8fb9cc] text-sm">Absent Employees</p>
-<p class="text-white text-sm font-medium">4</p>
+<p class="text-text-secondary-dark text-sm">Absent Employees</p>
+<p class="text-text-primary-dark text-sm font-medium">4</p>
 </div>
 <div class="flex items-center justify-between">
-<p class="text-[#8fb9cc] text-sm">Hired Employees</p>
-<p class="text-white text-sm font-medium">2</p>
+<p class="text-text-secondary-dark text-sm">Hired Employees</p>
+<p class="text-text-primary-dark text-sm font-medium">2</p>
 </div>
 <div class="flex items-center justify-between">
-<p class="text-[#8fb9cc] text-sm">Hired Out Employees</p>
-<p class="text-white text-sm font-medium">1</p>
+<p class="text-text-secondary-dark text-sm">Hired Out Employees</p>
+<p class="text-text-primary-dark text-sm font-medium">1</p>
 </div>
 <div class="flex items-center justify-between">
-<p class="text-[#8fb9cc] text-sm">Overtime Employees</p>
-<p class="text-white text-sm font-medium">8</p>
+<p class="text-text-secondary-dark text-sm">Overtime Employees</p>
+<p class="text-text-primary-dark text-sm font-medium">8</p>
 </div>
 </div>
 </div>
 <!-- Area Performance Section -->
 <div>
 <div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Area Performance</h2>
+<h2 class="text-text-primary-dark text-[22px] font-bold leading-tight tracking-[-0.015em]">Area Performance</h2>
 <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
 <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                 Edit
                             </button>
 </div>
-<div class="bg-[#101d23] rounded-lg p-4">
-<div class="grid grid-cols-4 gap-4 text-sm text-[#8fb9cc] mb-3 px-4">
+<div class="bg-background-dark rounded-lg p-4">
+<div class="grid grid-cols-4 gap-4 text-sm text-text-secondary-dark mb-3 px-4">
 <span>Area</span>
 <span class="text-right">Orderlines</span>
 <span class="text-right">Moves</span>
 <span class="text-right">Hours</span>
 </div>
 <div class="space-y-2">
-<div class="grid grid-cols-4 gap-4 text-sm text-white bg-[#19272e] p-4 rounded-md">
+<div class="grid grid-cols-4 gap-4 text-sm text-text-primary-dark bg-content-dark p-4 rounded-md">
 <span>A-Block</span>
 <span class="text-right">1,230</span>
 <span class="text-right">450</span>
 <span class="text-right">16.0</span>
 </div>
-<div class="grid grid-cols-4 gap-4 text-sm text-white bg-[#19272e] p-4 rounded-md">
+<div class="grid grid-cols-4 gap-4 text-sm text-text-primary-dark bg-content-dark p-4 rounded-md">
 <span>B-Block</span>
 <span class="text-right">980</span>
 <span class="text-right">320</span>
 <span class="text-right">14.5</span>
 </div>
-<div class="grid grid-cols-4 gap-4 text-sm text-white bg-[#19272e] p-4 rounded-md">
+<div class="grid grid-cols-4 gap-4 text-sm text-text-primary-dark bg-content-dark p-4 rounded-md">
 <span>C-Block</span>
 <span class="text-right">1,560</span>
 <span class="text-right">610</span>
 <span class="text-right">20.0</span>
 </div>
-<div class="grid grid-cols-4 gap-4 text-sm text-white font-bold border-t border-[#305869] mt-3 pt-3 px-4">
+<div class="grid grid-cols-4 gap-4 text-sm text-text-primary-dark font-bold border-t border-border-dark mt-3 pt-3 px-4">
 <span>Total</span>
 <span class="text-right">3,770</span>
 <span class="text-right">1,380</span>
@@ -147,42 +151,42 @@
 <!-- Sampakk & Issues Section -->
 <div>
 <div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Sampakk &amp; Issues</h2>
+<h2 class="text-text-primary-dark text-[22px] font-bold leading-tight tracking-[-0.015em]">Sampakk &amp; Issues</h2>
 <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
 <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                 Edit
                             </button>
 </div>
-<div class="bg-[#101d23] rounded-lg p-4">
+<div class="bg-background-dark rounded-lg p-4">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-<p class="text-[#8fb9cc] text-sm">Sampakk Scans</p>
-<p class="text-white text-sm">4,512</p>
-<p class="text-[#8fb9cc] text-sm">Sampakk Hours Worked</p>
-<p class="text-white text-sm">8.0</p>
-<p class="text-[#8fb9cc] text-sm col-span-1 md:col-span-2 mt-2">Significant Issues/Delays</p>
-<p class="text-white text-sm col-span-1 md:col-span-2">- Conveyor belt malfunction in B-Block from 09:15 to 09:45.<br/>- System outage for 10 minutes at 11:00.</p>
+<p class="text-text-secondary-dark text-sm">Sampakk Scans</p>
+<p class="text-text-primary-dark text-sm">4,512</p>
+<p class="text-text-secondary-dark text-sm">Sampakk Hours Worked</p>
+<p class="text-text-primary-dark text-sm">8.0</p>
+<p class="text-text-secondary-dark text-sm col-span-1 md:col-span-2 mt-2">Significant Issues/Delays</p>
+<p class="text-text-primary-dark text-sm col-span-1 md:col-span-2">- Conveyor belt malfunction in B-Block from 09:15 to 09:45.<br/>- System outage for 10 minutes at 11:00.</p>
 </div>
 </div>
 </div>
 <!-- General Notes Section -->
 <div>
 <div class="flex justify-between items-center mb-4">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">General Notes</h2>
+<h2 class="text-text-primary-dark text-[22px] font-bold leading-tight tracking-[-0.015em]">General Notes</h2>
 <button class="flex items-center gap-2 text-primary text-sm font-medium hover:underline">
 <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                 Edit
                             </button>
 </div>
-<div class="bg-[#101d23] rounded-lg p-4">
-<p class="text-white text-sm leading-relaxed">
+<div class="bg-background-dark rounded-lg p-4">
+<p class="text-text-primary-dark text-sm leading-relaxed">
                                 Overall a productive shift despite the minor technical issues. Team morale is high. Noted a significant increase in efficiency in C-Block due to the new scanner deployment. Follow-up required on the conveyor belt maintenance ticket.
                             </p>
 </div>
 </div>
 <!-- Action Buttons -->
-<div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-[#305869]">
-<button class="px-6 py-2.5 rounded-lg text-white font-medium bg-transparent border border-[#305869] hover:bg-[#223d49] transition-colors">Back</button>
-<button class="px-6 py-2.5 rounded-lg text-slate-900 font-medium bg-primary hover:bg-primary/90 transition-colors">Submit Final Report</button>
+<div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-border-dark">
+<button class="px-6 py-2.5 rounded-lg text-text-primary-dark font-medium bg-transparent border border-border-dark hover:bg-content-dark transition-colors">Back</button>
+<button class="px-6 py-2.5 rounded-lg text-background-dark font-medium bg-primary hover:bg-primary/90 transition-colors">Submit Final Report</button>
 </div>
 </div>
 </div>

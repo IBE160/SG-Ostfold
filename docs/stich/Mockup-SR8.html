@@ -16,6 +16,10 @@
             "primary": "#3abff8",
             "background-light": "#f5f7f8",
             "background-dark": "#101d23",
+            "content-dark": "#182c34",
+            "border-dark": "#305869",
+            "text-primary-dark": "#e0e0e0",
+            "text-secondary-dark": "#a0a0a0",
           },
           fontFamily: {
             "display": ["Inter", "sans-serif"]
@@ -48,33 +52,33 @@
 <body class="bg-background-light dark:bg-background-dark p-8">
 <div class="mx-auto max-w-4xl">
 <!-- Card Component -->
-<div class="flex flex-col items-stretch justify-start rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-[#182c34] p-6">
+<div class="flex flex-col items-stretch justify-start rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-content-dark p-6">
 <div class="flex w-full flex-col items-stretch justify-center gap-6">
-<h2 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">Sampakk &amp; Issues Summary</h2>
+<h2 class="text-text-primary-dark text-xl font-bold leading-tight tracking-[-0.015em]">Sampakk &amp; Issues Summary</h2>
 <!-- Form -->
 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 <!-- Sampakk Scans Input -->
 <label class="flex flex-col min-w-40 flex-1">
-<p class="text-white text-base font-medium leading-normal pb-2">Sampakk Scans</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-[#101d23] focus:border-primary h-14 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" placeholder="e.g., 500" type="number" value=""/>
+<p class="text-text-primary-dark text-base font-medium leading-normal pb-2">Sampakk Scans</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-primary-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary h-14 placeholder:text-text-secondary-dark p-[15px] text-base font-normal leading-normal" placeholder="e.g., 500" type="number" value=""/>
 </label>
 <!-- Sampakk Hours Worked Input -->
 <label class="flex flex-col min-w-40 flex-1">
-<p class="text-white text-base font-medium leading-normal pb-2">Sampakk Hours Worked</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-[#101d23] focus:border-primary h-14 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" placeholder="e.g., 80" type="number" value=""/>
+<p class="text-text-primary-dark text-base font-medium leading-normal pb-2">Sampakk Hours Worked</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-primary-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary h-14 placeholder:text-text-secondary-dark p-[15px] text-base font-normal leading-normal" placeholder="e.g., 80" type="number" value=""/>
 </label>
 </div>
 <!-- Significant Issues or Delays Textarea -->
 <div class="col-span-1 md:col-span-2">
 <label class="flex flex-col min-w-40 flex-1">
-<p class="text-white text-base font-medium leading-normal pb-2">Significant Issues or Delays</p>
-<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#305869] bg-[#101d23] focus:border-primary min-h-36 placeholder:text-[#8fb9cc] p-[15px] text-base font-normal leading-normal" placeholder="Summarize any major incidents, delays, or challenges..."></textarea>
+<p class="text-text-primary-dark text-base font-medium leading-normal pb-2">Significant Issues or Delays</p>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-primary-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary min-h-36 placeholder:text-text-secondary-dark p-[15px] text-base font-normal leading-normal" placeholder="Summarize any major incidents, delays, or challenges..."></textarea>
 </label>
 </div>
 <!-- Action Buttons -->
 <div class="flex justify-end gap-4 pt-4">
-<button class="flex items-center justify-center rounded-lg border border-[#305869] bg-transparent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#305869]/50">Back</button>
-<button class="flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-black transition-opacity hover:opacity-90">Continue</button>
+<button class="flex items-center justify-center rounded-lg border border-border-dark bg-transparent px-6 py-3 text-sm font-medium text-text-primary-dark transition-colors hover:bg-border-dark/50">Back</button>
+<button class="flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-background-dark transition-opacity hover:opacity-90">Continue</button>
 </div>
 </div>
 </div>
