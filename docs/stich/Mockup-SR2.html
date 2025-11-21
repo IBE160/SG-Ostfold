@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Select Report Criteria</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#3abff8",
+              "background-light": "#f5f7f8",
+              "background-dark": "#111827",
+              "content-dark": "#1f2937",
+              "text-primary-dark": "#d1d5db",
+              "text-secondary-dark": "#9ca3af",
+              "border-dark": "#374151"
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+        .calendar-day {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        }
+        .calendar-day.inactive {
+            color: #4b5563;}
+        .calendar-day.current-month {
+            color: var(--text-primary-dark);
+        }
+        .calendar-day.today {
+            border: 1px solid var(--primary);
+            font-weight: 700;
+        }
+        .calendar-day.selected {
+            background-color: var(--primary);
+            color: var(--background-dark);
+            font-weight: 700;
+        }
+        .calendar-day:not(.inactive):hover:not(.selected) {
+            background-color: var(--border-dark);
+        }
+        .calendar-weekday {
+            text-align: center;
+            font-weight: 500;
+            color: var(--text-secondary-dark);
+            font-size: 0.875rem;
+        }
+        :root {
+            --primary-rgb: 56, 189, 248;
+        }
+        .sidebar {
+            width: 16rem;
+            transition: width 0.3s ease-in-out;
+        }
+        .sidebar.collapsed {
+            width: 4.5rem;
+        }
+        .sidebar .nav-text, .sidebar .user-info {
+            opacity: 1;
+            transition: opacity 0.2s ease-in-out, width 0s ease-in-out 0s;
+            width: auto;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .sidebar.collapsed .nav-text, .sidebar.collapsed .user-info {
+            opacity: 0;
+            width: 0;
+            transition: opacity 0.1s ease-in-out, width 0s ease-in-out 0.1s;
+        }
+        .sidebar .nav-link, .sidebar .user-profile {
+            justify-content: flex-start;
+        }
+        .sidebar.collapsed .nav-link, .sidebar.collapsed .user-profile {
+            justify-content: center;
+        }
+        .main-content {
+            flex: 1;
+            transition: margin-left 0.3s ease-in-out;
+            margin-left: 16rem;
+        }
+        .sidebar.collapsed ~ .main-content {
+            margin-left: 4.5rem;
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-text-primary-dark">
+<div class="flex min-h-screen w-full">
+<aside class="sidebar fixed top-0 left-0 flex h-full flex-col justify-between border-r border-border-dark bg-content-dark p-4">
+<div>
+<div class="flex items-center gap-3 px-3 py-2 user-profile">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 flex-shrink-0" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_7l6XvFrIyDRrHcXpuy64h-xNyPTGTPA-lqIjpAS49h6hLFPWfKMMLbAcVXc8ZKqwH-lQiIuSOgUYMkujIV8eelmm_2OcMInFP7Te_eBQeRURZTq8ksuYaynQ2iTr4HCh1PinKpL7TE9euOpAalzPCkTrz7JscnAZ3cHX2t6dqhbZN3JGkjWRyZl-URLS5hHUNU1Jz_JL7mfVK8CX8YwVpns0Gz8MKo0P4Cf9KzY8Is1WHa1fjaLFvogEeD2I85XSuu_RP4rWApM");'></div>
+<div class="flex flex-col user-info">
+<h1 class="text-text-primary-dark text-base font-medium leading-normal">ibe160</h1>
+<p class="text-text-secondary-dark text-sm font-normal leading-normal">Operations</p>
+</div>
+</div>
+<nav class="mt-4 flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors nav-link" href="#">
+<span class="material-symbols-outlined text-2xl">dashboard</span>
+<p class="text-sm font-medium leading-normal nav-text">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors nav-link" href="#">
+<span class="material-symbols-outlined fill text-2xl">description</span>
+<p class="text-sm font-medium leading-normal nav-text">Shift Reports</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors nav-link" href="#">
+<span class="material-symbols-outlined text-2xl">engineering</span>
+<p class="text-sm font-medium leading-normal nav-text">Operations</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors nav-link" href="#">
+<span class="material-symbols-outlined text-2xl">bar_chart</span>
+<p class="text-sm font-medium leading-normal nav-text">Analytics</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors nav-link" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<p class="text-sm font-medium leading-normal nav-text">Settings</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-1 border-t border-border-dark pt-2">
+<a class="flex items-center gap-3 rounded-lg bg-primary px-3 py-2 text-background-dark font-medium transition-colors hover:bg-primary/90 nav-link" href="#">
+<span class="material-symbols-outlined text-2xl">add</span>
+<p class="text-sm font-medium leading-normal nav-text">New Report</p>
+</a>
+<button class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors nav-link" onclick="document.querySelector('.sidebar').classList.toggle('collapsed'); this.querySelector('.material-symbols-outlined').classList.toggle('rotate-180');">
+<span class="material-symbols-outlined text-2xl transition-transform duration-300">keyboard_double_arrow_left</span>
+<p class="text-sm font-normal leading-normal nav-text">Collapse</p>
+</button>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors nav-link" href="#">
+<span class="material-symbols-outlined text-2xl">help</span>
+<p class="text-sm font-normal leading-normal nav-text">Help</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark transition-colors nav-link" href="#">
+<span class="material-symbols-outlined text-2xl">logout</span>
+<p class="text-sm font-normal leading-normal nav-text">Logout</p>
+</a>
+</div>
+</aside>
+<main class="main-content flex-1 p-8">
+<header class="mb-8">
+<h1 class="text-3xl font-bold text-text-primary-dark">Select Report Criteria</h1>
+</header>
+<div class="mx-auto w-full max-w-4xl">
+<div class="rounded-lg border border-border-dark bg-content-dark p-8 shadow-lg">
+<div class="space-y-8">
+<div>
+<h2 class="text-text-primary-dark text-xl font-bold leading-tight">Select Date</h2>
+<p class="text-text-secondary-dark mt-1 text-sm">Choose the date for the new report.</p>
+</div>
+<div class="flex flex-col gap-4">
+<div class="w-full">
+<div class="flex items-center justify-between pb-4">
+<button class="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+</button>
+<h3 class="text-text-primary-dark text-lg font-semibold">October 2023</h3>
+<button class="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark">
+<span class="material-symbols-outlined text-2xl">arrow_forward_ios</span>
+</button>
+</div>
+<div class="calendar-grid text-sm">
+<div class="calendar-weekday">MON</div>
+<div class="calendar-weekday">TUE</div>
+<div class="calendar-weekday">WED</div>
+<div class="calendar-weekday">THU</div>
+<div class="calendar-weekday">FRI</div>
+<div class="calendar-weekday">SAT</div>
+<div class="calendar-weekday">SUN</div>
+<div class="calendar-day inactive">25</div>
+<div class="calendar-day inactive">26</div>
+<div class="calendar-day current-month">27</div>
+<div class="calendar-day current-month">28</div>
+<div class="calendar-day current-month">29</div>
+<div class="calendar-day current-month">30</div>
+<div class="calendar-day current-month">31</div>
+<div class="calendar-day current-month">1</div>
+<div class="calendar-day current-month">2</div>
+<div class="calendar-day current-month">3</div>
+<div class="calendar-day current-month">4</div>
+<div class="calendar-day current-month">5</div>
+<div class="calendar-day current-month">6</div>
+<div class="calendar-day current-month">7</div>
+<div class="calendar-day current-month">8</div>
+<div class="calendar-day current-month">9</div>
+<div class="calendar-day current-month">10</div>
+<div class="calendar-day current-month">11</div>
+<div class="calendar-day current-month">12</div>
+<div class="calendar-day current-month">13</div>
+<div class="calendar-day current-month">14</div>
+<div class="calendar-day current-month">15</div>
+<div class="calendar-day current-month">16</div>
+<div class="calendar-day current-month">17</div>
+<div class="calendar-day current-month">18</div>
+<div class="calendar-day current-month">19</div>
+<div class="calendar-day current-month">20</div>
+<div class="calendar-day current-month">21</div>
+<div class="calendar-day current-month">22</div>
+<div class="calendar-day current-month">23</div>
+<div class="calendar-day current-month">24</div>
+<div class="calendar-day current-month">25</div>
+<div class="calendar-day current-month">26</div>
+<div class="calendar-day selected current-month">27</div>
+<div class="calendar-day current-month">28</div>
+<div class="calendar-day current-month">29</div>
+<div class="calendar-day current-month">30</div>
+<div class="calendar-day inactive">1</div>
+<div class="calendar-day inactive">2</div>
+<div class="calendar-day inactive">3</div>
+<div class="calendar-day inactive">4</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<h2 class="text-text-primary-dark text-xl font-bold leading-tight">Select Shift</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="flex flex-col items-center justify-center p-4 rounded-lg border border-border-dark bg-background-dark text-text-primary-dark cursor-pointer hover:border-primary transition-colors h-24 text-center">
+<p class="text-base font-medium">Morning</p>
+<p class="text-sm text-text-secondary-dark">(06:00-14:00)</p>
+</div>
+<div class="flex flex-col items-center justify-center p-4 rounded-lg border border-primary bg-primary/10 text-text-primary-dark cursor-pointer h-24 text-center">
+<p class="text-base font-medium">Evening</p>
+<p class="text-sm text-text-secondary-dark">(14:00-22:00)</p>
+</div>
+<div class="flex flex-col items-center justify-center p-4 rounded-lg border border-border-dark bg-background-dark text-text-primary-dark cursor-pointer hover:border-primary transition-colors h-24 text-center">
+<p class="text-base font-medium">Night</p>
+<p class="text-sm text-text-secondary-dark">(22:00-06:00)</p>
+</div>
+</div>
+</div>
+<div class="flex pt-4 justify-end">
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
+<span class="truncate">Continue</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Historical Shift Reports - ibe160</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style type="text/tailwindcss">
+    #sidebar-toggle:checked ~ #sidebar .sidebar-text,
+    #sidebar-toggle:checked ~ #sidebar .sidebar-user-info {
+        display: none;
+    }
+    #sidebar-toggle:checked ~ #sidebar .sidebar-header {
+        justify-content: center;
+    }
+    #sidebar-toggle:checked ~ #sidebar {
+        width: 80px;
+    }
+    #sidebar-toggle:checked ~ #sidebar .sidebar-nav-link {
+        justify-content: center;
+    }
+    #sidebar-toggle:checked ~ #sidebar .sidebar-toggle-button .toggle-open {
+       transform: rotate(180deg);
+    }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#38bdf8",
+              "background-light": "#f5f7f8",
+              "background-dark": "#111827",
+              "content-dark": "#1f2937",
+              "border-dark": "#374151",
+              "text-primary-dark": "#d1d5db",
+              "text-secondary-dark": "#9ca3af",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-row">
+<input class="peer sr-only" id="sidebar-toggle" type="checkbox"/>
+<aside class="flex h-screen w-[220px] flex-col justify-between bg-background-light dark:bg-background-dark p-4 border-r border-transparent dark:border-border-dark flex-shrink-0 sticky top-0 transition-all duration-300 ease-in-out" id="sidebar">
+<div class="flex flex-col gap-4 overflow-hidden">
+<div class="sidebar-header flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 flex-shrink-0" data-alt="User avatar for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAGKu8Rb2oAaTv7jl3YUVokyGXMQPWZn-7zhVjEnYgQqXYoE5tBQJdl40YOuMygrDPH62GfxsxRSnMeefJ4x7RWk12SyD7kO-2_DJi0vP2elQc4Q5TQVSSeH80N1IybjfmJZ7b9nxIvqB0qtyz62yH0uptvMbyBf7wuyOuTlWj3TsekEnbYkvYeJlEAJjY51UMsB8RYoHF9e1SK7mvNTRbuwZJ38qIS8q5SB5jLYIXJdMmhXzySOGoTjh6ZZAWAISk0cPsK5m3ux_Q");'></div>
+<div class="sidebar-user-info flex flex-col whitespace-nowrap">
+<h1 class="text-gray-800 dark:text-text-primary-dark text-base font-medium leading-normal">ibe160</h1>
+<p class="text-gray-500 dark:text-text-secondary-dark text-sm font-normal leading-normal">Operations Management</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="sidebar-nav-link flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-content-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-gray-600 dark:text-text-secondary-dark flex-shrink-0">dashboard</span>
+<p class="sidebar-text text-gray-800 dark:text-text-primary-dark text-sm font-medium leading-normal whitespace-nowrap">Dashboard</p>
+</a>
+<a class="sidebar-nav-link flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 dark:bg-content-dark" href="#">
+<span class="material-symbols-outlined text-primary flex-shrink-0">assignment</span>
+<p class="sidebar-text text-primary text-sm font-medium leading-normal whitespace-nowrap">Shift Reports</p>
+</a>
+<a class="sidebar-nav-link flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-content-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-gray-600 dark:text-text-secondary-dark flex-shrink-0">settings</span>
+<p class="sidebar-text text-gray-800 dark:text-text-primary-dark text-sm font-medium leading-normal whitespace-nowrap">Settings</p>
+</a>
+</nav>
+</div>
+<div class="overflow-hidden">
+<label class="sidebar-toggle-button cursor-pointer flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-content-dark transition-colors" for="sidebar-toggle">
+<span class="material-symbols-outlined text-gray-600 dark:text-text-secondary-dark toggle-open transition-transform duration-300">chevron_left</span>
+<span class="sidebar-text text-gray-800 dark:text-text-primary-dark text-sm font-medium leading-normal whitespace-nowrap">Collapse</span>
+</label>
+</div>
+</aside>
+<main class="flex-1 p-8 transition-all duration-300 ease-in-out">
+<div class="mx-auto max-w-7xl">
+<header class="flex flex-wrap items-center justify-between gap-4 mb-8">
+<h1 class="text-gray-900 dark:text-text-primary-dark text-3xl font-bold leading-tight">Historical Shift Reports</h1>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-primary text-primary text-sm font-bold leading-normal tracking-wide hover:bg-primary/10 transition-colors">
+<span class="truncate">Export CSV</span>
+</button>
+</header>
+<div class="mb-8 p-6 bg-background-light dark:bg-content-dark rounded-lg border border-gray-200 dark:border-border-dark">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-gray-600 dark:text-text-secondary-dark" for="start-date">Start Date</label>
+<input class="w-full rounded-lg border-gray-300 dark:border-border-dark bg-background-light dark:bg-background-dark text-gray-800 dark:text-text-primary-dark focus:border-primary focus:ring-primary" id="start-date" type="date"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-gray-600 dark:text-text-secondary-dark" for="end-date">End Date</label>
+<input class="w-full rounded-lg border-gray-300 dark:border-border-dark bg-background-light dark:bg-background-dark text-gray-800 dark:text-text-primary-dark focus:border-primary focus:ring-primary" id="end-date" type="date"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-gray-600 dark:text-text-secondary-dark" for="shift">Shift</label>
+<select class="w-full rounded-lg border-gray-300 dark:border-border-dark bg-background-light dark:bg-background-dark text-gray-800 dark:text-text-primary-dark focus:border-primary focus:ring-primary" id="shift">
+<option>All Shifts</option>
+<option>Morning</option>
+<option>Evening</option>
+<option>Night</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-gray-600 dark:text-text-secondary-dark" for="area">Area</label>
+<input class="w-full rounded-lg border-gray-300 dark:border-border-dark bg-background-light dark:bg-background-dark text-gray-800 dark:text-text-primary-dark placeholder:text-gray-400 dark:placeholder:text-text-secondary-dark focus:border-primary focus:ring-primary" id="area" placeholder="Filter by Area" type="text"/>
+</div>
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-wide hover:bg-opacity-90 transition-opacity">
+<span class="truncate">Apply Filters</span>
+</button>
+</div>
+</div>
+<div class="overflow-hidden rounded-lg border border-gray-200 dark:border-border-dark">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-border-dark bg-background-light dark:bg-content-dark">
+<thead class="bg-gray-50 dark:bg-background-dark">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Date</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Shift</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Area</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Orders</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Overtime</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Sick Leave</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-border-dark">
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">2023-10-26</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">Morning</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">Warehouse A</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">152</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">4 hours</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">1</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+<a class="text-primary hover:text-primary/80" href="#">View</a>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">2023-10-26</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">Evening</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">Loading Bay</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">130</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">2 hours</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">0</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+<a class="text-primary hover:text-primary/80" href="#">View</a>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">2023-10-25</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">Morning</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">Warehouse A</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">148</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">3 hours</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">0</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+<a class="text-primary hover:text-primary/80" href="#">View</a>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">2023-10-25</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">Night</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">Receiving</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">95</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">0 hours</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-text-primary-dark">2</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+<a class="text-primary hover:text-primary/80" href="#">View</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

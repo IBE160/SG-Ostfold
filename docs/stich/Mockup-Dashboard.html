@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ibe160 Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#3abff8", // This will be used for standard KPIs and accents
+              "background-light": "#f5f7f8",
+              "background-dark": "#111827",
+              "content-dark": "#1f2937",
+              "border-dark": "#374151",
+              "text-primary-dark": "#d1d5db",
+              "text-secondary-dark": "#9ca3af",
+              "success": "#22c55e",
+              "error": "#f43f5e"
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+<div class="flex h-full grow" x-data="{ sidebarOpen: true }">
+<aside :class="sidebarOpen ? 'w-[220px]' : 'w-[72px]'" class="fixed top-0 left-0 flex h-screen flex-col bg-background-light dark:bg-background-dark border-r border-transparent dark:border-border-dark p-4 transition-width duration-300 ease-in-out">
+<div class="flex flex-col gap-4 overflow-hidden">
+<div class="flex items-center gap-3 py-2 px-2 shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shrink-0" data-alt="User profile picture for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEFnmae8c-RPFAP7dXRRN35QE3R_xKcUyWDghXbXj5GfLlCsSvILFJ4Ub0rYm7KPcr0cBk2XpdpmcCptm81YVbieOPO2BQIlk4Bm-31NkHe3Foo2LrzlA9kzA6LBB6H7_Lq4y5idMuaW0mpYn0tkOkjVJjqpRTW5VponztbqNH1cJLCqOQSe2E6aPZhFjVyYtn2_e29dhdSbnUhJv-iBhxT7ttSi9vAUuOQ0nVUGCUOA39Sec4gMTtWZSFolm3l_ojuWH0qEh8jSc");'></div>
+<div class="flex flex-col min-w-0" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">
+<h1 class="text-white text-base font-medium leading-normal truncate">ibe160</h1>
+<p class="text-text-secondary-dark text-sm font-normal leading-normal truncate">Operations</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-content-dark" href="#">
+<span class="material-symbols-outlined text-primary" style="font-size: 24px; font-variation-settings: 'FILL' 1;">dashboard</span>
+<p class="text-primary text-sm font-medium leading-normal whitespace-nowrap" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-content-dark transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-text-primary-dark" style="font-size: 24px;">assignment</span>
+<p class="text-text-primary-dark text-sm font-medium leading-normal whitespace-nowrap" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">Shift Reports</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-content-dark transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-text-primary-dark" style="font-size: 24px;">settings</span>
+<p class="text-text-primary-dark text-sm font-medium leading-normal whitespace-nowrap" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">Settings</p>
+</a>
+</nav>
+</div>
+<div class="mt-auto">
+<button @click="sidebarOpen = !sidebarOpen" class="flex items-center w-full gap-3 px-3 py-2 rounded-lg hover:bg-content-dark transition-colors duration-200 text-text-secondary-dark">
+<span :class="!sidebarOpen &amp;&amp; 'rotate-180'" class="material-symbols-outlined transition-transform duration-300">menu_open</span>
+<p class="text-sm font-medium leading-normal whitespace-nowrap" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">Collapse</p>
+</button>
+</div>
+</aside>
+<main :class="sidebarOpen ? 'ml-[220px]' : 'ml-[72px]'" class="flex flex-1 flex-col transition-all duration-300 ease-in-out">
+<div class="flex-1 p-8 space-y-8">
+<header class="flex flex-col gap-6">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<h1 class="text-text-primary-dark text-4xl font-black leading-tight tracking-[-0.033em]">Dashboard</h1>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-content-dark pl-4 pr-3 border border-border-dark hover:border-primary/50 transition-colors duration-200">
+<p class="text-text-primary-dark text-sm font-medium leading-normal">Last 30 Days</p>
+<span class="material-symbols-outlined text-text-secondary-dark" style="font-size: 20px;">expand_more</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 rounded-lg bg-primary/20 text-primary text-sm font-medium transition-colors duration-200">Totalt</button>
+<button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 1</button>
+<button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 2</button>
+<button class="px-4 py-2 rounded-lg text-text-secondary-dark hover:bg-content-dark text-sm font-medium transition-colors duration-200">Drift 3</button>
+</div>
+</header>
+<section class="bg-content-dark p-6 rounded-lg border border-border-dark">
+<div class="flex flex-col gap-2">
+<p class="text-text-primary-dark text-base font-medium leading-normal">Orders per Hour: Trend &amp; Forecast</p>
+<div class="flex min-h-[220px] flex-1 flex-col justify-end pt-4">
+<svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 130C18.1538 130 18.1538 100 36.3077 100C54.4615 100 54.4615 85 72.6154 85C90.7692 85 90.7692 93 108.923 93C127.077 93 127.077 63 145.231 63C163.385 63 163.385 71 181.538 71C199.692 71 199.692 51 217.846 51C236 51 236 45 254.154 45C272.308 45 272.308 31 290.462 31C308.615 31 308.615 25 326.769 25C344.923 25 344.923 1 363.077 1C381.231 1 381.231 11 399.385 11C417.538 11 417.538 29 435.692 29C453.846 29 453.846 15 472 15V150H0V130Z" fill="url(#paint0_linear_chart)"></path>
+<path d="M0 130C18.1538 130 18.1538 100 36.3077 100C54.4615 100 54.4615 85 72.6154 85C90.7692 85 90.7692 93 108.923 93C127.077 93 127.077 63 145.231 63C163.385 63 163.385 71 181.538 71C199.692 71 199.692 51 217.846 51C236 51 236 45 254.154 45C272.308 45 272.308 31 290.462 31C308.615 31 308.615 25 326.769 25C344.923 25 344.923 1 363.077 1C381.231 1 381.231 11 399.385 11C417.538 11 417.538 29 435.692 29C453.846 29 453.846 15 472 15" stroke="#38bdf8" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_chart" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#38bdf8" stop-opacity="0.3"></stop>
+<stop offset="1" stop-color="#38bdf8" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+</svg>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
+<p class="text-text-secondary-dark text-base font-medium leading-normal">Sick Leave (vs. Avg)</p>
+<p class="text-success tracking-light text-4xl font-bold leading-tight">↓ 2%</p>
+</div>
+<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
+<p class="text-text-secondary-dark text-base font-medium leading-normal">Overtime (vs. Avg)</p>
+<p class="text-error tracking-light text-4xl font-bold leading-tight">↑ 15%</p>
+</div>
+<div class="flex flex-col gap-2 rounded-lg p-6 bg-content-dark border border-border-dark">
+<p class="text-text-secondary-dark text-base font-medium leading-normal">Avg. Orders/Hr</p>
+<p class="text-primary tracking-light text-4xl font-bold leading-tight">120</p>
+</div>
+</section>
+</div>
+</main>
+</div>
+</div>
+<script defer="" src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</body></html>
