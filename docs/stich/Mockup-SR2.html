@@ -53,14 +53,16 @@
             border-radius: 0.5rem;
             cursor: pointer;
             transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+            font-weight: 700; /* Made numbers more visible */
         }
         .calendar-day.inactive {
-            color: #4b5563;}
+            color: var(--text-secondary-dark); /* Using theme color */
+        }
         .calendar-day.current-month {
             color: var(--text-primary-dark);
         }
         .calendar-day.today {
-            border: 1px solid var(--primary);
+            border: 2px solid var(--primary); /* Increased border for today */
             font-weight: 700;
         }
         .calendar-day.selected {
@@ -71,15 +73,25 @@
         .calendar-day:not(.inactive):hover:not(.selected) {
             background-color: var(--border-dark);
         }
+        .calendar-day.greyed-out {
+            color: var(--text-secondary-dark);
+            cursor: not-allowed;
+            background-color: transparent;
+        }
+        .calendar-day.completed-report {
+            background-color: var(--success);
+            color: var(--background-dark);
+        }
+        .calendar-day.selected.completed-report {
+            background-color: var(--primary); /* Maintain primary color if also selected */
+        }
         .calendar-weekday {
             text-align: center;
             font-weight: 500;
             color: var(--text-secondary-dark);
             font-size: 0.875rem;
         }
-        :root {
-            --primary-rgb: 56, 189, 248;
-        }
+        /* Removed :root { --primary-rgb: 56, 189, 248; } as it is not used directly */
 
     </style>
 </head>
@@ -100,85 +112,40 @@
 <div class="flex flex-col gap-4">
 <div class="w-full">
 <div class="flex items-center justify-between pb-4">
-<button class="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark">
+<button id="prev-month" class="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark">
 <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
 </button>
-<h3 class="text-text-primary-dark text-lg font-semibold">October 2023</h3>
-<button class="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark">
+<h3 id="current-month-year" class="text-text-primary-dark text-lg font-semibold" data-date="">October 2023</h3>
+<button id="next-month" class="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark">
 <span class="material-symbols-outlined text-2xl">arrow_forward_ios</span>
 </button>
 </div>
-<div class="calendar-grid text-sm">
-<div class="calendar-weekday">MON</div>
-<div class="calendar-weekday">TUE</div>
-<div class="calendar-weekday">WED</div>
-<div class="calendar-weekday">THU</div>
-<div class="calendar-weekday">FRI</div>
-<div class="calendar-weekday">SAT</div>
-<div class="calendar-weekday">SUN</div>
-<div class="calendar-day inactive">25</div>
-<div class="calendar-day inactive">26</div>
-<div class="calendar-day current-month">27</div>
-<div class="calendar-day current-month">28</div>
-<div class="calendar-day current-month">29</div>
-<div class="calendar-day current-month">30</div>
-<div class="calendar-day current-month">31</div>
-<div class="calendar-day current-month">1</div>
-<div class="calendar-day current-month">2</div>
-<div class="calendar-day current-month">3</div>
-<div class="calendar-day current-month">4</div>
-<div class="calendar-day current-month">5</div>
-<div class="calendar-day current-month">6</div>
-<div class="calendar-day current-month">7</div>
-<div class="calendar-day current-month">8</div>
-<div class="calendar-day current-month">9</div>
-<div class="calendar-day current-month">10</div>
-<div class="calendar-day current-month">11</div>
-<div class="calendar-day current-month">12</div>
-<div class="calendar-day current-month">13</div>
-<div class="calendar-day current-month">14</div>
-<div class="calendar-day current-month">15</div>
-<div class="calendar-day current-month">16</div>
-<div class="calendar-day current-month">17</div>
-<div class="calendar-day current-month">18</div>
-<div class="calendar-day current-month">19</div>
-<div class="calendar-day current-month">20</div>
-<div class="calendar-day current-month">21</div>
-<div class="calendar-day current-month">22</div>
-<div class="calendar-day current-month">23</div>
-<div class="calendar-day current-month">24</div>
-<div class="calendar-day current-month">25</div>
-<div class="calendar-day current-month">26</div>
-<div class="calendar-day selected current-month">27</div>
-<div class="calendar-day current-month">28</div>
-<div class="calendar-day current-month">29</div>
-<div class="calendar-day current-month">30</div>
-<div class="calendar-day inactive">1</div>
-<div class="calendar-day inactive">2</div>
-<div class="calendar-day inactive">3</div>
-<div class="calendar-day inactive">4</div>
+<div id="calendar-body" class="calendar-grid text-sm">
 </div>
 </div>
 </div>
 <div class="flex flex-col gap-4">
 <h2 class="text-text-primary-dark text-xl font-bold leading-tight">Select Shift</h2>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<div class="flex flex-col items-center justify-center p-4 rounded-lg border border-border-dark bg-background-dark text-text-primary-dark cursor-pointer hover:border-primary transition-colors h-24 text-center">
+<div id="shift-morning" class="shift-option flex flex-col items-center justify-center p-4 rounded-lg border border-border-dark bg-background-dark text-text-primary-dark cursor-pointer hover:border-primary transition-colors h-24 text-center" data-shift="Morning">
 <p class="text-base font-medium">Morning</p>
 <p class="text-sm text-text-secondary-dark">(06:00-14:00)</p>
 </div>
-<div class="flex flex-col items-center justify-center p-4 rounded-lg border border-primary bg-primary/10 text-text-primary-dark cursor-pointer h-24 text-center">
+<div id="shift-evening" class="shift-option flex flex-col items-center justify-center p-4 rounded-lg border border-primary bg-primary/10 text-text-primary-dark cursor-pointer h-24 text-center" data-shift="Evening">
 <p class="text-base font-medium">Evening</p>
 <p class="text-sm text-text-secondary-dark">(14:00-22:00)</p>
 </div>
-<div class="flex flex-col items-center justify-center p-4 rounded-lg border border-border-dark bg-background-dark text-text-primary-dark cursor-pointer hover:border-primary transition-colors h-24 text-center">
+<div id="shift-night" class="shift-option flex flex-col items-center justify-center p-4 rounded-lg border border-border-dark bg-background-dark text-text-primary-dark cursor-pointer hover:border-primary transition-colors h-24 text-center" data-shift="Night">
 <p class="text-base font-medium">Night</p>
 <p class="text-sm text-text-secondary-dark">(22:00-06:00)</p>
 </div>
 </div>
 </div>
-<div class="flex pt-4 justify-end">
-<button class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
+<div class="flex pt-4 justify-between">
+<button id="back-button" class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent border border-border-dark text-text-primary-dark text-base font-bold leading-normal tracking-wide hover:bg-content-dark transition-colors">
+<span class="truncate">Back</span>
+</button>
+<button id="continue-button" class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
 <span class="truncate">Continue</span>
 </button>
 </div>
@@ -188,4 +155,149 @@
 </main>
 </div>
 
-</body></html>
+<script>
+    const calendarBody = document.getElementById('calendar-body');
+    const currentMonthYear = document.getElementById('current-month-year');
+    const prevMonthBtn = document.getElementById('prev-month');
+    const nextMonthBtn = document.getElementById('next-month');
+    const shiftOptions = document.querySelectorAll('.shift-option');
+
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+    let selectedDate = new Date(); // Initially selected date
+    let selectedShift = null;
+
+    // Placeholder for completed report dates
+    // In a real application, this would come from a backend or local storage
+    const completedDates = [
+        new Date(2023, 9, 10).toDateString(), // October 10th, 2023
+        new Date(2023, 9, 15).toDateString(), // October 15th, 2023
+        new Date(2023, 9, 20).toDateString(), // October 20th, 2023
+        new Date(2023, 10, 5).toDateString(), // November 5th, 2023
+        new Date(2023, 10, 12).toDateString(), // November 12th, 2023
+        new Date(currentYear, currentMonth, today.getDate() - 2).toDateString(), // Example: 2 days ago
+    ];
+
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const weekdays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+
+    function renderCalendar() {
+        calendarBody.innerHTML = '';
+        currentMonthYear.textContent = `${months[currentMonth]} ${currentYear}`;
+        currentMonthYear.dataset.date = `${currentYear}-${currentMonth + 1}`; // Store date for easy access
+
+        // Add weekday headers
+        weekdays.forEach(day => {
+            const dayElement = document.createElement('div');
+            dayElement.classList.add('calendar-weekday');
+            dayElement.textContent = day;
+            calendarBody.appendChild(dayElement);
+        });
+
+        let firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+        firstDayOfMonth = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1; // Adjust to start on Monday
+
+        let daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        // Fill leading empty days with placeholders (empty divs)
+        for (let i = 0; i < firstDayOfMonth; i++) {
+            const dayElement = document.createElement('div');
+            dayElement.classList.add('calendar-day', 'empty'); // Add an empty class for styling if needed
+            calendarBody.appendChild(dayElement);
+        }
+
+        // Fill days of the current month
+        for (let i = 1; i <= daysInMonth; i++) {
+            const dayElement = document.createElement('div');
+            dayElement.classList.add('calendar-day', 'current-month');
+            dayElement.textContent = i;
+
+            const date = new Date(currentYear, currentMonth, i);
+            const dayOfWeek = date.getDay(); // 0 for Sunday, 6 for Saturday
+
+            if (date.toDateString() === today.toDateString()) {
+                dayElement.classList.add('today');
+            }
+
+            // Check if the date has a completed report
+            if (completedDates.includes(date.toDateString())) {
+                dayElement.classList.add('completed-report');
+            }
+
+            if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
+                dayElement.classList.add('selected');
+            }
+
+            if (dayOfWeek === 0 || dayOfWeek === 6) { // If it's Saturday or Sunday
+                dayElement.classList.add('greyed-out');
+            } else {
+                dayElement.addEventListener('click', () => {
+                    selectedDate = date;
+                    renderCalendar(); // Re-render to update selected day
+                });
+            }
+            calendarBody.appendChild(dayElement);
+        }
+
+        // Fill trailing empty days with placeholders (empty divs)
+        // This ensures the grid remains consistent in size
+        let totalCells = firstDayOfMonth + daysInMonth;
+        let remainingCells = 42 - totalCells; // Max 6 rows * 7 days
+        for (let i = 0; i < remainingCells; i++) {
+            const dayElement = document.createElement('div');
+            dayElement.classList.add('calendar-day', 'empty');
+            calendarBody.appendChild(dayElement);
+        }
+    }
+
+    prevMonthBtn.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        renderCalendar();
+    });
+
+    nextMonthBtn.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        renderCalendar();
+    });
+
+    shiftOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            shiftOptions.forEach(opt => {
+                opt.classList.remove('border-primary', 'bg-primary/10');
+                opt.classList.add('border-border-dark', 'bg-background-dark');
+            });
+            option.classList.add('border-primary', 'bg-primary/10');
+            option.classList.remove('border-border-dark', 'bg-background-dark');
+            selectedShift = option.dataset.shift;
+        });
+    });
+
+    // Initial render
+    renderCalendar();
+
+    // Select initial shift (e.g., Evening as it was pre-selected in the HTML)
+    document.getElementById('shift-evening').click();
+
+    // Navigation buttons
+    document.getElementById('back-button').addEventListener('click', () => {
+        window.location.href = 'Mockup-SR1.html';
+    });
+
+    document.getElementById('continue-button').addEventListener('click', () => {
+        // Here you would typically pass the selectedDate and selectedShift to Mockup-SR3.html
+        // For simplicity, we are just navigating
+        window.location.href = 'Mockup-SR3.html';
+    });
+
+</script>
+
+</body>
