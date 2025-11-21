@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ibe160 - Application Mockup Viewer</title>
+    <title>UX Design Directions - Mockup Viewer</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
@@ -101,42 +101,73 @@
 </head>
 <body class="bg-background-dark">
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h1>ibe160 Mockups</h1>
-            <p>A central hub for all application mockups and user flows.</p>
+    <!-- The sidebar content from Shift-report-Page1.html -->
+    <aside class="flex w-64 flex-col bg-[#101d23] p-4 border-r border-white/10 h-screen sticky top-0 justify-between">
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyKrKzNZ2dzHCiPU5hpsTon_I7CMbryH7wdM2h_7p4NsM8qCzbDF3wlU3BaGRqQyDI2Cbpa5nfBSPlSrB8UZ88NDMRD6ybP-gbuFOhd-TwIw7rCPcepyTnuZKgftfDU6vJJpiYUlvIuhTxvyHJulTigwpAVJSB7KpWpJWlZvadOOI3AU-h8H0wjOjqH_jplu7K1nWU27kgGacEnFNSuQbA8ZBnA7FPQRy9a7RvT3JfRdasTivgc8LW5KmwZyUEpPKdyHnij0TXYVQ");'></div>
+                <div class="flex flex-col">
+                    <h1 class="text-white text-base font-medium leading-normal">ibe160</h1>
+                    <p class="text-[#8fb9cc] text-sm font-normal leading-normal">Shift Management</p>
+                </div>
+            </div>
+            <nav class="flex flex-col gap-2">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">dashboard</span>
+                    <p class="text-sm font-medium leading-normal">Dashboard</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#223d49] text-white" href="#">
+                    <span class="material-symbols-outlined fill" style="font-size: 24px;">assessment</span>
+                    <p class="text-sm font-medium leading-normal">Shift Reports</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
+                    <p class="text-sm font-medium leading-normal">Operations</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">bar_chart</span>
+                    <p class="text-sm font-medium leading-normal">Analytics</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">tune</span>
+                    <p class="text-sm font-medium leading-normal">Settings</p>
+                </a>
+            </nav>
         </div>
-        <nav class="menu-section">
-            <h2>Shift Report Flow</h2>
-            <ul class="menu-list" id="sitemap-menu">
-                <li><a href="./stich/Shift-report-page0.html" target="mockup-frame">0. Draft Shift Reports</a></li>
-                <li><a href="./stich/Shift-report-Page1.html" target="mockup-frame">1. Select Criteria</a></li>
-                <li><a href="./stich/Shift-report-page2.html" target="mockup-frame">2. Staffing Overview</a></li>
-                <li><a href="./stich/Shift-report-Page3.html" target="mockup-frame">3. Orderlines by Area</a></li>
-                <li><a href="./stich/Shift-report-page4.html" target="mockup-frame">4. Moves by Area</a></li>
-                <li><a href="./stich/Shift-report-page5.html" target="mockup-frame">5. Hours by Area</a></li>
-                <li><a href="./stich/Shift-report-page6.html" target="mockup-frame">6. Efficiency Summary</a></li>
-                <li><a href="./stich/Shift-report-page7.html" target="mockup-frame">7. Sampakk & Issues</a></li>
-                <li><a href="./stich/Shift-report-page8.html" target="mockup-frame">8. Review & Submit</a></li>
-            </ul>
-        </nav>
+        <div class="flex flex-col gap-4">
+            <a href="./stich/Shift-report-page0.html" target="mockup-frame" class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em]">
+                <span class="truncate">New Report</span>
+            </a>
+            <div class="flex flex-col gap-1">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">help</span>
+                    <p class="text-sm font-medium leading-normal">Help</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-[#223d49] transition-colors" href="#">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">logout</span>
+                    <p class="text-sm font-medium leading-normal">Logout</p>
+                </a>
+            </div>
+        </div>
     </aside>
-
+    <!-- Main Content for the viewer -->
     <main class="iframe-container">
         <iframe name="mockup-frame" src="./stich/Shift-report-page0.html"></iframe>
     </main>
 
     <script>
-        const menu = document.getElementById('sitemap-menu');
+        const menu = document.querySelector('aside nav'); // Target the nav inside the aside
         const links = menu.getElementsByTagName('a');
         const iframe = document.querySelector('iframe[name="mockup-frame"]');
 
         // Function to set the active link
         function setActiveLink(href) {
             for (let i = 0; i < links.length; i++) {
-                links[i].classList.remove('active');
+                links[i].classList.remove('bg-[#223d49]', 'text-white');
+                links[i].querySelector('.material-symbols-outlined').classList.remove('fill');
                 if (links[i].getAttribute('href') === href) {
-                    links[i].classList.add('active');
+                    links[i].classList.add('bg-[#223d49]', 'text-white');
+                    links[i].querySelector('.material-symbols-outlined').classList.add('fill');
                 }
             }
         }
@@ -146,11 +177,14 @@
             setActiveLink(iframe.getAttribute('src'));
         }
 
-        // Handle clicks on the main menu
+        // Handle clicks on the menu links
         menu.addEventListener('click', function(e) {
-            if (e.target.tagName === 'A') {
-                const href = e.target.getAttribute('href');
-                setActiveLink(href);
+            if (e.target.tagName === 'A' || e.target.closest('a')) {
+                const link = e.target.tagName === 'A' ? e.target : e.target.closest('a');
+                const href = link.getAttribute('href');
+                if (link.getAttribute('target') === 'mockup-frame') {
+                    setActiveLink(href);
+                }
             }
         });
 
@@ -164,6 +198,5 @@
             }
         });
     </script>
-
 </body>
 </html>
