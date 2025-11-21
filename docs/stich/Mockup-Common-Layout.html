@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ibe160 Shift Management</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ibe160 Shift Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -28,60 +29,112 @@
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        main > div { /* This targets the container for your main content */
+            border: 2px dashed #38bdf8; /* A dashed border using the primary color */
+            border-radius: 0.5rem; /* A slight rounding of corners */
+            padding: 1rem; /* Some internal spacing */
+            min-height: calc(100vh - 4rem); /* Ensure it's visible and takes up most of the screen height */
+        }
+
+        #sidebar {
+            transition: width 0.3s ease-in-out;
+        }
+
+        #sidebar.collapsed {
+            width: 80px;
+        }
+
+        #sidebar.collapsed .sidebar-text,
+        #sidebar.collapsed .user-info {
+            display: none;
+        }
+        
+        #sidebar:not(.collapsed) .new-report-icon {
+            display: none;
+        }
+
+        #sidebar.collapsed .new-report-text {
+            display: none;
+        }
+
+        #sidebar.collapsed .sidebar-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        #sidebar.collapsed .nav-link, #sidebar.collapsed .logo-container {
+            justify-content: center;
         }
     </style>
 </head>
 <body class="bg-background font-sans text-primary-text">
-<div class="flex min-h-screen">
-<aside class="w-[220px] bg-background border-r border-border flex flex-col p-4 transition-width duration-300">
-<div class="flex items-center gap-3 mb-8">
-<div class="w-10 h-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyKrKzNZ2dzHCiPU5hpsTon_I7CMbryH7wdM2h_7p4NsM8qCzbDF3wlU3BaGRqQyDI2Cbpa5nfBSPlSrB8UZ88NDMRD6ybP-gbuFOhd-TwIw7rCPcepyTnuZKgftfDU6vJJpiYUlvIuhTxvyHJulTigwpAVJSB7KpWpJWlZvadOOI3AU-h8H0wjOjqH_jplu7K1nWU27kgGacEnFNSuQbA8ZBnA7FPQRy9a7RvT3JfRdasTivgc8LW5KmwZyUEpPKdyHnij0TXYVQ");'></div>
-<div>
-<h1 class="font-bold text-primary-text">ibe160</h1>
-<p class="text-xs text-secondary-text">Shift Management</p>
-</div>
-</div>
-<nav class="flex flex-col flex-grow gap-2">
-<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-<span class="material-symbols-outlined text-secondary-text">dashboard</span>
-<span class="font-medium text-sm">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-<span class="material-symbols-outlined text-secondary-text">assignment</span>
-<span class="font-medium text-sm">Shift Reports</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-<span class="material-symbols-outlined text-secondary-text">precision_manufacturing</span>
-<span class="font-medium text-sm">Operations</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-<span class="material-symbols-outlined text-secondary-text">bar_chart</span>
-<span class="font-medium text-sm">Analytics</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-<span class="material-symbols-outlined text-secondary-text">settings</span>
-<span class="font-medium text-sm">Settings</span>
-</a>
-</nav>
-<div class="flex flex-col gap-2">
-<button class="w-full h-10 px-4 flex items-center justify-center bg-primary text-background font-bold text-sm rounded-md hover:bg-primary/90 transition-colors">
-                    New Report
-                </button>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-<span class="material-symbols-outlined text-secondary-text">help_outline</span>
-<span class="font-medium text-sm">Help</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
-<span class="material-symbols-outlined text-secondary-text">logout</span>
-<span class="font-medium text-sm">Logout</span>
-</a>
-</div>
-</aside>
-<main class="flex-1 p-8 bg-background">
-</main>
-</div>
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="w-[220px] bg-background border-r border-border flex flex-col p-4">
+            <div class="flex items-center gap-3 mb-8 logo-container">
+                <div class="w-10 h-10 rounded-full bg-cover bg-center flex-shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyKrKzNZ2dzHCiPU5hpsTon_I7CMbryH7wdM2h_7p4NsM8qCzbDF3wlU3BaGRqQyDI2Cbpa5nfBSPlSrB8UZ88NDMRD6ybP-gbuFOhd-TwIw7rCPcepyTnuZKgftfDU6vJJpiYUlvIuhTxvyHJulTigwpAVJSB7KpWpJWlZvadOOI3AU-h8H0wjOjqH_jplu7K1nWU27kgGacEnFNSuQbA8ZBnA7FPQRy9a7RvT3JfRdasTivgc8LW5KmwZyUEpPKdyHnij0TXYVQ");'></div>
+                <div class="user-info">
+                    <h1 class="font-bold text-primary-text">ibe160</h1>
+                    <p class="text-xs text-secondary-text">Shift Management</p>
+                </div>
+            </div>
+            <nav class="flex flex-col flex-grow gap-2">
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
+                    <span class="material-symbols-outlined text-secondary-text">dashboard</span>
+                    <span class="sidebar-text font-medium text-sm">Dashboard</span>
+                </a>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
+                    <span class="material-symbols-outlined text-secondary-text">assignment</span>
+                    <span class="sidebar-text font-medium text-sm">Shift Reports</span>
+                </a>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
+                    <span class="material-symbols-outlined text-secondary-text">history</span>
+                    <span class="sidebar-text font-medium text-sm">Historical</span>
+                </a>
 
-</body></html>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
+                    <span class="material-symbols-outlined text-secondary-text">settings</span>
+                    <span class="sidebar-text font-medium text-sm">Settings</span>
+                </a>
+            </nav>
+            <div class="flex flex-col gap-2">
+                <button class="w-full h-10 px-4 flex items-center justify-center bg-primary text-background font-bold text-sm rounded-md hover:bg-primary/90 transition-colors">
+                    <span class="new-report-icon material-symbols-outlined">add</span>
+                    <span class="new-report-text">New Report</span>
+                </button>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
+                    <span class="material-symbols-outlined text-secondary-text">help_outline</span>
+                    <span class="sidebar-text font-medium text-sm">Help</span>
+                </a>
+                <a class="nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-card transition-colors" href="#">
+                    <span class="material-symbols-outlined text-secondary-text">logout</span>
+                    <span class="sidebar-text font-medium text-sm">Logout</span>
+                </a>
+            </div>
+             <div class="border-t border-border mt-4 pt-4">
+                <button id="sidebar-toggle" class="w-full flex items-center justify-center text-secondary-text hover:text-primary-text">
+                    <span class="material-symbols-outlined sidebar-toggle-icon transition-transform duration-300">chevron_left</span>
+                </button>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 bg-background">
+            <div class="mx-auto px-4">
+                <!-- Your main content goes here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+
+</body>
+</html>
