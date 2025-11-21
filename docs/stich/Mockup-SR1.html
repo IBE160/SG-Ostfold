@@ -63,59 +63,8 @@
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display">
 <div class="relative flex min-h-screen w-full">
-<input class="hidden" id="sidebar-toggle" type="checkbox"/>
-<aside class="fixed top-0 left-0 h-full w-64 bg-[#101d23] border-r border-r-[#305869]/50 transition-all duration-300 ease-in-out z-20" id="sidebar-container">
-<div class="flex h-full flex-col justify-between p-4">
-<div class="flex flex-col gap-4 overflow-hidden">
-<div class="sidebar-header flex items-center justify-between p-2">
-<div class="flex items-center gap-3 overflow-hidden">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 flex-shrink-0" data-alt="User avatar for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDcgvBSuaU1BtIyqcwUDqal8y6Yfx8JGSJ5LwaIyPHXEJkTa9DJ7_W2kwcbLL4YVMeIyRNVhyQ3QpWUuV3ISmnFGbjY9nZASP-AY69C5Y4agK-BvXnFTPvzg3GndqW3b1YmKREhvZ7eEdG2kCi662Dfn8nruooyj87gtW20t72FD5qk_n18aJ_JFC87cXFxcVp8kT9Z4EXnciGjjqTHYerRhC66Rg-n03_IZwf-zBnNud6uHPkuwPG8kGjfRITK9Wh5rgL7VesVfcs");'></div>
-<div class="user-info flex flex-col whitespace-nowrap">
-<h1 class="text-white text-base font-medium leading-normal">ibe160</h1>
-<p class="text-[#8fb9cc] text-sm font-normal leading-normal">Operations</p>
-</div>
-</div>
-<label class="cursor-pointer text-white/70 hover:text-white p-1 rounded-md" for="sidebar-toggle">
-<span class="material-symbols-outlined toggle-icon-expanded">menu_open</span>
-<span class="material-symbols-outlined toggle-icon-collapsed">menu</span>
-</label>
-</div>
-<nav class="flex flex-col gap-2 mt-4">
-<a class="sidebar-nav-item flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
-<span class="material-symbols-outlined text-white/70">dashboard</span>
-<p class="sidebar-text text-sm font-medium leading-normal whitespace-nowrap">Dashboard</p>
-</a>
-<a class="sidebar-nav-item flex items-center gap-3 px-3 py-2 rounded-lg bg-[#223d49] text-white" href="#">
-<span class="material-symbols-outlined text-white">description</span>
-<p class="sidebar-text text-sm font-medium leading-normal whitespace-nowrap">Shift Reports</p>
-</a>
-<a class="sidebar-nav-item flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
-<span class="material-symbols-outlined text-white/70">group</span>
-<p class="sidebar-text text-sm font-medium leading-normal whitespace-nowrap">Team</p>
-</a>
-<a class="sidebar-nav-item flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
-<span class="material-symbols-outlined text-white/70">bar_chart</span>
-<p class="sidebar-text text-sm font-medium leading-normal whitespace-nowrap">Analytics</p>
-</a>
-<a class="sidebar-nav-item flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
-<span class="material-symbols-outlined text-white/70">settings</span>
-<p class="sidebar-text text-sm font-medium leading-normal whitespace-nowrap">Settings</p>
-</a>
-</nav>
-</div>
-<div class="flex flex-col gap-1 overflow-hidden">
-<a class="sidebar-nav-item flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
-<span class="material-symbols-outlined text-white/70">help</span>
-<p class="sidebar-text text-sm font-medium leading-normal whitespace-nowrap">Help</p>
-</a>
-<a class="sidebar-nav-item flex items-center gap-3 px-3 py-2 text-white/70 hover:text-white hover:bg-[#223d49]/60 rounded-lg transition-colors" href="#">
-<span class="material-symbols-outlined text-white/70">logout</span>
-<p class="sidebar-text text-sm font-medium leading-normal whitespace-nowrap">Logout</p>
-</a>
-</div>
-</div>
-</aside>
-<main class="flex-1 p-6 lg:p-8 overflow-y-auto pl-64 transition-all duration-300 ease-in-out" id="main-content">
+
+<main class="flex-1 p-6 lg:p-8 overflow-y-auto transition-all duration-300 ease-in-out" id="main-content">
 <div class="max-w-7xl mx-auto space-y-8">
 <div class="flex flex-col rounded-lg bg-[#182c34] shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
 <div class="flex items-center justify-between p-4 sm:p-6 border-b border-b-[#305869]/50">

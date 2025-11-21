@@ -33,39 +33,9 @@
 </head>
 <body class="font-display bg-background-light dark:bg-background-dark">
 <div class="relative flex h-auto min-h-screen w-full flex-col">
-<div class="flex h-full grow" x-data="{ sidebarOpen: true }">
-<aside :class="sidebarOpen ? 'w-[220px]' : 'w-[72px]'" class="fixed top-0 left-0 flex h-screen flex-col bg-background-light dark:bg-background-dark border-r border-transparent dark:border-border-dark p-4 transition-width duration-300 ease-in-out">
-<div class="flex flex-col gap-4 overflow-hidden">
-<div class="flex items-center gap-3 py-2 px-2 shrink-0">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shrink-0" data-alt="User profile picture for ibe160" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEFnmae8c-RPFAP7dXRRN35QE3R_xKcUyWDghXbXj5GfLlCsSvILFJ4Ub0rYm7KPcr0cBk2XpdpmcCptm81YVbieOPO2BQIlk4Bm-31NkHe3Foo2LrzlA9kzA6LBB6H7_Lq4y5idMuaW0mpYn0tkOkjVJjqpRTW5VponztbqNH1cJLCqOQSe2E6aPZhFjVyYtn2_e29dhdSbnUhJv-iBhxT7ttSi9vAUuOQ0nVUGCUOA39Sec4gMTtWZSFolm3l_ojuWH0qEh8jSc");'></div>
-<div class="flex flex-col min-w-0" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">
-<h1 class="text-white text-base font-medium leading-normal truncate">ibe160</h1>
-<p class="text-text-secondary-dark text-sm font-normal leading-normal truncate">Operations</p>
-</div>
-</div>
-<nav class="flex flex-col gap-2 mt-4">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-content-dark" href="#">
-<span class="material-symbols-outlined text-primary" style="font-size: 24px; font-variation-settings: 'FILL' 1;">dashboard</span>
-<p class="text-primary text-sm font-medium leading-normal whitespace-nowrap" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">Dashboard</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-content-dark transition-colors duration-200" href="#">
-<span class="material-symbols-outlined text-text-primary-dark" style="font-size: 24px;">assignment</span>
-<p class="text-text-primary-dark text-sm font-medium leading-normal whitespace-nowrap" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">Shift Reports</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-content-dark transition-colors duration-200" href="#">
-<span class="material-symbols-outlined text-text-primary-dark" style="font-size: 24px;">settings</span>
-<p class="text-text-primary-dark text-sm font-medium leading-normal whitespace-nowrap" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">Settings</p>
-</a>
-</nav>
-</div>
-<div class="mt-auto">
-<button @click="sidebarOpen = !sidebarOpen" class="flex items-center w-full gap-3 px-3 py-2 rounded-lg hover:bg-content-dark transition-colors duration-200 text-text-secondary-dark">
-<span :class="!sidebarOpen &amp;&amp; 'rotate-180'" class="material-symbols-outlined transition-transform duration-300">menu_open</span>
-<p class="text-sm font-medium leading-normal whitespace-nowrap" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-in-out duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-in-out duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100">Collapse</p>
-</button>
-</div>
-</aside>
-<main :class="sidebarOpen ? 'ml-[220px]' : 'ml-[72px]'" class="flex flex-1 flex-col transition-all duration-300 ease-in-out">
+<div class="flex h-full grow">
+
+<main class="flex flex-1 flex-col transition-all duration-300 ease-in-out">
 <div class="flex-1 p-8 space-y-8">
 <header class="flex flex-col gap-6">
 <div class="flex flex-wrap items-center justify-between gap-4">
