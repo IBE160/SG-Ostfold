@@ -41,49 +41,139 @@
 <div class="p-6 sm:p-8 flex-grow">
 <!-- Data List -->
 <div class="space-y-2">
-<div class="flex justify-between gap-x-6 py-3 border-b border-border-dark/50">
-<p class="text-text-secondary-dark text-sm font-normal leading-normal">Pallelager</p>
-<p class="text-text-primary-dark text-sm font-medium leading-normal text-right">15.2 units/hour</p>
+    <!-- Header -->
+    <div class="flex justify-between gap-x-4 pb-2 border-b border-border-dark/50 text-xs text-text-secondary-dark uppercase tracking-wider">
+        <p class="w-1/4">Area</p>
+        <p class="w-1/4 text-right">Efficiency</p>
+        <p class="w-1/4 text-right">vs Yesterday</p>
+        <p class="w-1/4 text-right">vs 3 Weeks Ago</p>
+    </div>
+    <!-- Pallelager -->
+    <div class="flex justify-between items-center gap-x-4 py-3">
+        <p class="w-1/4 text-text-secondary-dark text-sm font-normal leading-normal">Pallelager</p>
+        <p id="pallelager-efficiency" class="w-1/4 text-text-primary-dark text-sm font-medium leading-normal text-right">15.2 units/hour</p>
+        <span id="pallelager-trend-yesterday" class="w-1/4 text-right material-symbols-outlined"></span>
+        <span id="pallelager-trend-3w" class="w-1/4 text-right material-symbols-outlined"></span>
+    </div>
+    <!-- Transitt -->
+    <div class="flex justify-between items-center gap-x-4 py-3">
+        <p class="w-1/4 text-text-secondary-dark text-sm font-normal leading-normal">Transitt</p>
+        <p id="transitt-efficiency" class="w-1/4 text-text-primary-dark text-sm font-medium leading-normal text-right">12.8 units/hour</p>
+        <span id="transitt-trend-yesterday" class="w-1/4 text-right material-symbols-outlined"></span>
+        <span id="transitt-trend-3w" class="w-1/4 text-right material-symbols-outlined"></span>
+    </div>
+    <!-- Heis -->
+    <div class="flex justify-between items-center gap-x-4 py-3">
+        <p class="w-1/4 text-text-secondary-dark text-sm font-normal leading-normal">Heis</p>
+        <p id="heis-efficiency" class="w-1/4 text-text-primary-dark text-sm font-medium leading-normal text-right">18.1 units/hour</p>
+        <span id="heis-trend-yesterday" class="w-1/4 text-right material-symbols-outlined"></span>
+        <span id="heis-trend-3w" class="w-1/4 text-right material-symbols-outlined"></span>
+    </div>
+    <!-- Høytlager -->
+    <div class="flex justify-between items-center gap-x-4 py-3">
+        <p class="w-1/4 text-text-secondary-dark text-sm font-normal leading-normal">Høytlager</p>
+        <p id="hoytlager-efficiency" class="w-1/4 text-text-primary-dark text-sm font-medium leading-normal text-right">20.5 units/hour</p>
+        <span id="hoytlager-trend-yesterday" class="w-1/4 text-right material-symbols-outlined"></span>
+        <span id="hoytlager-trend-3w" class="w-1/4 text-right material-symbols-outlined"></span>
+    </div>
+    <!-- OSR -->
+    <div class="flex justify-between items-center gap-x-4 py-3">
+        <p class="w-1/4 text-text-secondary-dark text-sm font-normal leading-normal">OSR</p>
+        <p id="osr-efficiency" class="w-1/4 text-primary text-sm font-bold leading-normal text-right">25.0 units/hour</p>
+        <span id="osr-trend-yesterday" class="w-1/4 text-right material-symbols-outlined"></span>
+        <span id="osr-trend-3w" class="w-1/4 text-right material-symbols-outlined"></span>
+    </div>
+    <!-- Ute -->
+    <div class="flex justify-between items-center gap-x-4 py-3">
+        <p class="w-1/4 text-text-secondary-dark text-sm font-normal leading-normal">Ute</p>
+        <p id="ute-efficiency" class="w-1/4 text-text-primary-dark text-sm font-medium leading-normal text-right">9.7 units/hour</p>
+        <span id="ute-trend-yesterday" class="w-1/4 text-right material-symbols-outlined"></span>
+        <span id="ute-trend-3w" class="w-1/4 text-right material-symbols-outlined"></span>
+    </div>
+    <!-- Rørhall -->
+    <div class="flex justify-between items-center gap-x-4 py-3">
+        <p class="w-1/4 text-text-secondary-dark text-sm font-normal leading-normal">Rørhall</p>
+        <p id="rorhall-efficiency" class="w-1/4 text-text-primary-dark text-sm font-medium leading-normal text-right">11.3 units/hour</p>
+        <span id="rorhall-trend-yesterday" class="w-1/4 text-right material-symbols-outlined"></span>
+        <span id="rorhall-trend-3w" class="w-1/4 text-right material-symbols-outlined"></span>
+    </div>
+    <!-- Total -->
+    <div class="flex justify-between items-center gap-x-4 py-4 mt-4 border-t border-border-dark/50">
+        <p class="text-text-primary-dark text-base font-bold leading-normal">Total/Overall Efficiency</p>
+        <p id="total-efficiency" class="text-primary text-base font-bold leading-normal text-right">16.1 units/hour</p>
+    </div>
 </div>
-<div class="flex justify-between gap-x-6 py-3 border-b border-border-dark/50">
-<p class="text-text-secondary-dark text-sm font-normal leading-normal">Transitt</p>
-<p class="text-text-primary-dark text-sm font-medium leading-normal text-right">12.8 units/hour</p>
-</div>
-<div class="flex justify-between gap-x-6 py-3 border-b border-border-dark/50">
-<p class="text-text-secondary-dark text-sm font-normal leading-normal">Heis</p>
-<p class="text-text-primary-dark text-sm font-medium leading-normal text-right">18.1 units/hour</p>
-</div>
-<div class="flex justify-between gap-x-6 py-3 border-b border-border-dark/50">
-<p class="text-text-secondary-dark text-sm font-normal leading-normal">Høytlager</p>
-<p class="text-text-primary-dark text-sm font-medium leading-normal text-right">20.5 units/hour</p>
-</div>
-<div class="flex justify-between gap-x-6 py-3 border-b border-border-dark/50">
-<p class="text-text-secondary-dark text-sm font-normal leading-normal">OSR</p>
-<p class="text-primary text-sm font-bold leading-normal text-right">25.0 units/hour</p>
-</div>
-<div class="flex justify-between gap-x-6 py-3 border-b border-border-dark/50">
-<p class="text-text-secondary-dark text-sm font-normal leading-normal">Ute</p>
-<p class="text-text-primary-dark text-sm font-medium leading-normal text-right">9.7 units/hour</p>
-</div>
-<div class="flex justify-between gap-x-6 py-3 border-b border-border-dark/50">
-<p class="text-text-secondary-dark text-sm font-normal leading-normal">Rørhall</p>
-<p class="text-text-primary-dark text-sm font-medium leading-normal text-right">11.3 units/hour</p>
-</div>
-<div class="flex justify-between gap-x-6 py-4 mt-4">
-<p class="text-text-primary-dark text-base font-bold leading-normal">Total/Overall Efficiency</p>
-<p class="text-primary text-base font-bold leading-normal text-right">16.1 units/hour</p>
 </div>
 </div>
-</div>
-<!-- Button Group -->
-<div class="flex flex-1 gap-3 flex-wrap p-6 sm:p-8 justify-end items-end border-t border-border-dark/50 mt-auto">
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-content-dark hover:bg-content-dark/80 text-text-primary-dark text-base font-bold leading-normal tracking-[0.015em] transition-colors">
-<span class="truncate">Back</span>
-</button>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary hover:bg-primary/90 text-background-dark text-base font-bold leading-normal tracking-[0.015em] transition-colors">
-<span class="truncate">Continue</span>
-</button>
+<!-- Action Buttons -->
+<div class="flex justify-between items-center gap-4 pt-6">
+    <button class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-text-primary-dark bg-content-dark border border-border-dark hover:bg-border-dark/80 transition-colors" type="button" onclick="window.location.href='Mockup-SR6.html'">Back</button>
+    <button class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-background-dark bg-primary hover:bg-primary/90 transition-colors" type="button" onclick="window.location.href='Mockup-SR8.html'">Continue</button>
 </div>
 </div>
-</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Mock data for efficiency comparisons
+    const todayData = {
+        pallelager: parseFloat(document.getElementById('pallelager-efficiency')?.textContent) || 0,
+        transitt: parseFloat(document.getElementById('transitt-efficiency')?.textContent) || 0,
+        heis: parseFloat(document.getElementById('heis-efficiency')?.textContent) || 0,
+        hoytlager: parseFloat(document.getElementById('hoytlager-efficiency')?.textContent) || 0,
+        osr: parseFloat(document.getElementById('osr-efficiency')?.textContent) || 0,
+        ute: parseFloat(document.getElementById('ute-efficiency')?.textContent) || 0,
+        rorhall: parseFloat(document.getElementById('rorhall-efficiency')?.textContent) || 0
+    };
+
+    const yesterdayData = {
+        pallelager: 14.5,
+        transitt: 13.0,
+        heis: 18.1,
+        hoytlager: 21.0,
+        osr: 24.5,
+        ute: 9.0,
+        rorhall: 12.0
+    };
+    
+    const threeWeeksAgoData = {
+        pallelager: 15.8,
+        transitt: 12.5,
+        heis: 17.5,
+        hoytlager: 20.5,
+        osr: 26.0,
+        ute: 10.0,
+        rorhall: 10.5
+    };
+
+    const areas = Object.keys(todayData);
+
+    // Reusable function to set trend arrows
+    function setTrend(area, trendId, todayValue, comparisonValue) {
+        const trendElement = document.getElementById(trendId);
+        if (trendElement) {
+            trendElement.classList.remove('text-green-500', 'text-red-500', 'text-yellow-500');
+
+            if (todayValue > comparisonValue) {
+                trendElement.innerHTML = 'arrow_upward';
+                trendElement.classList.add('text-green-500');
+            } else if (todayValue < comparisonValue) {
+                trendElement.innerHTML = 'arrow_downward';
+                trendElement.classList.add('text-red-500');
+            } else {
+                trendElement.innerHTML = 'horizontal_rule';
+                trendElement.classList.add('text-yellow-500');
+            }
+        }
+    }
+
+    areas.forEach(area => {
+        const todayValue = todayData[area];
+        
+        // Set trend vs Yesterday
+        setTrend(area, `${area}-trend-yesterday`, todayValue, yesterdayData[area]);
+        
+        // Set trend vs 3 Weeks Ago
+        setTrend(area, `${area}-trend-3w`, todayValue, threeWeeksAgoData[area]);
+    });
+});
+</script>
 </body></html>
