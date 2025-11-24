@@ -77,19 +77,19 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 <div class="bg-background-light dark:bg-background-dark p-4 rounded-md border border-border-light dark:border-border-dark">
 <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Absent Hours</p>
-<p class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">16</p>
+<p id="summary-absent-hours" class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">16</p>
 </div>
 <div class="bg-background-light dark:bg-background-dark p-4 rounded-md border border-border-light dark:border-border-dark">
 <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Hired Hours</p>
-<p class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">12</p>
+<p id="summary-hired-hours" class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">12</p>
 </div>
 <div class="bg-background-light dark:bg-background-dark p-4 rounded-md border border-border-light dark:border-border-dark">
 <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Hired Out Hours</p>
-<p class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">4</p>
+<p id="summary-hired-out-hours" class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">4</p>
 </div>
 <div class="bg-background-light dark:bg-background-dark p-4 rounded-md border border-border-light dark:border-border-dark">
 <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Overtime Hours</p>
-<p class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">5</p>
+<p id="summary-overtime-hours" class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">5</p>
 </div>
 </div>
 </div>
@@ -105,30 +105,56 @@
 <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
 <th class="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Absent Code</th>
 <th class="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Hours Absent</th>
+<th class="relative py-3.5 pl-3 pr-4 sm:pr-0" scope="col"><span class="sr-only">Remove</span></th>
 </tr>
 </thead>
-<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<tbody id="absent-employees-tbody" class="divide-y divide-border-light dark:divide-border-dark">
 <tr>
-<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-primary-light dark:text-text-primary-dark sm:pl-0">Jane Doe</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">SICK</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">8</td>
+<td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+    <input type="text" name="full-name" value="Jane Doe" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="text" name="absent-code" value="SICK" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="number" name="hours-absent" value="8" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+    <button type="button" class="text-error remove-btn font-bold">×</button>
+</td>
 </tr>
 <tr>
-<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-primary-light dark:text-text-primary-dark sm:pl-0">John Smith</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">PTO</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">8</td>
+<td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+    <input type="text" name="full-name" value="John Smith" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="text" name="absent-code" value="PTO" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="number" name="hours-absent" value="8" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+    <button type="button" class="text-error remove-btn font-bold">×</button>
+</td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
 <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark sm:pl-0" colspan="2">Total Absent Hours</td>
-<td class="px-3 py-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">16</td>
+<td id="total-absent-hours-cell" class="px-3 py-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">16</td>
+<td class="py-3 pl-3 pr-4 sm:pr-0"></td>
 </tr>
 </tfoot>
 </table>
 </div>
 </div>
 </div>
+</div>
+<div class="mt-4">
+<button id="add-absent-employee-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
+<span class="material-symbols-outlined text-base">add</span>
+Add Employee
+</button>
 </div>
 </div>
 <div class="bg-content-light dark:bg-content-dark p-6 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
@@ -143,30 +169,56 @@
 <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
 <th class="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Shift Hired From</th>
 <th class="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Hours Worked</th>
+<th class="relative py-3.5 pl-3 pr-4 sm:pr-0" scope="col"><span class="sr-only">Remove</span></th>
 </tr>
 </thead>
-<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<tbody id="hired-employees-tbody" class="divide-y divide-border-light dark:divide-border-dark">
 <tr>
-<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-primary-light dark:text-text-primary-dark sm:pl-0">Mike Johnson</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">Morning (06:00-14:00)</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">4</td>
+<td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+    <input type="text" name="full-name-hired" value="Mike Johnson" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="text" name="shift-hired-from" value="Morning (06:00-14:00)" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="number" name="hours-worked" value="4" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+    <button type="button" class="text-error remove-btn font-bold">×</button>
+</td>
 </tr>
 <tr>
-<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-primary-light dark:text-text-primary-dark sm:pl-0">Sarah Miller</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">Morning (06:00-14:00)</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">8</td>
+<td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+    <input type="text" name="full-name-hired" value="Sarah Miller" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="text" name="shift-hired-from" value="Morning (06:00-14:00)" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="number" name="hours-worked" value="8" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+    <button type="button" class="text-error remove-btn font-bold">×</button>
+</td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
 <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark sm:pl-0" colspan="2">Total Hired Hours</td>
-<td class="px-3 py-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">12</td>
+<td id="total-hired-hours-cell" class="px-3 py-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">12</td>
+<td class="py-3 pl-3 pr-4 sm:pr-0"></td>
 </tr>
 </tfoot>
 </table>
 </div>
 </div>
 </div>
+</div>
+<div class="mt-4">
+<button id="add-hired-employee-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
+<span class="material-symbols-outlined text-base">add</span>
+Add Employee
+</button>
 </div>
 </div>
 <div class="bg-content-light dark:bg-content-dark p-6 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
@@ -181,25 +233,42 @@
 <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
 <th class="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Shift Hired To</th>
 <th class="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Hours Hired Out</th>
+<th class="relative py-3.5 pl-3 pr-4 sm:pr-0" scope="col"><span class="sr-only">Remove</span></th>
 </tr>
 </thead>
-<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<tbody id="hired-out-employees-tbody" class="divide-y divide-border-light dark:divide-border-dark">
 <tr>
-<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-primary-light dark:text-text-primary-dark sm:pl-0">Emily White</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">Night (22:00-06:00)</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">4</td>
+<td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+    <input type="text" name="full-name-hired-out" value="Emily White" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="text" name="shift-hired-to" value="Night (22:00-06:00)" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="number" name="hours-hired-out" value="4" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+    <button type="button" class="text-error remove-btn font-bold">×</button>
+</td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
 <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark sm:pl-0" colspan="2">Total Hours Hired Out</td>
-<td class="px-3 py-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">4</td>
+<td id="total-hired-out-hours-cell" class="px-3 py-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">4</td>
+<td class="py-3 pl-3 pr-4 sm:pr-0"></td>
 </tr>
 </tfoot>
 </table>
 </div>
 </div>
 </div>
+</div>
+<div class="mt-4">
+<button id="add-hired-out-employee-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
+<span class="material-symbols-outlined text-base">add</span>
+Add Employee
+</button>
 </div>
 </div>
 <div class="bg-content-light dark:bg-content-dark p-6 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
@@ -213,28 +282,50 @@
 <tr>
 <th class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
 <th class="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider" scope="col">Hours Worked Overtime</th>
+<th class="relative py-3.5 pl-3 pr-4 sm:pr-0" scope="col"><span class="sr-only">Remove</span></th>
 </tr>
 </thead>
-<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<tbody id="overtime-employees-tbody" class="divide-y divide-border-light dark:divide-border-dark">
 <tr>
-<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-primary-light dark:text-text-primary-dark sm:pl-0">Chris Green</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">2</td>
+<td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+    <input type="text" name="full-name-overtime" value="Chris Green" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="number" name="hours-overtime" value="2" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+    <button type="button" class="text-error remove-btn font-bold">×</button>
+</td>
 </tr>
 <tr>
-<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-primary-light dark:text-text-primary-dark sm:pl-0">David Brown</td>
-<td class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">3</td>
+<td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+    <input type="text" name="full-name-overtime" value="David Brown" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark">
+</td>
+<td class="whitespace-nowrap px-3 py-2 text-sm">
+    <input type="number" name="hours-overtime" value="3" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark">
+</td>
+<td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+    <button type="button" class="text-error remove-btn font-bold">×</button>
+</td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
 <td class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark sm:pl-0">Total Overtime Hours</td>
-<td class="px-3 py-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">5</td>
+<td id="total-overtime-hours-cell" class="px-3 py-3 text-left text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">5</td>
+<td class="py-3 pl-3 pr-4 sm:pr-0"></td>
 </tr>
 </tfoot>
 </table>
 </div>
 </div>
 </div>
+</div>
+<div class="mt-4">
+<button id="add-overtime-employee-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
+<span class="material-symbols-outlined text-base">add</span>
+Add Employee
+</button>
 </div>
 </div>
 <div class="bg-content-light dark:bg-content-dark p-6 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
@@ -251,4 +342,119 @@
 </main>
 </div>
 
-</body></html>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function initializeDynamicTable(tbodyId, addBtnId, totalCellId, summaryId, hourInputName, newRowHtml) {
+            const tbody = document.getElementById(tbodyId);
+            if (!tbody) return; 
+
+            const addBtn = document.getElementById(addBtnId);
+            const totalCell = document.getElementById(totalCellId);
+            const summaryP = document.getElementById(summaryId);
+
+            function updateTotals() {
+                let totalHours = 0;
+                const hourInputs = tbody.querySelectorAll(`input[name="${hourInputName}"]`);
+                hourInputs.forEach(input => {
+                    totalHours += Number(input.value) || 0;
+                });
+
+                if (totalCell) totalCell.textContent = totalHours;
+                if (summaryP) summaryP.textContent = totalHours;
+            }
+
+            function addRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = newRowHtml;
+                tbody.appendChild(newRow);
+            }
+
+            if (addBtn) {
+                addBtn.addEventListener('click', addRow);
+            }
+
+            tbody.addEventListener('input', function(e) {
+                if (e.target.matches(`input[name="${hourInputName}"]`)) {
+                    updateTotals();
+                }
+            });
+
+            tbody.addEventListener('click', function(e) {
+                if (e.target.matches('.remove-btn')) {
+                    e.target.closest('tr').remove();
+                    updateTotals();
+                }
+            });
+
+            updateTotals();
+        }
+
+        // Initialize Absent Employees Table
+        const absentNewRowHtml = `
+            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+                <input type="text" name="full-name" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
+            </td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm">
+                <input type="text" name="absent-code" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., SICK">
+            </td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm">
+                <input type="number" name="hours-absent" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
+            </td>
+            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+                <button type="button" class="text-error remove-btn font-bold">×</button>
+            </td>
+        `;
+        initializeDynamicTable('absent-employees-tbody', 'add-absent-employee-btn', 'total-absent-hours-cell', 'summary-absent-hours', 'hours-absent', absentNewRowHtml);
+
+        // Initialize Hired Employees Table
+        const hiredNewRowHtml = `
+            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+                <input type="text" name="full-name-hired" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
+            </td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm">
+                <input type="text" name="shift-hired-from" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., Morning">
+            </td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm">
+                <input type="number" name="hours-worked" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
+            </td>
+            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+                <button type="button" class="text-error remove-btn font-bold">×</button>
+            </td>
+        `;
+        initializeDynamicTable('hired-employees-tbody', 'add-hired-employee-btn', 'total-hired-hours-cell', 'summary-hired-hours', 'hours-worked', hiredNewRowHtml);
+
+        // Initialize Hired Out Employees Table
+        const hiredOutNewRowHtml = `
+            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+                <input type="text" name="full-name-hired-out" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
+            </td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm">
+                <input type="text" name="shift-hired-to" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., Night">
+            </td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm">
+                <input type="number" name="hours-hired-out" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
+            </td>
+            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+                <button type="button" class="text-error remove-btn font-bold">×</button>
+            </td>
+        `;
+        initializeDynamicTable('hired-out-employees-tbody', 'add-hired-out-employee-btn', 'total-hired-out-hours-cell', 'summary-hired-out-hours', 'hours-hired-out', hiredOutNewRowHtml);
+
+        // Initialize Overtime Employees Table
+        const overtimeNewRowHtml = `
+            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
+                <input type="text" name="full-name-overtime" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
+            </td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm">
+                <input type="number" name="hours-overtime" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
+            </td>
+            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
+                <button type="button" class="text-error remove-btn font-bold">×</button>
+            </td>
+        `;
+        initializeDynamicTable('overtime-employees-tbody', 'add-overtime-employee-btn', 'total-overtime-hours-cell', 'summary-overtime-hours', 'hours-overtime', overtimeNewRowHtml);
+    });
+</script>
+</html>
