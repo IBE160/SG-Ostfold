@@ -150,10 +150,14 @@
 </div>
 </div>
 </div>
-<div class="mt-4">
+<div class="mt-4 flex gap-x-4">
 <button id="add-absent-employee-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
 <span class="material-symbols-outlined text-base">add</span>
 Add Employee
+</button>
+<button id="copy-yesterday-absent-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
+<span class="material-symbols-outlined text-base">content_copy</span>
+Copy from Yesterday
 </button>
 </div>
 </div>
@@ -346,6 +350,13 @@ Add Employee
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // --- Mock Data ---
+        const previousDayAbsentData = [
+            { name: 'Peter Jones', code: 'SICK', hours: 8 },
+            { name: 'Mary Smith', code: 'SICK', hours: 4 }
+        ];
+
+        // --- Core Function for Table Logic ---
         function initializeDynamicTable(tbodyId, addBtnId, totalCellId, summaryId, hourInputName, newRowHtml) {
             const tbody = document.getElementById(tbodyId);
             if (!tbody) return; 
@@ -365,14 +376,22 @@ Add Employee
                 if (summaryP) summaryP.textContent = totalHours;
             }
 
-            function addRow() {
+            function addRow(data = null) {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = newRowHtml;
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const input = newRow.querySelector(`[name="${key}"]`);
+                        if (input) {
+                            input.value = data[key];
+                        }
+                    });
+                }
                 tbody.appendChild(newRow);
             }
 
             if (addBtn) {
-                addBtn.addEventListener('click', addRow);
+                addBtn.addEventListener('click', () => addRow());
             }
 
             tbody.addEventListener('input', function(e) {
@@ -389,26 +408,29 @@ Add Employee
             });
 
             updateTotals();
+            
+            // Return a reference to the addRow and updateTotals functions to be used by other parts of the script
+            return { addRow, updateTotals };
         }
 
-        // Initialize Absent Employees Table
+        // --- Absent Employees Initialization ---
         const absentNewRowHtml = `
             <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
-                <input type="text" name="full-name" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
+                <input type="text" name="name" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
             </td>
             <td class="whitespace-nowrap px-3 py-2 text-sm">
-                <input type="text" name="absent-code" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., SICK">
+                <input type="text" name="code" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., SICK">
             </td>
             <td class="whitespace-nowrap px-3 py-2 text-sm">
-                <input type="number" name="hours-absent" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
+                <input type="number" name="hours" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
             </td>
             <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
                 <button type="button" class="text-error remove-btn font-bold">×</button>
             </td>
         `;
-        initializeDynamicTable('absent-employees-tbody', 'add-absent-employee-btn', 'total-absent-hours-cell', 'summary-absent-hours', 'hours-absent', absentNewRowHtml);
+        const absentTable = initializeDynamicTable('absent-employees-tbody', 'add-absent-employee-btn', 'total-absent-hours-cell', 'summary-absent-hours', 'hours', absentNewRowHtml);
 
-        // Initialize Hired Employees Table
+        // --- Hired Employees Initialization ---
         const hiredNewRowHtml = `
             <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
                 <input type="text" name="full-name-hired" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
@@ -425,7 +447,7 @@ Add Employee
         `;
         initializeDynamicTable('hired-employees-tbody', 'add-hired-employee-btn', 'total-hired-hours-cell', 'summary-hired-hours', 'hours-worked', hiredNewRowHtml);
 
-        // Initialize Hired Out Employees Table
+        // --- Hired Out Employees Initialization ---
         const hiredOutNewRowHtml = `
             <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
                 <input type="text" name="full-name-hired-out" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
@@ -442,7 +464,7 @@ Add Employee
         `;
         initializeDynamicTable('hired-out-employees-tbody', 'add-hired-out-employee-btn', 'total-hired-out-hours-cell', 'summary-hired-out-hours', 'hours-hired-out', hiredOutNewRowHtml);
 
-        // Initialize Overtime Employees Table
+        // --- Overtime Employees Initialization ---
         const overtimeNewRowHtml = `
             <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
                 <input type="text" name="full-name-overtime" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
@@ -455,6 +477,19 @@ Add Employee
             </td>
         `;
         initializeDynamicTable('overtime-employees-tbody', 'add-overtime-employee-btn', 'total-overtime-hours-cell', 'summary-overtime-hours', 'hours-overtime', overtimeNewRowHtml);
+
+        // --- "Copy from Yesterday" Logic ---
+        const copyYesterdayBtn = document.getElementById('copy-yesterday-absent-btn');
+        if (copyYesterdayBtn && absentTable) {
+            copyYesterdayBtn.addEventListener('click', () => {
+                const tbody = document.getElementById('absent-employees-tbody');
+                tbody.innerHTML = ''; // Clear existing rows
+                previousDayAbsentData.forEach(employeeData => {
+                    absentTable.addRow(employeeData);
+                });
+                absentTable.updateTotals();
+            });
+        }
     });
 </script>
 </html>
