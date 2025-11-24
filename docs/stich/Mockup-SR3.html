@@ -218,10 +218,14 @@ Copy from Yesterday
 </div>
 </div>
 </div>
-<div class="mt-4">
+<div class="mt-4 flex gap-x-4">
 <button id="add-hired-employee-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
 <span class="material-symbols-outlined text-base">add</span>
 Add Employee
+</button>
+<button id="copy-yesterday-hired-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
+<span class="material-symbols-outlined text-base">content_copy</span>
+Copy from Yesterday
 </button>
 </div>
 </div>
@@ -268,10 +272,14 @@ Add Employee
 </div>
 </div>
 </div>
-<div class="mt-4">
+<div class="mt-4 flex gap-x-4">
 <button id="add-hired-out-employee-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
 <span class="material-symbols-outlined text-base">add</span>
 Add Employee
+</button>
+<button id="copy-yesterday-hired-out-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
+<span class="material-symbols-outlined text-base">content_copy</span>
+Copy from Yesterday
 </button>
 </div>
 </div>
@@ -325,10 +333,14 @@ Add Employee
 </div>
 </div>
 </div>
-<div class="mt-4">
+<div class="mt-4 flex gap-x-4">
 <button id="add-overtime-employee-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
 <span class="material-symbols-outlined text-base">add</span>
 Add Employee
+</button>
+<button id="copy-yesterday-overtime-btn" type="button" class="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all">
+<span class="material-symbols-outlined text-base">content_copy</span>
+Copy from Yesterday
 </button>
 </div>
 </div>
@@ -351,15 +363,26 @@ Add Employee
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // --- Mock Data ---
-        const previousDayAbsentData = [
-            { name: 'Peter Jones', code: 'SICK', hours: 8 },
-            { name: 'Mary Smith', code: 'SICK', hours: 4 }
-        ];
+        const previousDayData = {
+            absent: [
+                { name: 'Peter Jones', code: 'SICK', hours: 8 },
+                { name: 'Mary Smith', code: 'SICK', hours: 4 }
+            ],
+            hired: [
+                { 'full-name-hired': 'Gary Clark Jr.', 'shift-hired-from': 'Morning', 'hours-worked': 8 }
+            ],
+            hiredOut: [
+                { 'full-name-hired-out': 'Susan Tedeschi', 'shift-hired-to': 'Night', 'hours-hired-out': 6 }
+            ],
+            overtime: [
+                { 'full-name-overtime': 'Derek Trucks', 'hours-overtime': 2 }
+            ]
+        };
 
         // --- Core Function for Table Logic ---
         function initializeDynamicTable(tbodyId, addBtnId, totalCellId, summaryId, hourInputName, newRowHtml) {
             const tbody = document.getElementById(tbodyId);
-            if (!tbody) return; 
+            if (!tbody) return;
 
             const addBtn = document.getElementById(addBtnId);
             const totalCell = document.getElementById(totalCellId);
@@ -408,88 +431,59 @@ Add Employee
             });
 
             updateTotals();
-            
-            // Return a reference to the addRow and updateTotals functions to be used by other parts of the script
             return { addRow, updateTotals };
         }
-
-        // --- Absent Employees Initialization ---
-        const absentNewRowHtml = `
-            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
-                <input type="text" name="name" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
-            </td>
-            <td class="whitespace-nowrap px-3 py-2 text-sm">
-                <input type="text" name="code" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., SICK">
-            </td>
-            <td class="whitespace-nowrap px-3 py-2 text-sm">
-                <input type="number" name="hours" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
-            </td>
-            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                <button type="button" class="text-error remove-btn font-bold">×</button>
-            </td>
-        `;
-        const absentTable = initializeDynamicTable('absent-employees-tbody', 'add-absent-employee-btn', 'total-absent-hours-cell', 'summary-absent-hours', 'hours', absentNewRowHtml);
-
-        // --- Hired Employees Initialization ---
-        const hiredNewRowHtml = `
-            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
-                <input type="text" name="full-name-hired" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
-            </td>
-            <td class="whitespace-nowrap px-3 py-2 text-sm">
-                <input type="text" name="shift-hired-from" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., Morning">
-            </td>
-            <td class="whitespace-nowrap px-3 py-2 text-sm">
-                <input type="number" name="hours-worked" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
-            </td>
-            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                <button type="button" class="text-error remove-btn font-bold">×</button>
-            </td>
-        `;
-        initializeDynamicTable('hired-employees-tbody', 'add-hired-employee-btn', 'total-hired-hours-cell', 'summary-hired-hours', 'hours-worked', hiredNewRowHtml);
-
-        // --- Hired Out Employees Initialization ---
-        const hiredOutNewRowHtml = `
-            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
-                <input type="text" name="full-name-hired-out" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
-            </td>
-            <td class="whitespace-nowrap px-3 py-2 text-sm">
-                <input type="text" name="shift-hired-to" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., Night">
-            </td>
-            <td class="whitespace-nowrap px-3 py-2 text-sm">
-                <input type="number" name="hours-hired-out" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
-            </td>
-            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                <button type="button" class="text-error remove-btn font-bold">×</button>
-            </td>
-        `;
-        initializeDynamicTable('hired-out-employees-tbody', 'add-hired-out-employee-btn', 'total-hired-out-hours-cell', 'summary-hired-out-hours', 'hours-hired-out', hiredOutNewRowHtml);
-
-        // --- Overtime Employees Initialization ---
-        const overtimeNewRowHtml = `
-            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
-                <input type="text" name="full-name-overtime" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name">
-            </td>
-            <td class="whitespace-nowrap px-3 py-2 text-sm">
-                <input type="number" name="hours-overtime" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0">
-            </td>
-            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                <button type="button" class="text-error remove-btn font-bold">×</button>
-            </td>
-        `;
-        initializeDynamicTable('overtime-employees-tbody', 'add-overtime-employee-btn', 'total-overtime-hours-cell', 'summary-overtime-hours', 'hours-overtime', overtimeNewRowHtml);
-
-        // --- "Copy from Yesterday" Logic ---
-        const copyYesterdayBtn = document.getElementById('copy-yesterday-absent-btn');
-        if (copyYesterdayBtn && absentTable) {
-            copyYesterdayBtn.addEventListener('click', () => {
-                const tbody = document.getElementById('absent-employees-tbody');
-                tbody.innerHTML = ''; // Clear existing rows
-                previousDayAbsentData.forEach(employeeData => {
-                    absentTable.addRow(employeeData);
+        
+        function setupCopyButton(buttonId, tbodyId, data, tableController) {
+            const copyBtn = document.getElementById(buttonId);
+            if (copyBtn && tableController) {
+                copyBtn.addEventListener('click', () => {
+                    const tbody = document.getElementById(tbodyId);
+                    tbody.innerHTML = ''; // Clear existing rows
+                    data.forEach(employeeData => {
+                        tableController.addRow(employeeData);
+                    });
+                    tableController.updateTotals();
                 });
-                absentTable.updateTotals();
-            });
+            }
         }
+
+        // --- Table Initializations ---
+
+        // Absent
+        const absentNewRowHtml = `
+            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0"><input type="text" name="name" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name"></td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm"><input type="text" name="code" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., SICK"></td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm"><input type="number" name="hours" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0"></td>
+            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0"><button type="button" class="text-error remove-btn font-bold">×</button></td>`;
+        const absentTable = initializeDynamicTable('absent-employees-tbody', 'add-absent-employee-btn', 'total-absent-hours-cell', 'summary-absent-hours', 'hours', absentNewRowHtml);
+        setupCopyButton('copy-yesterday-absent-btn', 'absent-employees-tbody', previousDayData.absent, absentTable);
+
+        // Hired
+        const hiredNewRowHtml = `
+            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0"><input type="text" name="full-name-hired" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name"></td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm"><input type="text" name="shift-hired-from" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., Morning"></td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm"><input type="number" name="hours-worked" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0"></td>
+            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0"><button type="button" class="text-error remove-btn font-bold">×</button></td>`;
+        const hiredTable = initializeDynamicTable('hired-employees-tbody', 'add-hired-employee-btn', 'total-hired-hours-cell', 'summary-hired-hours', 'hours-worked', hiredNewRowHtml);
+        setupCopyButton('copy-yesterday-hired-btn', 'hired-employees-tbody', previousDayData.hired, hiredTable);
+
+        // Hired Out
+        const hiredOutNewRowHtml = `
+            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0"><input type="text" name="full-name-hired-out" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name"></td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm"><input type="text" name="shift-hired-to" class="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="e.g., Night"></td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm"><input type="number" name="hours-hired-out" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0"></td>
+            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0"><button type="button" class="text-error remove-btn font-bold">×</button></td>`;
+        const hiredOutTable = initializeDynamicTable('hired-out-employees-tbody', 'add-hired-out-employee-btn', 'total-hired-out-hours-cell', 'summary-hired-out-hours', 'hours-hired-out', hiredOutNewRowHtml);
+        setupCopyButton('copy-yesterday-hired-out-btn', 'hired-out-employees-tbody', previousDayData.hiredOut, hiredOutTable);
+
+        // Overtime
+        const overtimeNewRowHtml = `
+            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0"><input type="text" name="full-name-overtime" class="w-full bg-transparent border-0 focus:ring-0 text-text-primary-light dark:text-text-primary-dark" placeholder="Full Name"></td>
+            <td class="whitespace-nowrap px-3 py-2 text-sm"><input type="number" name="hours-overtime" class="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-light dark:text-text-secondary-dark" placeholder="Hours" value="0"></td>
+            <td class="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0"><button type="button" class="text-error remove-btn font-bold">×</button></td>`;
+        const overtimeTable = initializeDynamicTable('overtime-employees-tbody', 'add-overtime-employee-btn', 'total-overtime-hours-cell', 'summary-overtime-hours', 'hours-overtime', overtimeNewRowHtml);
+        setupCopyButton('copy-yesterday-overtime-btn', 'overtime-employees-tbody', previousDayData.overtime, overtimeTable);
     });
 </script>
 </html>
