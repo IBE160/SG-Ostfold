@@ -100,19 +100,48 @@
 <div class="mt-8 pt-6 border-t border-border-dark">
 <div class="flex justify-between items-center">
 <p class="text-text-primary-dark text-lg font-medium">Total Moves Performed</p>
-<p class="text-primary text-3xl font-bold">0</p>
+<p id="total-moves-display" class="text-primary text-3xl font-bold">0</p>
 </div>
 </div>
-<!-- Action Buttons -->
-<div class="flex justify-end gap-4 mt-8">
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent border border-border-dark text-text-primary-dark text-sm font-bold leading-normal tracking-[0.015em] hover:bg-content-dark transition-colors" type="button">
-<span class="truncate">Back</span>
-</button>
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-background-dark text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" type="submit">
-<span class="truncate">Continue</span>
-</button>
-</div>
+
 </form>
 </div>
+<!-- Action Buttons -->
+<div class="flex justify-between items-center gap-4 pt-6">
+    <button class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-text-primary-dark bg-content-dark border border-border-dark hover:bg-border-dark/80 transition-colors" type="button" onclick="window.location.href='Mockup-SR4.html'">Back</button>
+    <button class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-background-dark bg-primary hover:bg-primary/90 transition-colors" type="button" onclick="window.location.href='Mockup-SR6.html'">Continue</button>
 </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const totalDisplay = document.getElementById('total-moves-display');
+    const inputIds = [
+        'pallelager-moves',
+        'transitt-moves',
+        'heis-moves',
+        'hoytlager-moves',
+        'osr-moves',
+        'ute-moves',
+        'rorhall-moves'
+    ];
+    
+    const inputElements = inputIds.map(id => document.getElementById(id));
+
+    function calculateTotal() {
+        let total = 0;
+        inputElements.forEach(input => {
+            if (input) {
+                total += parseFloat(input.value) || 0;
+            }
+        });
+        totalDisplay.textContent = total;
+    }
+
+    inputElements.forEach(input => {
+        if (input) {
+            input.addEventListener('input', calculateTotal);
+        }
+    });
+});
+</script>
 </body></html>
