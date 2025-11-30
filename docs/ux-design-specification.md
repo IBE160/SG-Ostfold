@@ -1,7 +1,68 @@
-# ibe160 UX Design Specification  
-Version 2.0
-
+# UX Design Specification  
+### Shift & KPI Reporting Solution  
+**IBE160 – BMAD Phase: Validate UX Design**
 ---
+## Table of Contents
+
+- [UX Design Specification](#ux-design-specification)
+    - [Shift \& KPI Reporting Solution](#shift--kpi-reporting-solution)
+  - [**IBE160 – BMAD Phase: Validate UX Design**](#ibe160--bmad-phase-validate-ux-design)
+  - [Table of Contents](#table-of-contents)
+  - [1. Introduction](#1-introduction)
+  - [2. Target Users \& Roles](#2-target-users--roles)
+    - [2.1 Shift Leaders](#21-shift-leaders)
+    - [2.2 Department Managers](#22-department-managers)
+    - [2.3 Operations Manager](#23-operations-manager)
+  - [3. Design Goals \& UX Principles](#3-design-goals--ux-principles)
+    - [3.1 Design Goals](#31-design-goals)
+    - [3.2 UX Principles](#32-ux-principles)
+  - [4. Information Architecture](#4-information-architecture)
+    - [4.1 Navigation Structure](#41-navigation-structure)
+    - [4.2 Navigation Pattern](#42-navigation-pattern)
+  - [5. Layout Specification](#5-layout-specification)
+    - [5.1 Page Layout](#51-page-layout)
+      - [Sidebar](#sidebar)
+      - [Main Content](#main-content)
+    - [5.2 Dashboard Layout](#52-dashboard-layout)
+    - [5.3 Historical Layout](#53-historical-layout)
+    - [5.4 Shift Report Layout (SR1–SR9)](#54-shift-report-layout-sr1sr9)
+  - [6. Visual Identity \& Styling](#6-visual-identity--styling)
+    - [6.1 Color Palette](#61-color-palette)
+    - [6.2 Typography](#62-typography)
+  - [7. Component Inventory](#7-component-inventory)
+    - [7.1 Navigation](#71-navigation)
+    - [7.2 KPI Cards](#72-kpi-cards)
+    - [7.3 Tables](#73-tables)
+    - [7.4 Forms](#74-forms)
+    - [7.5 Buttons](#75-buttons)
+    - [7.6 Alerts \& Messages](#76-alerts--messages)
+  - [8. Interaction Design](#8-interaction-design)
+    - [Buttons](#buttons)
+    - [Forms](#forms)
+    - [Navigation](#navigation)
+  - [9. UX States](#9-ux-states)
+    - [9.1 Loading](#91-loading)
+    - [9.2 Empty State](#92-empty-state)
+    - [9.3 Error State](#93-error-state)
+    - [9.4 Success State](#94-success-state)
+  - [10. UX Data Structure](#10-ux-data-structure)
+    - [Dashboard KPIs](#dashboard-kpis)
+    - [Historical Table](#historical-table)
+    - [Shift Reports (SR1–SR9)](#shift-reports-sr1sr9)
+  - [11. User Flows](#11-user-flows)
+    - [Flow: Shift Registration](#flow-shift-registration)
+    - [Flow: Manager KPI Analysis](#flow-manager-kpi-analysis)
+  - [12. Non-Functional UX Requirements](#12-non-functional-ux-requirements)
+    - [Performance](#performance)
+    - [Usability](#usability)
+    - [Accessibility](#accessibility)
+  - [13. Constraints](#13-constraints)
+  - [Appendix](#appendix)
+    - [Related Documents](#related-documents)
+    - [Core Interactive Deliverables](#core-interactive-deliverables)
+    - [Optional Enhancement Deliverables](#optional-enhancement-deliverables)
+    - [Next Steps \& Follow-Up Workflows](#next-steps--follow-up-workflows)
+  - [14. Summary](#14-summary)
 
 ## 1. Introduction  
 This UX Design Specification defines the visual structure, information architecture, interaction rules, and component system for the *Shift & KPI Reporting Solution*.  
@@ -53,10 +114,9 @@ The system supports:
 
 **Interactive Mockups:**
 
-- 
-- Design Direction Showcase Mockups from stich: [Mockup-Common-Layout.html](./Mockup-Common Layout.html)
+- Design Direction Showcase Mockups from stich: [Mockup-Common-Layout.html](./stich/Mockup-Common-Layout.html)
 - Design Direction Showcase Mockups from stich: [Mockup-Dashboard.html](./Mockup-Dashboard.html)
-- Design Direction Showcase Mockups from stich: [Mockup-Historical.html](./Mockup-Hostorical.html)
+- Design Direction Showcase Mockups from stich: [Mockup-Historical.html](./stich/Mockup-Historical.html)
 - Design Direction Showcase Mockups from stich: [Mockup-SR1.html](./Mockup-SR1.html)
 - Design Direction Showcase Mockups from stich: [Mockup-SR2.html](./Mockup-SR2.html)
 - Design Direction Showcase Mockups from stich: [Mockup-SR3.html](./Mockup-SR3.html)
@@ -295,7 +355,7 @@ Examples:
 
 - Product Requirements: [PRD-md](./PRD.md)
 - Product Brief: [product-brief.md](./product-brief.md)
-- Proposal: [propoasal.md](proposal.md)
+- Proposal: [proposal.md](proposal.md)
 - Brainstorming: [bmad-shiftapp-inegration-and-proposal-alignment-rune-2025-10-29.md](./Fase%20O/bmad-shiftapp-lean-integration-and-proposal-alignment-Rune-2025-10-29.md)
 - Brainstorming: [brainstorming-BMAD-AI-feedback-userflow-review-rune-2025-10-27.md](./Fase%20O/brainstorming-BMAD-AI-feedback-userflow-review-Rune-2025-10-27.md)
 - Brainstorming: [brainstorming-data-entry-risk-thomas.md](./Fase%20O/Brainstorming-data-entry-risk-thomas.md)
