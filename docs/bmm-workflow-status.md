@@ -12,7 +12,7 @@ WORKFLOW_PATH: greenfield-level-3.yaml
 ## Current State
 
 CURRENT_PHASE: 4
-CURRENT_WORKFLOW: implementation-readiness - Complete
+CURRENT_WORKFLOW: implementation-readiness - docs/solutioning-validation-report-2025-12-01.md
 CURRENT_AGENT: architect
 PHASE_1_COMPLETE: true
 PHASE_2_COMPLETE: true

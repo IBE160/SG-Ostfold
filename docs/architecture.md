@@ -27,49 +27,18 @@ This command establishes the base architecture with the following decisions pre-
 - **Routing:** Next.js App Router
 - **Project Structure:** `src/` directory for application code, absolute imports (`@/*`)
 
-## Identified Architectural Decisions
-
-Based on the analysis of your Product Requirements Document (PRD), Epics, and UX Design Specification, we have identified the following key architectural decision areas. These decisions will form the backbone of your application, ensuring consistency and scalability.
-
-**Decisions already covered by the Next.js starter template:**
--   **Framework:** Next.js (for React web applications, supporting SSR/SSG)
--   **Language:** TypeScript (for type safety and improved developer experience)
--   **Styling:** Tailwind CSS (for utility-first CSS and rapid UI development)
--   **Linting:** ESLint (for code quality and consistency)
--   **Routing:** Next.js App Router (for modern routing, layouts, and data fetching)
--   **Project Structure:** `src/` directory and absolute imports (`@/*`) for organized codebase.
-
-**Critical Decisions (requiring immediate attention):**
-These decisions are fundamental and impact the entire system.
--   **Data Persistence:** How the application will store and manage all shift reports, KPIs, and user data. This includes selecting a database and a method for interacting with it (ORM/client).
--   **Authentication:** How users will securely log in and how their roles (Shift Leader, Manager) will be managed for access control.
--   **API Pattern:** The approach for how the frontend and backend components will communicate, ensuring efficient and type-safe data exchange.
--   **Deployment Target:** The platform or service where the application will be hosted and made accessible to users.
-
-**Important Decisions (shaping key functionalities):**
-These decisions are crucial for specific features and will be addressed after the critical ones.
--   **Data Analytics / Visualization:** The strategy for aggregating data for KPIs and the choice of libraries for rendering interactive dashboards and trend graphs.
--   **File Storage:** The solution for storing attachments (images, notes) associated with shift reports.
-
-**Nice-to-Have Decisions (for future growth and advanced features):**
-These can be deferred to later stages of development or post-MVP.
--   **Background Jobs / Alerts:** The mechanism for processing asynchronous tasks, such as generating alerts for KPI threshold breaches.
--   **AI Application Integration:** The strategy for incorporating AI features like auto-summarization, anomaly detection, and chatbot functionalities.
-
 ## Decision Summary
 
-| Category | Decision | Version | Affects Epics | Rationale |
+| Category | Decision | Version (Verified: 2025-12-01) | Affects Epics | Rationale |
 |---|---|---|---|---|
-| Data Persistence | Supabase | latest | All Epics | Provides a managed PostgreSQL database, along with authentication and storage, simplifying the tech stack and accelerating development. |
-| Authentication | Supabase Auth | latest | User & Access Management Epic (Epic 1) | Seamless integration with the chosen Supabase database, providing a complete authentication solution with email/password, social logins, JWTs, and RBAC management. |
-| API Pattern | Next.js Route Handlers + Direct Supabase Client | Next.js (latest), Supabase Client (latest) | All Epics (especially data interactions, forms, dashboards) | Leverages Next.js's built-in server-side capabilities for custom logic and Supabase's auto-generated APIs and client for efficient data interactions, minimizing boilerplate and ensuring tight integration. |
-| Deployment Target | Vercel | Latest | All Epics | Seamless integration with Next.js, automatic deployments from Git, built-in serverless functions, global CDN, and optimized performance, simplifying deployment and operations. |
-| Data Analytics / Visualization | Client-side Charting Library (e.g., Recharts or Tremor) + Server-side data aggregation (Next.js Route Handlers + Supabase SQL) | Latest stable version (library to be chosen based on specific needs) | Performance Monitoring & Dashboards (Epic 3) | Enables rich, interactive visualizations directly within the application, leveraging Next.js server capabilities for efficient data fetching and aggregation from Supabase. |
-| File Storage | Supabase Storage | latest | Shift Report Management Epic (Epic 1 - Growth feature) | Seamless integration with the chosen Supabase backend, providing secure and scalable object storage managed alongside the database and authentication, simplifying development and operations. |
-| Background Jobs / Alerts | Supabase Database Triggers and Edge Functions | latest | Performance Monitoring & Dashboards (Epic 3 - Growth feature) | Leverages the existing Supabase backend to efficiently handle event-driven alerts directly from database changes, using PostgreSQL functions and serverless Edge Functions for logic execution. |
-| AI Application Integration | OpenAI API (e.g., GPT-4) | Latest API | AI-Powered Insights Epic (Epic 5 - Growth/Vision feature) | Leverages state-of-the-art Large Language Models (LLMs) from a leading provider for tasks like summarization and chatbot functionality, offering high performance and ease of integration via APIs. |
-
-{{decision_table_rows}}
+| Data Persistence | Supabase | 2.5.0 | All Epics | Provides a managed PostgreSQL database, along with authentication and storage, simplifying the tech stack and accelerating development. |
+| Authentication | Supabase Auth | 2.5.0 | User & Access Management Epic (Epic 1) | Seamless integration with the chosen Supabase database, providing a complete authentication solution with email/password, social logins, JWTs, and RBAC management. |
+| API Pattern | Next.js Route Handlers + Direct Supabase Client | Next.js (15.1.0), Supabase Client (2.5.0) | All Epics (especially data interactions, forms, dashboards) | Leverages Next.js's built-in server-side capabilities for custom logic and Supabase's auto-generated APIs and client for efficient data interactions, minimizing boilerplate and ensuring tight integration. |
+| Deployment Target | Vercel | latest | All Epics | Seamless integration with Next.js, automatic deployments from Git, built-in serverless functions, global CDN, and optimized performance, simplifying deployment and operations. |
+| Data Analytics / Visualization | Client-side Charting Library (e.g., Recharts or Tremor) + Server-side data aggregation (Next.js Route Handlers + Supabase SQL) | Tremor (3.18.7), Recharts (3.0.1) | Performance Monitoring & Dashboards (Epic 3) | Enables rich, interactive visualizations directly within the application, leveraging Next.js server capabilities for efficient data fetching and aggregation from Supabase. |
+| File Storage | Supabase Storage | 2.5.0 | Shift Report Management Epic (Epic 1 - Growth feature) | Seamless integration with the chosen Supabase backend, providing secure and scalable object storage managed alongside the database and authentication, simplifying development and operations. |
+| Background Jobs / Alerts | Supabase Database Triggers and Edge Functions | 2.5.0 | Performance Monitoring & Dashboards (Epic 3 - Growth feature) | Leverages the existing Supabase backend to efficiently handle event-driven alerts directly from database changes, using PostgreSQL functions and serverless Edge Functions for logic execution. |
+| AI Application Integration | OpenAI API (e.g., GPT-4) | 2025-11-01 | AI-Powered Insights Epic (Epic 5 - Growth/Vision feature) | Leverages state-of-the-art Large Language Models (LLMs) from a leading provider for tasks like summarization and chatbot functionality, offering high performance and ease of integration via APIs. |
 
 ## Project Structure
 
@@ -186,6 +155,21 @@ These patterns ensure consistent implementation across all AI agents and develop
 | Date Format (in JSON/API) | ISO 8601 String (UTC) | `2025-11-30T10:00:00.000Z` |
 | Date Format (in UI) | Locale-specific via `date-fns` | `MM/dd/yyyy` for en-US |
 | API Response Format | Standardized `data` / `error` wrappers | `{ "data": { ... } }` or `{ "error": { ... } }` |
+
+### Communication Patterns
+
+| Pattern | Convention | Example |
+|---|---|---|
+| Inter-service (Post-MVP) | Asynchronous Events via Supabase Postgres Changes | A background service listens for new rows in a `jobs` table using `supabase.channel('public:jobs').on(...)` to trigger asynchronous tasks like sending emails. |
+| Client-Server | Standardized API calls via Next.js Route Handlers | The frontend uses `fetch` to call API routes like `/api/reports`, which then interact with the Supabase client. |
+
+### Lifecycle Patterns
+
+| Pattern | Convention | Example |
+|---|---|---|
+| Loading State | Skeleton UI Components | When fetching data for the dashboard, display skeleton versions of the KPI cards and charts to prevent layout shift and indicate progress. |
+| Error State | Toast Notifications & Error Boundaries | For non-critical errors (e.g., a single KPI fails to load), display a toast notification. For critical errors that break a page, use a React Error Boundary to show a user-friendly error message. |
+| Empty State | Informative Placeholders | If the historical reports view has no data, display a message like "No reports found for the selected period" with a call-to-action to adjust filters or create a new report. |
 
 ## Consistency Rules
 
@@ -332,5 +316,5 @@ The architecture document has been validated against the project's validation ch
 ---
 
 _Generated by BMAD Decision Architecture Workflow v1.0_
-_Date: 2025-11-30_
+_Date: 2025-12-01_
 _For: BIP_
