@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+  <story>
+    <id>1.1</id>
+    <title>Project Foundation &amp; CI/CD</title>
+    <description>
+      As the Dev Team, I want the initial project structure, database schema, and a CI/CD pipeline, so that we have a stable, automated foundation for all future development and deployment.
+    </description>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1">A Next.js application is created with all specified dependencies (Supabase, TailwindCSS, ShadCN/UI).</criterion>
+    <criterion id="AC2">The Supabase project is configured with the initial database schema for `users`, `roles`, and `reports` with RLS enabled.</criterion>
+    <criterion id="AC3">A Vercel project is configured to automatically deploy the `main` branch to production.</criterion>
+  </acceptanceCriteria>
+
+  <dependencies>
+    <dependency type="tool">Vercel account access</dependency>
+    <dependency type="tool">Supabase account access</dependency>
+    <dependency type="tool">Node.js and npm installed locally</dependency>
+  </dependencies>
+
+  <technicalRequirements>
+    <requirement type="command">
+      Run `npx create-next-app@latest my-app --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"` to initialize the project.
+    </requirement>
+    <requirement type="stack">The project must use Next.js with the App Router, TypeScript, and Tailwind CSS.</requirement>
+    <requirement type="dependencies">Install `supabase` and `date-fns` npm packages.</requirement>
+  </technicalRequirements>
+
+  <cicd>
+    <platform>Vercel</platform>
+    <trigger>Push to `main` branch</trigger>
+    <action>Build and deploy the Next.js application.</action>
+    <goal>Provide continuous deployment and preview deployments for pull requests.</goal>
+  </cicd>
+
+  <environmentVariables>
+    <variable name="NEXT_PUBLIC_SUPABASE_URL">The URL for the Supabase project.</variable>
+    <variable name="NEXT_PUBLIC_SUPABASE_ANON_KEY">The anonymous key for the Supabase project.</variable>
+    <notes>These must be configured in `.env.local` for local development and in Vercel project settings for deployment.</notes>
+  </environmentVariables>
+
+  <fileStructure>
+    <path>src/app/</path>
+    <path>src/components/</path>
+    <path>src/lib/</path>
+    <path>src/hooks/</path>
+    <path>src/types/</path>
+    <path>src/services/</path>
+    <path>src/styles/</path>
+    <notes>This structure, as defined in architecture.md, must be created as part of the initial setup.</notes>
+  </fileStructure>
+
+  <testing>
+    <integration>
+      <scope>Verify that the Supabase client can connect to the database using the provided environment variables.</scope>
+    </integration>
+    <e2e>
+      <scope>A smoke test that navigates to the deployed Vercel URL and verifies that a placeholder home page loads correctly.</scope>
+    </e2e>
+  </testing>
+
+</storyContext>

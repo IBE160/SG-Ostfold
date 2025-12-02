@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+  <story>
+    <id>1.3</id>
+    <title>Create &amp; Submit Shift Report</title>
+    <description>
+      As a Shift Leader, I want an intuitive form to create and submit a new shift report, so that I can accurately capture my daily operational data with minimal effort. This story involves building the user interface for the report creation form, implementing both client and server-side validation, and creating the backend API endpoint to save the report to the database.
+    </description>
+    <businessJustification>
+      This story is the cornerstone of the application's value proposition. It directly replaces the inefficient and error-prone manual data entry process. By enabling the collection of clean, structured, and validated data at the source, this feature provides the foundation for all subsequent data analysis, KPI dashboards, and management insights.
+    </businessJustification>
+  </story>
+
+  <functionalRequirements>
+    A logged-in user with the 'Shift Leader' role will be able to navigate to a dedicated page to create a new shift report. This page will present a form with fields for all required operational data points (e.g., Overtime, Sick Leave, Orders per Hour). The form will provide immediate feedback on data entry, highlighting any validation errors in real-time. Upon clicking "Submit", the data is sent securely to the backend, validated again, and persisted in the Supabase database. The Shift Leader receives a clear success notification once the submission is complete.
+  </functionalRequirements>
+
+  <acceptanceCriteria>
+    <criterion>A logged-in Shift Leader can access an intuitive form to create and submit a new shift report.</criterion>
+    <criterion>The form provides real-time validation for numeric inputs, with error states as defined in the UX spec.</criterion>
+    <criterion>When they click "Submit", the report data is saved to the 'reports' table in the Supabase database.</criterion>
+    <criterion>A success notification is displayed upon successful submission.</criterion>
+    <criterion>The API endpoint for submission is protected and only accessible by users with the 'shift_leader' role.</criterion>
+  </acceptanceCriteria>
+
+  <dependencies>
+    <dependency storyId="1.2">User Authentication &amp; Role-Based Access must be complete. This story requires an authenticated 'Shift Leader' session to function correctly.</dependency>
+  </dependencies>
+
+  <ux>
+    <screen id="new-report-form">
+        <path>/reports/new</path>
+        <description>The primary UI for this story. It must be built according to the components, layout, and styling defined in ux-design-specification.md.</description>
+    </screen>
+    <flow>Logged-in Shift Leader -&gt; Navigates to "New Report" -&gt; Fills Form -&gt; Submits Form -&gt; Receives Success/Error Feedback.</flow>
+    <components>
+        <component>Input (ShadCN/UI)</component>
+        <component>DatePicker (ShadCN/UI)</component>
+        <component>Button (ShadCN/UI)</component>
+        <component>Card (ShadCN/UI)</component>
+        <component>Toast/Notification</component>
+    </components>
+  </ux>
+
+  <api>
+    <route id="create-report">
+        <path>/api/reports</path>
+        <method>POST</method>
+        <description>Handles the submission of a new shift report. It must be protected to only allow 'shift_leader' roles.</description>
+    </route>
+  </api>
+
+  <database>
+    <table>
+        <name>reports</name>
+        <operation>INSERT</operation>
+        <notes>The RLS policy should ensure that a Shift Leader can only insert a report with their own user_id.</notes>
+    </table>
+  </database>
+
+  <validation>
+    <rule field="date">Required, must be a valid date.</rule>
+    <rule field="shift">Required, must be one of the predefined values.</rule>
+    <rule field="overtime_hrs">Required, numeric, range 0-24.</rule>
+    <rule field="other_numeric">All other numeric fields must be non-negative.</rule>
+    <notes>Validation must be implemented on both client-side (real-time) and server-side (security).</notes>
+  </validation>
+
+  <errorHandling>
+    <frontend>
+        <case description="Field validation fails">Display inline error messages for each field.</case>
+        <case description="Form is submitting">Disable the "Submit" button to prevent duplicates.</case>
+        <case description="API call fails">Show a generic error toast notification.</case>
+    </frontend>
+    <backend>
+        <case code="400">Return "Bad Request" with detailed error messages if server-side validation fails.</case>
+        <case code="401/403">Return "Unauthorized" or "Forbidden" if the user is not authenticated or authorized.</case>
+        <case code="500">Return "Internal Server Error" for unexpected database failures.</case>
+    </backend>
+  </errorHandling>
+  
+  <testing>
+    <unit>
+        <scope>Write comprehensive unit tests for the client-side validation schema (zod) to cover all fields and edge cases.</scope>
+    </unit>
+    <integration>
+        <scope>Test the POST /api/reports endpoint thoroughly: successful creation, validation failure, and authorization failure (e.g., attempt by a 'manager').</scope>
+    </integration>
+    <e2e>
+        <scope>Happy Path: Full user journey from Login as Shift Leader -> Navigate -> Fill form -> Submit -> Assert success.</scope>
+        <scope>Validation Path: Attempt to submit with invalid data and assert that field-specific error messages are displayed and the form is not submitted.</scope>
+    </e2e>
+  </testing>
+
+</storyContext>
