@@ -1,0 +1,89 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.2</storyId>
+    <title>User Authentication & Role-Based Access</title>
+    <status>Ready for Development</status>
+    <generatedAt>2025-12-02</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>sprint-artifacts/1-2-user-authentication-role-based-access.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a User</asA>
+    <iWant>to securely log in and be assigned a role</iWant>
+    <soThat>I can access the features relevant to my position</soThat>
+    <tasks>
+      <group title="Frontend Requirements">
+        <task>1. Login Page UI: Create a new route and page at src/app/(auth)/login/page.tsx.</task>
+        <task>2. Login Form Component: Build a reusable form component using ShadCN/UI (Input, Button, Label) for email and password fields.</task>
+        <task>3. Authentication Logic: Use the Supabase client (supabase.auth.signInWithPassword) to handle the authentication request.</task>
+        <task>4. State Management: Implement logic to manage the user's session state on the client-side, potentially using React Context or a similar pattern to make the user session available throughout the app.</task>
+        <task>5. Redirects: Handle the client-side redirection after a successful login using the Next.js useRouter hook.</task>
+      </group>
+      <group title="Backend/API Requirements">
+        <task>1. Middleware for Route Protection: Create a src/middleware.ts file. This middleware will run on requests to protected routes (e.g., /dashboard/*, /reports/*).</task>
+        <task>2. Session Verification: The middleware will check for the user's session cookie, verify it with the Supabase client on the server-side, and refresh the session if needed.</task>
+        <task>3. Authorization Logic: If the user is authenticated, the middleware allows the request to proceed. If not, it redirects the user to the /login page. This protects all routes within the (app) route group.</task>
+      </group>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion>A user can securely log in and be assigned a role.</criterion>
+    <criterion>A 'Shift Leader' is authenticated and redirected to their personal report dashboard after login.</criterion>
+    <criterion>A 'Manager' is authenticated and redirected to the main operations dashboard after login.</criterion>
+    <criterion>An error message is displayed for invalid credentials, as per the UX specification.</criterion>
+    <criterion>Application routes under the `/(app)` group are protected and inaccessible to unauthenticated users.</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+        <doc path="docs/PRD.md" title="Product Requirements Document" section="MVP Scope" snippet="Secure login with role-based access (shift leader vs. manager)"/>
+        <doc path="sprint-artifacts/tech-spec-epic-1.md" title="Technical Specification: Epic 1" section="Story 1.2" snippet="A user can securely log in and be assigned a role. A 'Shift Leader' is authenticated and redirected..."/>
+        <doc path="docs/architecture.md" title="Architecture" section="Authentication" snippet="Supabase Auth provides a complete authentication solution with email/password, social logins, JWTs, and RBAC management."/>
+    </docs>
+    <code>
+        <code path="src/app/(auth)/login/page.tsx" kind="page" symbol="LoginPage" lines="" reason="To be created: The main UI for user login."/>
+        <code path="src/middleware.ts" kind="middleware" symbol="middleware" lines="" reason="To be created: Will protect application routes from unauthenticated access."/>
+        <code path="src/lib/supabase.ts" kind="library" symbol="supabase" lines="" reason="Existing Supabase client setup to be used for authentication."/>
+    </code>
+    <dependencies>
+        <dependency name="@supabase/supabase-js" version="^2.86.0"/>
+        <dependency name="next" version="16.0.6"/>
+        <dependency name="react" version="19.2.0"/>
+        <dependency name="lucide-react" version="^0.555.0"/>
+        <dependency name="class-variance-authority" version="^0.7.1"/>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>The UI must be dark-mode only.</constraint>
+    <constraint>The application must be a responsive web app.</constraint>
+    <constraint>UI components should be built with ShadCN/UI.</constraint>
+    <constraint>Authentication must be implemented using Supabase Auth.</constraint>
+    <constraint>Route protection must be implemented using Next.js Middleware.</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface name="Supabase Sign In" kind="function signature" signature="supabase.auth.signInWithPassword({ email, password })" path="src/lib/supabase.ts"/>
+  </interfaces>
+  
+  <tests>
+    <standards>Layered testing strategy with Jest for unit/integration tests and Playwright for E2E tests. All tests run in CI/CD pipeline on Vercel.</standards>
+    <locations>
+        <location>src/app/(auth)/login/page.test.tsx</location>
+        <location>src/middleware.test.ts</location>
+        <location>tests/e2e/auth.spec.ts</location>
+    </locations>
+    <ideas>
+      <idea for="AC1">Unit Tests: Test the validation logic of the login form component.</idea>
+      <idea for="AC5">Integration Tests: CRITICAL: Write integration tests for the middleware.ts file to ensure it correctly protects routes, allows authenticated users, and redirects unauthenticated users.</idea>
+      <idea for="AC5">Integration Tests: Test the server-side Supabase client's ability to verify a session.</idea>
+      <idea for="AC2">End-to-End (E2E) Tests: A test case for a successful login as a 'Shift Leader' and redirection to their specific dashboard.</idea>
+      <idea for="AC3">End-to-End (E2E) Tests: A test case for a successful login as a 'Manager' and redirection to the main dashboard.</idea>
+      <idea for="AC4">End-to-End (E2E) Tests: A test case for a failed login attempt, asserting that an error message is displayed.</idea>
+      <idea for="AC5">End-to-End (E2E) Tests: A test case where an unauthenticated user attempts to access a protected URL (e.g., /reports/new) and is redirected to /login.</idea>
+    </ideas>
+  </tests>
+</story-context>

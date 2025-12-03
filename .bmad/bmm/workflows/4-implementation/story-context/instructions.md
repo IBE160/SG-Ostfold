@@ -51,7 +51,8 @@
     <action>Extract {{epic_id}}, {{story_id}}, {{story_title}}, {{story_status}} from filename/content</action>
     <action>Parse sections: Story, Acceptance Criteria, Tasks/Subtasks, Dev Notes</action>
     <action>Extract user story fields (asA, iWant, soThat)</action>
-    <template-output file="{default_output_file}">story_tasks</template-output>
+    <action>Extract content of "Tasks / Subtasks" section from the story file into a variable named story_tasks_content.</action>
+    <template-output file="{default_output_file}">{{story_tasks_content}}</template-output>
     <template-output file="{default_output_file}">acceptance_criteria</template-output>
 
     <!-- Check if context file already exists -->
