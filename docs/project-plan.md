@@ -30,8 +30,8 @@
     - [X] File: architecture.md
   - [X] /run-agent-task pm *create-epics-and-stories {prompt / user-input-file}
     - [X] File: epics.md
-  - [ ] /run-agent-task tea *test-design {prompt / user-input-file}
-  - [ ] /run-agent-task architect *solutioning-gate-check {prompt / user-input-file}
+  - [X] /run-agent-task tea *test-design {prompt / user-input-file}
+  - [X] /run-agent-task architect *solutioning-gate-check {prompt / user-input-file}
 
 ## Fase 3
 
