@@ -5,7 +5,6 @@
 1. Der hvor det står {prompt / user-input-file}, kan dere legge inn en egen prompt eller filnavn for å gi ekstra instruksjoner. Hvis dere ikke ønsker å legge til ekstra instruksjoner, kan dere bare fjerne denne delen.
 2. Hvis jeg har skrevet noe der allerede, f.eks. "Root Cause Analysis and Solution Design for Player Inactivity", så kan dere bytte ut min prompt med deres egen.
 
-
 ## Fase 0
 
 - [x ] Brainstorming
@@ -19,30 +18,34 @@
 ## Fase 1
 
 - [x ] Planning
-  - [x] /run-agent-task pm *prd
-  - [x] /run-agent-task pm *validate-prd
-  - [x] /run-agent-task ux-designer *create-ux-design "Make sure you run this command in interactive mode"
+  - [X] /run-agent-task pm *prd
+  - [X] /run-agent-task pm *validate-prd
+  - [X] /run-agent-task ux-designer *create-ux-design "Make sure you run this command in interactive mode"
   - [X] /run-agent-task ux-designer *validate-ux-design {prompt / user-input-file}
 
 ## Fase 2
 
-- [ ] Solutioning
-  - [ ] /run-agent-task architect *create-architecture {prompt / user-input-file}
-    - [ ] File: architecture.md
-  - [ ] /run-agent-task pm *create-epics-and-stories {prompt / user-input-file}
-    - [ ] File: epics.md
+- [X] Solutioning
+  - [X] /run-agent-task architect *create-architecture {prompt / user-input-file}
+    - [X] File: architecture.md
+  - [X] /run-agent-task pm *create-epics-and-stories {prompt / user-input-file}
+    - [X] File: epics.md
   - [ ] /run-agent-task tea *test-design {prompt / user-input-file}
   - [ ] /run-agent-task architect *solutioning-gate-check {prompt / user-input-file}
 
 ## Fase 3
 
 - [ ] Implementation
+
   - [ ] /run-agent-task sm *sprint-planning {prompt / user-input-file}
     - [ ] File: sprint-artifacts/sprint-status.yaml
+
   - foreach epic in sprint planning:
+
     - [ ] /run-agent-task sm create-epic-tech-context {prompt / user-input-file}
       - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
     - [ ] /run-agent-task sm validate-epic-tech-context {prompt / user-input-file}
+
     - foreach story in epic:
       - [ ] /run-agent-task sm *create-story {prompt / user-input-file}
         - [ ] File: sprint-artifacts/{{story_key}}.md
@@ -51,16 +54,13 @@
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
       - [ ] /run-agent-task sm *validate-story-context {prompt / user-input-file}
       - [ ] /run-agent-task sm *story-ready-for-dev {prompt / user-input-file}
-      while code-review != approved:
+        while code-review != approved:
         - [ ] /run-agent-task dev *develop-story {prompt / user-input-file}
         - [ ] /run-agent-task dev *code-review {prompt / user-input-file}
       - [ ] /run-agent-task dev *story-done {prompt / user-input-file}
       - [ ] /run-agent-task sm *test-review {prompt / user-input-file}
+
     - [ ] /run-agent-task sm *epic-retrospective {prompt / user-input-file}
-
-
-
-
 
 ## BMAD workflow
 
