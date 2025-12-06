@@ -5,23 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ibe160 - Color Theme</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
     <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
+                        /* Core app theme */
                         "primary": "#3abff8",
                         "background-light": "#f5f7f8",
                         "background-dark": "#101d23",
                         "text-primary": "#ffffff",
                         "text-secondary": "#8fb9cc",
                         "content-bg": "#182c34",
-                        "border": "#305869"
+                        "border": "#305869",
+
+                        /* Optional semantic layer (kan brukes i SR/dashboards) */
+                        "success": "#22c55e",
+                        "warning": "#eab308",
+                        "danger": "#ef4444",
+                        "info": "#38bdf8"
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -30,89 +40,309 @@
                         "DEFAULT": "0.25rem",
                         "lg": "0.5rem",
                         "xl": "0.75rem",
+                        "2xl": "1rem",
                         "full": "9999px"
                     },
+                    boxShadow: {
+                        "soft": "0 18px 45px rgba(0,0,0,0.35)"
+                    }
                 },
             },
         }
     </script>
     <style>
+        body {
+            font-family: "Inter", sans-serif;
+        }
         .material-symbols-outlined {
             font-variation-settings:
-            'FILL' 0,
-            'wght' 400,
-            'GRAD' 0,
-            'opsz' 24
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24;
         }
     </style>
 </head>
+
 <body class="font-display bg-background-dark text-text-primary p-8">
 
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-black tracking-tight border-b border-border pb-4 mb-4">ibe160 - Application Color Theme</h1>
-        <p class="text-text-secondary text-base leading-normal mb-8">
-            This page outlines the "Modern & Tech-Forward" color theme used across the application. 
-            This theme is designed to be sleek, reduce eye strain, and create a high-tech, focused atmosphere where data and key elements are highlighted effectively.
-        </p>
+    <div class="max-w-5xl mx-auto space-y-10">
 
-        <div class="bg-content-bg rounded-xl border border-border overflow-hidden">
-            <div class="p-6">
-                <h3 class="text-2xl font-bold text-text-primary mb-2">Modern & Tech-Forward (Dark)</h3>
-                <p class="text-text-secondary">A sleek dark theme where the bright blue accent makes data visualizations and interactive elements pop.</p>
+        <!-- Header -->
+        <header class="border-b border-border pb-5 mb-2 flex flex-col gap-3">
+            <div class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-text-secondary/80">
+                <span class="material-symbols-outlined text-sm">palette</span>
+                <span>Design System • Color</span>
             </div>
-            
-            <div class="px-6">
-                <h4 class="text-lg font-medium text-text-primary mb-3">Core Palette</h4>
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
-                    <div class="flex flex-col items-center">
-                        <div class="w-full h-16 rounded bg-primary"></div>
-                        <span class="mt-2 text-text-primary font-medium">Primary</span>
-                        <span class="text-text-secondary">#3abff8</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="w-full h-16 rounded bg-text-primary"></div>
-                        <span class="mt-2 text-text-primary font-medium">Text Primary</span>
-                        <span class="text-text-secondary">#ffffff</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="w-full h-16 rounded bg-text-secondary"></div>
-                        <span class="mt-2 text-text-primary font-medium">Text Secondary</span>
-                        <span class="text-text-secondary">#8fb9cc</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="w-full h-16 rounded bg-content-bg border border-border"></div>
-                        <span class="mt-2 text-text-primary font-medium">Content BG</span>
-                        <span class="text-text-secondary">#182c34</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="w-full h-16 rounded bg-background-dark border border-border"></div>
-                        <span class="mt-2 text-text-primary font-medium">Body BG</span>
-                        <span class="text-text-secondary">#101d23</span>
-                    </div>
+            <div class="flex flex-wrap items-end justify-between gap-3">
+                <h1 class="text-4xl font-black tracking-tight">ibe160 – Application Color Theme</h1>
+                <span class="text-[11px] px-3 py-1 rounded-full border border-border text-text-secondary">
+                    Mode: <span class="font-semibold text-text-primary ml-1">Dark-first</span>
+                </span>
+            </div>
+            <p class="text-text-secondary text-sm leading-relaxed max-w-3xl">
+                The color theme supports a <strong>“Modern & Tech-Forward”</strong> dark UI. It is optimized for dashboards
+                and shift reports where data and anomalies must stand out without overloading the user’s eyes.
+            </p>
+        </header>
+
+        <!-- Overview card -->
+        <section class="bg-content-bg rounded-2xl border border-border shadow-soft overflow-hidden">
+            <div class="p-6 border-b border-border/70 flex flex-wrap items-start justify-between gap-4">
+                <div class="space-y-2 max-w-xl">
+                    <h2 class="text-2xl font-bold">Modern & Tech-Forward (Dark)</h2>
+                    <p class="text-text-secondary text-sm leading-relaxed">
+                        A deep, low-noise background with a bright blue accent. Primary blue is reserved for the
+                        most important actions and key numbers; everything else uses more subtle contrasts.
+                    </p>
+                </div>
+                <div class="flex gap-1.5">
+                    <div class="w-8 h-8 rounded-xl bg-background-dark border border-border/60"></div>
+                    <div class="w-8 h-8 rounded-xl bg-content-bg border border-border/60"></div>
+                    <div class="w-8 h-8 rounded-xl bg-primary"></div>
+                    <div class="w-8 h-8 rounded-xl bg-text-secondary"></div>
                 </div>
             </div>
 
-            <div class="p-6 mt-4 border-t border-border">
-                <h4 class="text-lg font-medium text-text-primary mb-4">Component Examples</h4>
-                <div class="flex flex-wrap items-center gap-4">
-                    <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-[#101d23] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                        <span class="truncate">Continue</span>
-                    </button>
-                    <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent border border-border text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#223d49] transition-colors">
-                        <span class="truncate">Back</span>
-                    </button>
+            <!-- Mode comparison strip -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 text-xs">
+                <div class="p-4 border-t border-border/70 bg-background-dark/60">
+                    <p class="font-semibold mb-1">Usage focus</p>
+                    <p class="text-text-secondary">
+                        Dashboard views, shift reports, historical data, and monitoring screens where users may
+                        look at the interface for long periods.
+                    </p>
                 </div>
-                <div class="mt-6">
-                    <label class="text-white text-base font-medium leading-normal pb-2" for="example-input">Form Input</label>
-                    <input class="form-input flex w-full max-w-sm min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border bg-background-dark focus:border-primary h-14 placeholder:text-text-secondary p-[15px] text-base font-normal leading-normal" id="example-input" placeholder="Enter number..." type="text" value="">
+                <div class="p-4 border-t border-l md:border-l border-border/70 bg-background-dark/40">
+                    <p class="font-semibold mb-1">Primary contrast</p>
+                    <p class="text-text-secondary">
+                        Blue <span class="text-primary font-semibold">#3ABFF8</span> on dark surfaces for CTAs and
+                        highlights, white text for key numbers.
+                    </p>
                 </div>
-                <div class="mt-6 bg-content-bg rounded-lg border border-border p-6 max-w-xs">
-                    <h4 class="text-xl font-bold text-text-primary mb-1">Total Orderlines</h4>
-                    <p class="text-primary text-4xl font-black">1,234</p>
-                    <p class="text-text-secondary text-sm mt-2">This is an example of a data display card.</p>
+                <div class="p-4 border-t border-l md:border-l border-border/70 bg-background-dark/20">
+                    <p class="font-semibold mb-1">Accessibility</p>
+                    <p class="text-text-secondary">
+                        Avoid pure white blocks. Use content surfaces and secondary text for softer contrast.
+                    </p>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Core Palette -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between gap-4">
+                <h2 class="text-xl font-semibold">Core Palette</h2>
+                <p class="text-xs text-text-secondary max-w-sm text-right">
+                    These colors define the base application shell: backgrounds, content surfaces and core typography.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-xs">
+                <!-- Primary -->
+                <div class="flex flex-col items-center bg-content-bg/60 rounded-xl border border-border/80 p-3">
+                    <div class="w-full h-16 rounded-lg bg-primary"></div>
+                    <span class="mt-2 text-text-primary font-semibold">Primary</span>
+                    <span class="text-text-secondary text-[11px]">#3ABFF8</span>
+                    <p class="mt-1 text-[10px] text-text-secondary/80 text-center">
+                        Main actions, links, KPI highlights.
+                    </p>
+                </div>
+
+                <!-- Text primary -->
+                <div class="flex flex-col items-center bg-content-bg/60 rounded-xl border border-border/80 p-3">
+                    <div class="w-full h-16 rounded-lg bg-text-primary border border-border/60"></div>
+                    <span class="mt-2 text-text-primary font-semibold">Text Primary</span>
+                    <span class="text-text-secondary text-[11px]">#FFFFFF</span>
+                    <p class="mt-1 text-[10px] text-text-secondary/80 text-center">
+                        Key labels, headings, main numbers.
+                    </p>
+                </div>
+
+                <!-- Text secondary -->
+                <div class="flex flex-col items-center bg-content-bg/60 rounded-xl border border-border/80 p-3">
+                    <div class="w-full h-16 rounded-lg bg-text-secondary"></div>
+                    <span class="mt-2 text-text-primary font-semibold">Text Secondary</span>
+                    <span class="text-text-secondary text-[11px]">#8FB9CC</span>
+                    <p class="mt-1 text-[10px] text-text-secondary/80 text-center">
+                        Descriptions, helper text, less critical info.
+                    </p>
+                </div>
+
+                <!-- Content background -->
+                <div class="flex flex-col items-center bg-content-bg/60 rounded-xl border border-border/80 p-3">
+                    <div class="w-full h-16 rounded-lg bg-content-bg border border-border"></div>
+                    <span class="mt-2 text-text-primary font-semibold">Content BG</span>
+                    <span class="text-text-secondary text-[11px]">#182C34</span>
+                    <p class="mt-1 text-[10px] text-text-secondary/80 text-center">
+                        Cards, panels, modals, primary surfaces.
+                    </p>
+                </div>
+
+                <!-- Body background -->
+                <div class="flex flex-col items-center bg-content-bg/60 rounded-xl border border-border/80 p-3">
+                    <div class="w-full h-16 rounded-lg bg-background-dark border border-border"></div>
+                    <span class="mt-2 text-text-primary font-semibold">Body BG</span>
+                    <span class="text-text-secondary text-[11px]">#101D23</span>
+                    <p class="mt-1 text-[10px] text-text-secondary/80 text-center">
+                        App-level background behind all content.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Semantic colors -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between gap-4">
+                <h2 class="text-xl font-semibold">Semantic Colors</h2>
+                <p class="text-xs text-text-secondary max-w-sm text-right">
+                    Used for statuses, alerts and trend indicators across dashboards and shift reports.
+                </p>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-4 text-xs">
+                <!-- Success -->
+                <div class="bg-content-bg rounded-2xl border border-border/80 p-4 space-y-3">
+                    <div class="h-10 rounded-xl bg-success/80"></div>
+                    <p class="font-semibold">Success</p>
+                    <p class="text-text-secondary text-[11px]">
+                        Positive trends, completed tasks, meeting target.
+                    </p>
+                    <p class="font-mono text-[10px] text-text-secondary/90">
+                        #22C55E • bg-success text-success
+                    </p>
+                </div>
+
+                <!-- Warning -->
+                <div class="bg-content-bg rounded-2xl border border-border/80 p-4 space-y-3">
+                    <div class="h-10 rounded-xl bg-warning/80"></div>
+                    <p class="font-semibold">Warning</p>
+                    <p class="text-text-secondary text-[11px]">
+                        Pre-warning, upcoming issues, “check soon”.
+                    </p>
+                    <p class="font-mono text-[10px] text-text-secondary/90">
+                        #EAB308 • bg-warning text-warning
+                    </p>
+                </div>
+
+                <!-- Danger -->
+                <div class="bg-content-bg rounded-2xl border border-border/80 p-4 space-y-3">
+                    <div class="h-10 rounded-xl bg-danger/80"></div>
+                    <p class="font-semibold">Danger</p>
+                    <p class="text-text-secondary text-[11px]">
+                        Critical incidents, downtime, hard errors.
+                    </p>
+                    <p class="font-mono text-[10px] text-text-secondary/90">
+                        #EF4444 • bg-danger text-danger
+                    </p>
+                </div>
+
+                <!-- Info -->
+                <div class="bg-content-bg rounded-2xl border border-border/80 p-4 space-y-3">
+                    <div class="h-10 rounded-xl bg-info/80"></div>
+                    <p class="font-semibold">Info</p>
+                    <p class="text-text-secondary text-[11px]">
+                        Neutral notifications, tooltips, secondary indicators.
+                    </p>
+                    <p class="font-mono text-[10px] text-text-secondary/90">
+                        #38BDF8 • bg-info text-info
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Component examples -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between gap-4">
+                <h2 class="text-xl font-semibold">Component Examples</h2>
+                <p class="text-xs text-text-secondary max-w-sm text-right">
+                    Example components showing how the color theme is applied in real UI elements.
+                </p>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-[minmax(0,1.6fr)_minmax(0,1.1fr)] items-start">
+
+                <!-- Buttons + Form -->
+                <div class="bg-content-bg rounded-2xl border border-border p-6 space-y-6">
+                    <div class="space-y-2">
+                        <p class="text-sm font-semibold">Primary actions</p>
+                        <p class="text-xs text-text-secondary">
+                            Blue is reserved for the most important action on a screen. Secondary actions use
+                            transparent / outline styles.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-4">
+                        <button
+                            class="flex min-w-[92px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-6 bg-primary text-[#101d23] text-xs font-bold leading-normal tracking-[0.04em] uppercase hover:bg-primary/90 transition-colors">
+                            <span class="truncate">Continue</span>
+                        </button>
+                        <button
+                            class="flex min-w-[92px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-6 bg-transparent border border-border text-white text-xs font-bold leading-normal tracking-[0.04em] uppercase hover:bg-[#223d49] transition-colors">
+                            <span class="truncate">Back</span>
+                        </button>
+                        <button
+                            class="flex min-w-[92px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-4 bg-transparent border border-border text-text-secondary text-xs font-medium leading-normal hover:border-primary/60 hover:text-primary transition-colors">
+                            <span class="truncate">View details</span>
+                        </button>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-white text-sm font-medium leading-normal pb-1" for="example-input">
+                            Form input
+                        </label>
+                        <input
+                            class="form-input flex w-full max-w-sm min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white
+                                   focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border bg-background-dark
+                                   focus:border-primary h-12 placeholder:text-text-secondary px-4 text-sm"
+                            id="example-input"
+                            placeholder="Enter number..."
+                            type="text"
+                            value="">
+                        <p class="text-[11px] text-text-secondary mt-1">
+                            Inputs use <span class="font-mono">bg-background-dark</span> with a subtle border.
+                            Focus is indicated with primary blue.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Data card -->
+                <div class="bg-content-bg rounded-2xl border border-border p-6 space-y-4">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.18em] text-text-secondary/80">KPI Example</p>
+                            <h4 class="text-xl font-bold text-text-primary mt-1">Total Orderlines</h4>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-[11px] px-3 py-1 rounded-full bg-background-dark border border-border/70">
+                            <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                            <span class="text-text-secondary">Stable</span>
+                        </span>
+                    </div>
+
+                    <div class="space-y-1">
+                        <p class="text-primary text-4xl font-black leading-tight">1,234</p>
+                        <p class="text-success text-xs font-medium">+4.1% vs last shift</p>
+                    </div>
+
+                    <p class="text-text-secondary text-xs mt-2">
+                        Example of a data display card where the main value uses primary color, contextual trend uses
+                        semantic colors, and all secondary explanations remain low-contrast.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage guidelines -->
+        <section class="space-y-3 text-xs text-text-secondary bg-content-bg/60 border border-border rounded-2xl p-5">
+            <p class="font-semibold text-text-primary text-sm mb-1">Usage Guidelines</p>
+            <ul class="list-disc list-inside space-y-1.5">
+                <li><strong>Use primary blue sparingly</strong> – ideally one main CTA per view.</li>
+                <li><strong>Prefer secondary text</strong> for descriptions to reduce visual noise.</li>
+                <li><strong>Keep backgrounds dark</strong> – avoid mixing light and dark modes in the same flow.</li>
+                <li><strong>Semantic colors</strong> should not be overused; they should signal clear meaning (status, trend, alert).</li>
+                <li><strong>Borders</strong> use <span class="font-mono">border-border</span> to subtly separate surfaces without hard lines.</li>
+            </ul>
+        </section>
     </div>
 
 </body>
