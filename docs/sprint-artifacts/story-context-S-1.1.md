@@ -5,7 +5,7 @@
 **Sprint:** 1
 **Author:** Bob, Scrum Master
 **Date:** 2025-12-06
-**Status:** done, ready for SM test-review phase
+**Status:** ready for sprint demo
 
 ---
 
