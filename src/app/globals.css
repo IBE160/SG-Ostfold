@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 198 42% 10%; /* Matches background-dark from UX spec */
+    --foreground: 0 0% 100%; /* Matches text-primary from UX spec */
+
+    --card: 200 37% 15%; /* Matches content-bg from UX spec */
+    --card-foreground: 0 0% 100%;
+
+    --popover: 200 37% 15%; /* Matches content-bg from UX spec */
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 200 100% 61%; /* From UX spec: #3abff8 */
+    --primary-foreground: 0 0% 100%; /* White foreground for primary */
+
+    --secondary: 199 37% 30%; /* Using border color for secondary */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 198 42% 10%; /* Matches background-dark or content-bg */
+    --muted-foreground: 200 24% 75%; /* Matches text-secondary from UX spec */
+
+    --accent: 200 37% 15%; /* Matches content-bg */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%; /* Default shadcn red */
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 199 37% 30%; /* Matches border from UX spec */
+    --input: 199 37% 30%; /* Matches border from UX spec */
+    --ring: 200 100% 61%; /* Matches primary from UX spec */
+
+    --radius: 0.5rem; /* Default shadcn radius */
+
+    /* Custom UX Spec colors not directly mapped to shadcn defaults */
+    --background-dark: 198 42% 10%; /* #101d23 */
+    --content-bg: 200 37% 15%; /* #182c34 */
+    --border-color: 199 37% 30%; /* #305869 */
+    --text-primary: 0 0% 100%; /* #ffffff */
+    --text-secondary: 200 24% 75%; /* #8fb9cc */
+  }
+
+  .dark {
+    /* Since we are dark-mode first, .dark class will essentially be the same as :root.
+       Shadcn's components might still apply this class, so we ensure consistency. */
+    --background: 198 42% 10%;
+    --foreground: 0 0% 100%;
+
+    --card: 200 37% 15%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 200 37% 15%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 200 100% 61%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 199 37% 30%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 198 42% 10%;
+    --muted-foreground: 200 24% 75%;
+
+    --accent: 200 37% 15%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 199 37% 30%;
+    --input: 199 37% 30%;
+    --ring: 200 100% 61%;
+  }
+}
