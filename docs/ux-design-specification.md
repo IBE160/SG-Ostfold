@@ -211,6 +211,8 @@ The system supports:
 
 ## 7. Component Inventory
 
+*Note: The primary component library for this project is **shadcn/ui**. The following inventory is based on components available from this library, with custom components specified where needed.*
+
 ### 7.1 Navigation  
 - Sidebar  
 - Menu links  
@@ -236,14 +238,145 @@ The system supports:
 - Secondary (dark)  
 - Disabled state  
 
-### 7.6 Alerts & Messages  
-- Success  
-- Error  
-- Empty state screens  
+### 7.7 Shift Report Stepper
+
+**Purpose:** To visually guide the Shift Leader through the 9-step Shift Report process, indicating current, completed, and upcoming steps, making the process feel structured and manageable.
+
+**Anatomy & Content:**
+- **Layout:** Vertical sidebar stepper.
+- **Indicators:** Step number (1, 2, 3...) for each step.
+- **Titles:** Short, concise titles displayed next to the step number.
+- **Status Indicators:**
+    - Completed step: Checkmark icon.
+    - Current step: Solid dot or distinct highlight.
+    - Upcoming step: Hollow circle.
+
+**States:**
+- **Current Step:** Highlighted background with primary accent color for number/icon. Text is bold.
+- **Completed Step:** Background changes to a subtle success color, checkmark icon appears, number/icon in a neutral color. Text is regular weight.
+- **Upcoming Step:** Minimal styling, hollow circle icon, number/icon and text in secondary text color.
+
+**Actions & Behavior:**
+- **Navigation (Backward):** Users can click on any completed or current step to navigate back to that specific form page for review or data correction.
+- **Navigation (Forward):** Moving to upcoming steps is guided and potentially restricted (e.g., "Next" button on form pages, or disabled stepper steps until current step is complete).
+- **Hover:** Hovering over a step displays a tooltip with the full title/description of that step.
 
 ---
 
 ## 8. Interaction Design
+
+### 8.1 Consistency Rules
+
+#### Button Hierarchy
+
+*   **Primary Action:**
+    *   **Style:** Solid fill with the primary accent color (`#3abff8`).
+    *   **Usage:** For the main success action on a page (e.g., "Submit Report", "Save Changes", "Next"). Use only **once** per view to avoid confusion.
+*   **Secondary Action:**
+    *   **Style:** Outline/ghost button (transparent background with a colored border) or a subtle dark background.
+    *   **Usage:** For alternative, less-frequent actions (e.g., "Cancel", "Back", "Export").
+*   **Tertiary/Subtle Action:**
+    *   **Style:** Plain text link style.
+    *   **Usage:** For non-critical actions, often within other components (e.g., "Edit" on a summary view, "Clear Filters").
+*   **Destructive Action:**
+    *   **Style:** Secondary style but with a red color (`#ff6b6b` or similar) to indicate a warning.
+    *   **Usage:** For actions that delete data or have irreversible consequences (e.g., "Delete Report", "Remove User"). Always use with a confirmation dialog.
+
+#### Feedback Patterns
+
+*   **Success:**
+    *   **Pattern:** A small, auto-dismissing "Toast" or "Sonner" notification at the bottom or top of the screen (e.g., "Report submitted successfully!"). Use `shadcn/ui`'s `Toast` component.
+*   **Error:**
+    *   **For Forms:** Inline error messages directly below the invalid field.
+    *   **For System/API Errors:** A prominent, non-dismissing `Alert` component at the top of the relevant section (e.g., "Failed to load data. Please try again.").
+*   **Loading State:**
+    *   **For Pages/Sections:** Use `shadcn/ui`'s `Skeleton` component to show a grayed-out "ghost" version of the UI that is about to load.
+    *   **For Buttons:** The button that triggered the action should show a spinner inside it and be disabled to prevent multiple clicks.
+*   **Informational/Warning:**
+    *   **Pattern:** A dismissible `Alert` component with a distinct color (e.g., yellow or blue) to provide helpful tips or warnings that don't block user action.
+
+#### Form Patterns
+
+*   **Label Position:**
+    *   **Default:** Top-aligned labels (above the input field). This is generally best for scannability and allows for longer labels without impacting form width.
+*   **Required Field Indicator:**
+    *   **Pattern:** A subtle asterisk (`*`) next to the label for required fields.
+*   **Validation Timing:**
+    *   **Pattern:** On-blur validation (when the user leaves the field) for immediate feedback, and on-submit for a final check of the entire form.
+*   **Error Display:**
+    *   **Pattern:** Inline error messages directly below the input field, with a clear red text. A summary of errors at the top of the form for complex forms (if multiple errors).
+*   **Help Text:**
+    *   **Pattern:** Brief, contextual help text below the input field in a lighter text color. For more extensive help, a small info icon (i) next to the label that reveals a tooltip or popover on hover/click.
+
+#### Modal Patterns
+
+*   **Size Variants:**
+    *   **Pattern:** Standard (default, for most confirmations/simple forms), Large (for complex forms, tables), and Full-Screen (for multi-step flows or detailed views on small screens).
+*   **Dismiss Behavior:**
+    *   **Pattern:** Can be dismissed by clicking outside the modal content area or by pressing the `Esc` key. Always include an explicit "Close" button (X icon) in the top-right corner, and a "Cancel" button in the footer for actions.
+*   **Focus Management:**
+    *   **Pattern:** The initial focus should automatically shift to the first interactive element inside the modal. Focus should be "trapped" within the modal while it's open, preventing interaction with the background content.
+*   **Stacking:**
+    *   **Pattern:** Avoid stacking multiple modals. If a new modal needs to be opened, the previous one should be dismissed first. For complex nested workflows, consider using multi-step forms within a single modal or dedicated pages instead.
+
+#### Navigation Patterns
+
+*   **Active State Indication:**
+    *   **Pattern:** The currently active navigation item (in the sidebar) should have a distinct background highlight (e.g., `#223d49` as per current spec) and bold text to clearly differentiate it. A subtle border on the left side can also reinforce the active state.
+*   **Breadcrumb Usage:**
+    *   **Pattern:** Use breadcrumbs for multi-level hierarchical navigation to show the user's current location within the application. Display them prominently at the top of the main content area.
+*   **Back Button Behavior:**
+    *   **Pattern:** For most internal application navigation, the browser's back button behavior should be maintained. For specific workflows or modals, an in-app "Back" button should be provided, clearly indicating the previous logical step or view within that specific context.
+*   **Deep Linking:**
+    *   **Pattern:** Support deep linking for all major views and reports, allowing users to share direct URLs and maintain state across page reloads (e.g., dashboard with pre-selected date ranges).
+
+#### Empty State Patterns
+
+*   **First Use (Onboarding):**
+    *   **Pattern:** When a section is empty for the first time (e.g., no shift reports submitted), display a friendly message explaining what the section is for, along with a clear Call-to-Action (CTA) to get started (e.g., "Welcome! Submit your first shift report here.").
+*   **No Results (Search/Filter):**
+    *   **Pattern:** When a search or filter yields no results, provide a clear message ("No results found for 'X'"), suggest alternative actions (e.g., "Try adjusting your filters," "Clear search"), and possibly link to relevant documentation or common tasks.
+*   **Cleared Content:**
+    *   **Pattern:** For sections that can be cleared (e.g., a "drafts" section), an empty state should confirm the cleared status and potentially offer an "Undo" option for a short period, if technically feasible.
+
+#### Confirmation Patterns
+
+*   **Delete/Irreversible Actions:**
+    *   **Pattern:** Always use a modal confirmation dialog for any action that results in permanent data deletion or irreversible changes. The dialog should clearly state the consequence, require explicit confirmation (e.g., re-typing the item's name or clicking "Confirm Delete"), and provide a "Cancel" option.
+*   **Leave Unsaved Changes:**
+    *   **Pattern:** If a user attempts to navigate away from a form with unsaved changes, trigger a browser-level confirmation dialog (e.g., "You have unsaved changes. Are you sure you want to leave?"). Consider implementing auto-save functionality where appropriate to minimize this.
+
+#### Notification Patterns
+
+*   **Placement:**
+    *   **Pattern:** Non-critical notifications (informational, success) appear as "toasts" at the top-right or bottom-right of the screen, fading out after a few seconds. Critical notifications (errors requiring immediate attention) appear as alerts at the top of the relevant section or page.
+*   **Duration:**
+    *   **Pattern:** Informational/Success notifications auto-dismiss after 3-5 seconds. Error/Warning notifications require manual dismissal.
+*   **Stacking:**
+    *   **Pattern:** Multiple toast notifications should stack vertically, pushing older ones up or down. A maximum of 3 visible at any time, with older ones implicitly dismissible to make room.
+*   **Priority Levels:**
+    *   **Pattern:** Use distinct colors and icons for different notification types: Green for Success, Red for Error, Yellow for Warning, Blue/Gray for Info.
+
+#### Search Patterns
+
+*   **Trigger:**
+    *   **Pattern:** Search should trigger results instantly as the user types (live search) where performance allows. For heavier searches, a dedicated "Search" button can be used.
+*   **Results Display:**
+    *   **Pattern:** Live search results can appear in a dropdown list below the search bar. Full-page search results should be displayed on a dedicated search results page, offering filtering and sorting options.
+*   **Filters:**
+    *   **Pattern:** Filters for search results should be clearly visible and interactive, ideally placed in a sidebar or as a collapsible section above the results.
+*   **No Results:**
+    *   **Pattern:** Display a clear "No results found for '[query]'" message, along with suggestions to refine the query or adjust filters.
+
+#### Date/Time Patterns
+
+*   **Format (Display):**
+    *   **Pattern:** Dates should be displayed in a human-readable, locale-aware format (e.g., "Dec 6, 2025" or "06.12.2025"). Relative timestamps (e.g., "2 hours ago", "yesterday") can be used for recent events, switching to absolute dates after a certain threshold.
+    *   **Times:** Use 24-hour format (e.g., "14:30") unless user preferences dictate 12-hour.
+*   **Timezone Handling:**
+    *   **Pattern:** All dates and times should be stored as UTC in the backend. On the frontend, dates and times should be converted to the user's local timezone for display. User input should be converted to UTC before sending to the backend.
+*   **Pickers:**
+    *   **Pattern:** Use intuitive calendar-style date pickers for date selection. Time input can be a simple dropdown for hours/minutes or a dedicated time picker component.
 
 ### Buttons  
 - Hover: darker tone  
@@ -322,31 +455,129 @@ Examples:
 4. Filter by date/department  
 5. Export Excel  
 
+### Flow: Shift Report Completion & Submission Flow
+
+*   **User Goal:** The Shift Leader wants to complete a full Shift Report in a structured, efficient, and error-resistant way.
+*   **Primary User:** Shift Leader
+*   **Entry Points:**
+    *   Dashboard: "Start Shift Report" button
+    *   Dashboard: "Continue Shift Report" button (if a report is in progress)
+
+#### **Flow Steps:**
+
+1.  **Initiation:**
+    *   **User Action:** Clicks "Start Shift Report" or "Continue Shift Report".
+    *   **System Response:** The application navigates to the first page of the Shift Report form (SR1) or the last visited page if continuing. A progress indicator (e.g., "Step 1 of 9") is clearly visible.
+
+2.  **Data Entry (SR1-SR9):**
+    *   **User Action:** Fills out the form fields for each step (SR1 through SR9). Uses "Next" and "Back" buttons to navigate between form pages.
+    *   **System Response:**
+        *   Input data is validated in real-time (e.g., checking for valid numbers, required fields).
+        *   Errors are displayed inline next to the corresponding field.
+        *   The "Next" button may be disabled until all required fields on the current page are valid.
+        *   All data is auto-saved as the user moves between steps.
+
+3.  **Review Before Submission:**
+    *   **User Action:** After completing the final step (SR9), clicks a "Review Report" button.
+    *   **System Response:** The system presents a single, read-only summary page displaying all entered data from SR1-SR9, organized by section. Each section has an "Edit" button.
+    *   **User Action (Optional):** Clicks an "Edit" button for a specific section.
+    *   **System Response (Optional):** Navigates the user back to the corresponding form page (e.g., SR3) to allow for corrections. After editing, the user is returned to the review page.
+
+4.  **Submission:**
+    *   **User Action:** Clicks the "Submit Final Report" button on the review page.
+    *   **System Response:**
+        *   The system performs a final, comprehensive validation of the entire report.
+        *   A confirmation modal appears: "Are you sure you want to submit this report? It cannot be edited after submission."
+
+5.  **Confirmation/Error Handling:**
+    *   **User Action:** Clicks "Confirm" in the modal.
+    *   **System Response (Success):**
+        *   The report is submitted.
+        *   A success message is displayed: "Shift Report Submitted Successfully!"
+        *   The user is redirected to the Dashboard.
+        *   The submitted report is now visible to Managers.
+    *   **System Response (Error):**
+        *   If final validation fails, the confirmation modal closes, and an error message appears at the top of the review page, listing the specific errors and providing links to the sections that need correction (e.g., "Error in Shift Hours section: Total hours exceed 24.").
+
+#### **Mermaid Flowchart:**
+
+```mermaid
+graph TD
+    A[Dashboard] --> B{Start/Continue Report?};
+    B -- Start New --> C[SR1: Shift Metadata];
+    B -- Continue --> D[Last Visited SR Page];
+    C --> E[SR2: ...];
+    D --> E;
+    E --> F[...] --> G[SR9: Handover Notes];
+    G --> H{Review Report};
+    H -- Yes --> I[Read-only Summary Page];
+    I --> J{Edit Section?};
+    J -- Yes --> K[Navigate to specific SR page];
+    K --> I;
+    J -- No --> L{Submit Report};
+    L --> M{Final Validation};
+    M -- Valid --> N[Confirmation Modal];
+    N -- Confirm --> O[Success! Redirect to Dashboard];
+    M -- Invalid --> P[Show Errors on Summary Page];
+    P --> J;
+    N -- Cancel --> I;
+```
 ---
 
-## 12. Non-Functional UX Requirements
+## 12. Responsive Design & Accessibility Strategy
 
-### Performance  
-- Dashboard loads < 1.5 sec  
-- Form submit < 1 sec  
+### 12.1 Responsive Design Strategy
 
-### Usability  
-- Must require zero training  
-- Max 2 clicks between SR pages  
+This outlines how the application's layout and content will adapt across various screen sizes, adopting a mobile-first approach.
 
-### Accessibility  
-- WCAG 2.1 AA  
-- Visible focus states  
-- High contrast  
+*   **Breakpoint Strategy:**
+    *   **`sm` (640px):** Small screens (large phones in landscape)
+    *   **`md` (768px):** Medium screens (tablets)
+    *   **`lg` (1024px):** Large screens (small laptops)
+    *   **`xl` (1280px):** Extra-large screens (desktops)
+    *   **`2xl` (1536px):** Double extra-large screens
+*   **Adaptation Patterns:**
+    *   **Navigation:**
+        *   **Mobile/Tablet (`sm`, `md`):** Left sidebar collapses into a hamburger menu or bottom navigation bar.
+        *   **Desktop (`lg`+):** Persistent left sidebar.
+    *   **Dashboard Layout:**
+        *   **Mobile/Tablet:** KPI cards stack vertically. Graphs may simplify or offer horizontal scrolling.
+        *   **Desktop:** Multi-column layout for KPI cards and graphs.
+    *   **Tables:**
+        *   **Mobile/Tablet:** Tables will prioritize critical columns, with less important data either hidden, available via horizontal scroll, or converted to a card-view layout per row.
+        *   **Desktop:** Full-width, multi-column tables.
+    *   **Forms (SR1-SR9):**
+        *   **Mobile/Tablet:** Single-column layout. The `ShiftReportStepper` will adapt to provide clear progress indicators suitable for smaller screens.
+        *   **Desktop:** Multi-column layouts where appropriate.
+    *   **Modals:**
+        *   **Mobile:** Modals will automatically convert to full-screen sheets or dedicated pages.
+        *   **Desktop:** Standard centered modal behavior.
 
----
+### 12.2 Accessibility Strategy
 
-## 13. Constraints  
-- Tailwind CSS  
-- Tailwind Forms plugin  
-- Dark mode only  
-- Fully compatible with React/Next.js  
-- Must work on mobile devices  
+Making the application usable for everyone, including individuals with disabilities, is a core principle.
+
+*   **Compliance Target:**
+    *   **WCAG 2.1 Level AA**.
+*   **Key Requirements:**
+    *   **Color Contrast:** Minimum contrast ratio of 4.5:1 (or 3:1 for large text).
+    *   **Keyboard Navigation:** All interactive elements reachable and operable via keyboard, with visible focus indicators.
+    *   **ARIA Labels:** Meaningful `aria-label` attributes for complex UI components.
+    *   **Alt Text:** Descriptive `alt` text for all meaningful images.
+    *   **Form Labels:** Properly associated labels (`<label for="...">`).
+    *   **Error Identification:** Clear, descriptive error messages programmatically associated with input fields.
+    *   **Touch Target Size:** Minimum 44x44px for interactive elements on mobile.
+*   **Testing Strategy:**
+    *   **Automated Tools:** Axe DevTools, Lighthouse.
+    *   **Manual Testing:** Keyboard-only navigation.
+    *   **Screen Reader Testing:** With common screen readers (e.g., NVDA, VoiceOver).
+
+## 13. Constraints
+- Tailwind CSS
+- Tailwind Forms plugin
+- Dark mode only
+- Fully compatible with React/Next.js
+
 
 ---
 ## Appendix
@@ -366,7 +597,7 @@ Examples:
 
 This UX Design Specification was created through visual collaboration:
 
-- **Color Theme Visualizer**: C:\Users\thbje\Documents\IBE160\SG-Ostfold/docs/ux-color-themes.html
+- **Color Theme Visualizer**: C:\Users\thbje\Documents\IBE160\SG-Ostfold\docs\ux-color-themes.html
   - Interactive HTML showing all color theme options explored
   - Live UI component examples in each theme
   - Side-by-side comparison and semantic color usage

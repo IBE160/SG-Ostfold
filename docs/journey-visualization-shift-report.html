@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift Report Completion & Submission Flow</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3abff8",
+                        "background-dark": "#101d23",
+                        "content-dark": "#182c34",
+                        "border-dark": "#305869",
+                        "text-primary-dark": "#e0e0e0",
+                        "text-secondary-dark": "#a0a0a0",
+                        "success": "#22c55e",
+                        "error": "#f43f5e"
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .stepper-item .step-circle {
+            transition: all 0.3s ease;
+        }
+        .stepper-item.completed .step-circle {
+            background-color: #22c55e;
+            border-color: #22c55e;
+            color: #101d23;
+        }
+        .stepper-item.active .step-circle {
+            background-color: #3abff8;
+            border-color: #3abff8;
+            color: #101d23;
+        }
+        .stepper-item.upcoming .step-circle {
+            border-color: #305869;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-sans text-text-primary-dark">
+
+    <div class="flex h-screen">
+        <!-- Stepper Sidebar -->
+        <aside class="w-72 bg-content-dark p-4 border-r border-border-dark flex flex-col">
+            <h1 class="text-xl font-bold mb-6 pb-4 border-b border-border-dark">Shift Report</h1>
+            <nav id="stepper" class="flex flex-col gap-4">
+                <!-- Stepper items will be injected by JS -->
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 p-8 overflow-y-auto">
+            <!-- Pages will be injected by JS -->
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-content-dark rounded-lg shadow-xl p-8 max-w-md w-full border border-border-dark">
+            <h3 class="text-xl font-bold mb-4">Confirm Submission</h3>
+            <p class="text-text-secondary-dark mb-6">Are you sure you want to submit this report? It cannot be edited after submission.</p>
+            <div class="flex justify-end gap-4">
+                <button id="cancel-submission" class="px-6 py-2 rounded-lg border border-border-dark hover:bg-border-dark transition-colors">Cancel</button>
+                <button id="confirm-submission" class="px-6 py-2 rounded-lg bg-primary text-background-dark font-bold hover:bg-primary/90 transition-colors">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const stepper = document.getElementById('stepper');
+        const mainContent = document.getElementById('main-content');
+        const confirmationModal = document.getElementById('confirmation-modal');
+
+        const steps = [
+            { id: 1, title: 'Shift Details', short: 'Shift Details' },
+            { id: 2, title: 'Team & Staffing', short: 'Team' },
+            { id: 3, title: 'Production Numbers', short: 'Production' },
+            { id: 4, title: 'Quality Control', short: 'Quality' },
+            { id: 5, title: 'Downtime & Issues', short: 'Issues' },
+            { id: 6, title: 'Safety Observations', short: 'Safety' },
+            { id: 7, title: 'Maintenance Log', short: 'Maintenance' },
+            { id: 8, title: 'Handover Notes', short: 'Handover' },
+            { id: 9, title: 'Final Review', short: 'Review' },
+            { id: 10, title: 'Submission Complete', short: 'Complete' }
+        ];
+
+        let currentStep = 1;
+
+        function renderStepper() {
+            stepper.innerHTML = '';
+            steps.slice(0, 9).forEach(step => {
+                const item = document.createElement('div');
+                item.classList.add('stepper-item', 'flex', 'items-center', 'gap-4', 'cursor-pointer');
+                item.dataset.step = step.id;
+
+                const circle = document.createElement('div');
+                circle.classList.add('step-circle', 'w-8', 'h-8', 'rounded-full', 'border-2', 'flex', 'items-center', 'justify-center', 'font-bold');
+                circle.textContent = step.id;
+
+                const text = document.createElement('span');
+                text.classList.add('font-medium');
+                text.textContent = step.short;
+
+                item.appendChild(circle);
+                item.appendChild(text);
+                stepper.appendChild(item);
+                
+                item.addEventListener('click', () => {
+                    if (step.id < currentStep) {
+                        goToStep(step.id);
+                    }
+                });
+            });
+            updateStepperState();
+        }
+
+        function updateStepperState() {
+            const items = stepper.querySelectorAll('.stepper-item');
+            items.forEach(item => {
+                const stepId = parseInt(item.dataset.step);
+                item.classList.remove('active', 'completed', 'upcoming');
+                if (stepId < currentStep) {
+                    item.classList.add('completed');
+                } else if (stepId === currentStep) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.add('upcoming');
+                }
+            });
+        }
+
+        function renderPages() {
+            mainContent.innerHTML = '';
+            steps.forEach(step => {
+                const page = document.createElement('div');
+                page.classList.add('page');
+                page.id = `page-${step.id}`;
+                
+                if (step.id <= 8) { // Standard form pages
+                    page.innerHTML = `
+                        <div class="max-w-4xl mx-auto">
+                            <div class="rounded-lg border border-border-dark bg-content-dark p-8 shadow-lg">
+                                <h2 class="text-2xl font-bold mb-2">${step.title}</h2>
+                                <p class="text-text-secondary-dark mb-8">Please fill in the details for this section.</p>
+                                <div class="space-y-6">
+                                    <div>
+                                        <label for="field-${step.id}-1" class="block text-sm font-medium text-text-primary-dark mb-2">Example Field 1 *</label>
+                                        <input type="text" id="field-${step.id}-1" class="w-full bg-background-dark border-border-dark rounded-lg focus:ring-primary focus:border-primary">
+                                        <p class="mt-2 text-sm text-error hidden">This field is required.</p>
+                                    </div>
+                                    <div>
+                                        <label for="field-${step.id}-2" class="block text-sm font-medium text-text-primary-dark mb-2">Example Field 2</label>
+                                        <textarea id="field-${step.id}-2" rows="4" class="w-full bg-background-dark border-border-dark rounded-lg focus:ring-primary focus:border-primary"></textarea>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between mt-12">
+                                    <button class="back-btn px-6 py-2 rounded-lg border border-border-dark hover:bg-border-dark transition-colors ${step.id === 1 ? 'invisible' : ''}" data-step="${step.id - 1}">Back</button>
+                                    <button class="next-btn px-6 py-2 rounded-lg bg-primary text-background-dark font-bold hover:bg-primary/90 transition-colors" data-step="${step.id + 1}">Next</button>
+                                </div>
+                            </div>
+                        </div>`;
+                } else if (step.id === 9) { // Review page
+                     page.innerHTML = `
+                        <div class="max-w-4xl mx-auto">
+                            <div class="rounded-lg border border-border-dark bg-content-dark p-8 shadow-lg">
+                                <h2 class="text-2xl font-bold mb-8">Review Your Report</h2>
+                                <!-- Placeholder for review content -->
+                                <div class="space-y-4 text-text-secondary-dark">
+                                    <p><strong>Shift Details:</strong> ... a summary of SR1 ...</p>
+                                    <p><strong>Team:</strong> ... a summary of SR2 ...</p>
+                                    <p><strong>Production:</strong> ... a summary of SR3 ...</p>
+                                    <p class="italic">(Full review content would be displayed here)</p>
+                                </div>
+                                <div class="flex justify-between mt-12">
+                                    <button class="back-btn px-6 py-2 rounded-lg border border-border-dark hover:bg-border-dark transition-colors" data-step="${step.id - 1}">Back</button>
+                                    <button id="submit-report" class="px-6 py-2 rounded-lg bg-primary text-background-dark font-bold hover:bg-primary/90 transition-colors">Submit Final Report</button>
+                                </div>
+                            </div>
+                        </div>`;
+                } else { // Submission Complete page
+                    page.innerHTML = `
+                        <div class="max-w-4xl mx-auto text-center">
+                            <div class="rounded-lg border border-border-dark bg-content-dark p-12 shadow-lg">
+                                <div class="w-16 h-16 rounded-full bg-success/20 text-success mx-auto flex items-center justify-center mb-6">
+                                     <span class="material-symbols-outlined" style="font-size: 40px;">check_circle</span>
+                                </div>
+                                <h2 class="text-3xl font-bold mb-2">Shift Report Submitted!</h2>
+                                <p class="text-text-secondary-dark mb-8">Your report has been successfully submitted and is now available for managers to review.</p>
+                                <button id="return-to-dashboard" class="px-6 py-2 rounded-lg bg-primary text-background-dark font-bold hover:bg-primary/90 transition-colors">Return to Dashboard</button>
+                            </div>
+                        </div>`;
+                }
+                mainContent.appendChild(page);
+            });
+            addPageEventListeners();
+            goToStep(1);
+        }
+
+        function addPageEventListeners() {
+            document.querySelectorAll('.next-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => goToStep(parseInt(e.target.dataset.step)));
+            });
+            document.querySelectorAll('.back-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => goToStep(parseInt(e.target.dataset.step)));
+            });
+            document.getElementById('submit-report')?.addEventListener('click', () => {
+                confirmationModal.classList.remove('hidden');
+            });
+             document.getElementById('return-to-dashboard')?.addEventListener('click', () => {
+                // In a real app, this would redirect. Here we just reset.
+                goToStep(1);
+            });
+        }
+        
+        function setupModal() {
+            document.getElementById('cancel-submission').addEventListener('click', () => {
+                confirmationModal.classList.add('hidden');
+            });
+            document.getElementById('confirm-submission').addEventListener('click', () => {
+                confirmationModal.classList.add('hidden');
+                goToStep(10); // Go to submission complete step
+            });
+        }
+
+        function goToStep(step) {
+            currentStep = step;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${step}`).classList.add('active');
+            updateStepperState();
+        }
+        
+        // Initial setup
+        renderStepper();
+        renderPages();
+        setupModal();
+
+    </script>
+</body>
+</html>
