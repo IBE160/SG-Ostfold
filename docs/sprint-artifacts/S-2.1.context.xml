@@ -1,0 +1,207 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>S-2.1</storyId>
+    <title>User Login</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-07</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/S-2.1.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to log in through a dedicated login page</iWant>
+    <soThat>when I enter a valid email and password, I am authenticated and redirected to the dashboard.</soThat>
+    <tasks>
+      <task id="TASK1">
+        <description>Frontend – Login Page UI:</description>
+        <subtasks>
+          <subtask>Create a login page with the route: /auth/login.</subtask>
+          <subtask>Build the UI based on the existing design specification (typography, spacing, inputs, buttons, error states).</subtask>
+          <subtask>Form fields: Email (required, validate correct email format), Password (required).</subtask>
+          <subtask>UI behaviors: Disable “Log in” button while login in progress, Display error message for invalid attempts.</subtask>
+          <subtask>Accessibility: Proper label associations for inputs, Visible focus states for inputs and buttons.</subtask>
+        </subtasks>
+      </task>
+      <task id="TASK2">
+        <description>Frontend – useAuth Hook:</description>
+        <subtasks>
+          <subtask>Implement the client logic in hooks/useAuth.ts using the Supabase Auth client.</subtask>
+          <subtask>Expose: currentUser / session, login(credentials: { email: string; password: string }), logout(), isLoading, isAuthenticated (boolean).</subtask>
+          <subtask>On successful login: Update global auth state, Trigger navigation to /dashboard.</subtask>
+          <subtask>On failed login: Return or throw an error for UI display.</subtask>
+        </subtasks>
+      </task>
+      <task id="TASK3">
+        <description>JWT Storage and Auth State Handling:</description>
+        <subtasks>
+          <subtask>Ensure correct handling of Supabase session/JWT in the browser.</subtask>
+          <subtask>Implement logic to: Detect existing session on app initialization, Keep global auth state in sync with Supabase events.</subtask>
+          <subtask>Route behavior: Authenticated users visiting /auth/login should be redirected to /dashboard; Unauthenticated users accessing protected pages should be redirected to /auth/login.</subtask>
+          <subtask>Optionally implement an "AuthGuard" component or higher-level logic for protected routes.</subtask>
+        </subtasks>
+      </task>
+      <task id="TASK4">
+        <description>Testing – Playwright E2E:</description>
+        <subtasks>
+          <subtask>Create a Playwright E2E test verifying that: A user can navigate to /auth/login, User enters valid credentials and clicks “Log in”, After successful login, user is redirected to /dashboard.</subtask>
+          <subtask>The test checks: The final URL is /dashboard, Dashboard-specific UI elements are visible.</subtask>
+          <subtask>Negative test: Invalid credentials show an error message and do NOT redirect the user.</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="AC1">
+      <type>UI</type>
+      <description>/auth/login exists and matches the design specification. Error and loading states work and are clearly visible.</description>
+    </ac>
+    <ac id="AC2">
+      <type>Auth flow</type>
+      <description>Login with valid credentials using Supabase works and creates a valid session. After login, the user is automatically redirected to /dashboard. Authenticated users cannot access the login page. Unauthenticated users cannot access protected pages.</description>
+    </ac>
+    <ac id="AC3">
+      <type>JWT/session</type>
+      <description>Supabase session/JWT is stored and reused so the user remains logged in on page reload (while tokens are valid). Auth state initializes correctly on app load.</description>
+    </ac>
+    <ac id="AC4">
+      <type>Testing</type>
+      <description>Playwright E2E test for the happy path (successful login + redirect) is implemented and passes. Playwright E2E test for invalid credentials (error state, no redirect) is implemented and passes.</description>
+    </ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>E-2: Authentication &amp; User Roles</title>
+        <section>Description</section>
+        <snippet>This epic focuses on implementing user authentication and a simple role-based access control (RBAC) system for "Shift Leader" and "Manager" roles.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Functional Requirements</title>
+        <section>Authentication &amp; Authorization</section>
+        <snippet>The system shall provide secure user authentication and role-based access control. Authentication: Secure user authentication (e.g., OAuth2, JWT) with strong password policies.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>1. High-Level System Architecture</title>
+        <section>Supabase (BaaS)</section>
+        <snippet>E[Auth]: Manages user authentication, roles, and JWT issuance.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>2. Frontend Architecture</title>
+        <section>Folder Structure</section>
+        <snippet>src/
+├── app/
+│   ├── (auth)/
+│   │   └── login/page.tsx
+├── hooks/
+│   ├── useAuth.ts              # Hook for user session and roles</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>3. Backend Architecture (NestJS)</title>
+        <section>Domain Modules</section>
+        <snippet>- Auth Module: Integrates with Supabase Auth. A custom guard will validate JWTs from Supabase on protected routes.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>7. Security Model</title>
+        <section>Authentication</section>
+        <snippet>Authentication: Handled by Supabase Auth. The frontend client gets a JWT, which is sent with every API/database request.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>9. Implementation Roadmap</title>
+        <section>Phase 1: MVP (Core Reporting &amp; Viewing)</section>
+        <snippet>2. Auth: Implement login for Shift Leaders using Supabase Auth.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>3. Design Goals &amp; UX Principles</title>
+        <section>3.1 Design Goals</section>
+        <snippet>- Clean and minimal dark UI
+- Clear visual hierarchy</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>8. Interaction Design</title>
+        <section>Form Patterns</section>
+        <snippet>Error Display: Pattern: Inline error messages directly below the input field, with a clear red text.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>9. UX States</title>
+        <section>9.1 Loading</section>
+        <snippet>- KPI skeletons
+- Table spinner</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>12.2 Accessibility Strategy</title>
+        <section>Key Requirements</section>
+        <snippet>- Keyboard Navigation: All interactive elements reachable and operable via keyboard, with visible focus indicators.
+- Form Labels: Properly associated labels (`&lt;label for="..."&gt;`).</snippet>
+      </doc>
+    </docs>
+    <code>
+      <code path="src/app/(auth)/login/page.tsx" kind="page" reason="Dedicated login page UI." />
+      <code path="src/hooks/useAuth.ts" kind="hook" reason="Client-side authentication logic using Supabase Auth." />
+      <code path="src/lib/supabase/client.ts" kind="utility" reason="Supabase client instance for frontend interactions." />
+      <code path="src/app/(main)/dashboard/page.tsx" kind="page" reason="Target for redirection after successful login." />
+      <code path="backend/src/auth/auth.module.ts" kind="module" reason="Backend authentication module (future integration)." />
+    </code>
+    <dependencies>
+      <ecosystem name="Node.js/pnpm">
+        <package name="next" version="^15.0.0-rc.0" type="dependency" />
+        <package name="react" version="^19.0.0-rc-" type="dependency" />
+        <package name="@supabase/supabase-js" version="^latest" type="dependency" />
+        <package name="playwright" version="^latest" type="devDependency" />
+        <package name="zod" version="^latest" type="dependency" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="architectural">The solution must adhere to the Next.js App Router pattern and utilize Supabase for data and authentication.</constraint>
+    <constraint type="ui-framework">Implement using Shadcn/ui components, integrating the project's existing design system.</constraint>
+    <constraint type="testing">All new UI queries in tests must rely on ARIA roles. Playwright is the primary E2E testing tool.</constraint>
+    <constraint type="security">Supabase handles session/JWT management. Protected routes must redirect unauthenticated users to login.</constraint>
+    <constraint type="accessibility">WCAG 2.1 Level AA compliance, including keyboard navigation and proper form labels.</constraint>
+  </constraints>
+  <interfaces>
+    <interface name="Supabase Auth API" kind="External API" signature="POST /auth/v1/token?grant_type=password" path="N/A (external service)" reason="Direct interaction from frontend for user login." />
+  </interfaces>
+  <tests>
+    <standards>
+A layered testing approach (Unit, Integration, E2E) will be adopted. Unit tests will focus on the `useAuth` hook. E2E tests will verify the complete login flow using Playwright and ARIA roles for UI queries.
+    </standards>
+    <locations>
+      <location>E2E tests: `e2e/auth.spec.ts` (or similar)</location>
+      <location>Component tests for UI: `src/app/(auth)/login/login.test.tsx` (or similar)</location>
+      <location>Hook tests: `src/hooks/useAuth.test.ts`</location>
+    </locations>
+    <ideas>
+      <idea id="TIDEA1" referencesAc="AC4">
+        <description>Verify successful login: user navigates to /auth/login, enters valid credentials, clicks "Log in", is redirected to /dashboard, and dashboard-specific UI elements are visible.</description>
+      </idea>
+      <idea id="TIDEA2" referencesAc="AC4">
+        <description>Verify failed login: user navigates to /auth/login, enters invalid credentials, clicks "Log in", an error message is displayed, and user is NOT redirected.</description>
+      </idea>
+      <idea id="TIDEA3" referencesAc="AC2">
+        <description>Verify authenticated users attempting to access /auth/login are redirected to /dashboard.</description>
+      </idea>
+      <idea id="TIDEA4" referencesAc="AC2">
+        <description>Verify unauthenticated users attempting to access protected pages (e.g., /dashboard) are redirected to /auth/login.</description>
+      </idea>
+      <idea id="TIDEA5" referencesAc="AC3">
+        <description>Verify session persistence across page reloads after successful login.</description>
+      </idea>
+    </ideas>
+  </tests>
+</story-context>
