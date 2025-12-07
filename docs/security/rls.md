@@ -25,6 +25,7 @@ This function returns the role of the currently authenticated user. It is a `SEC
 - **Users can view their own profile:** Allows a user to `SELECT` their own profile information.
 - **Users can update their own profile:** Allows a user to `UPDATE` their own profile information.
 - **Admins can manage all profiles:** Allows users with the `admin` role to perform any action (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) on any profile.
+- **Managers can view all profiles:** Allows users with the `shift_manager` role to `SELECT` all profiles.
 
 ### `shift_reports` and `kpis` Tables
 - **Users can view their own reports/kpis:** Allows any user to `SELECT` reports or KPIs that they have created (where `employee_profile_id` matches their user ID).

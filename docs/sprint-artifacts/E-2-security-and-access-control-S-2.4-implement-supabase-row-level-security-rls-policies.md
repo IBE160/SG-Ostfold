@@ -2,7 +2,7 @@
 epic_key: E-2-security-and-access-control
 story_id: S-2.4
 title: Implement Supabase Row Level Security (RLS) policies
-status: in-review
+status: accepted
 ---
 
 # Story: Implement Supabase Row Level Security (RLS) policies

@@ -34,6 +34,11 @@ ON public.profiles FOR ALL
 USING (public.get_my_role() = 'admin')
 WITH CHECK (public.get_my_role() = 'admin');
 
+DROP POLICY IF EXISTS "Managers can view all profiles." ON public.profiles;
+CREATE POLICY "Managers can view all profiles."
+ON public.profiles FOR SELECT
+USING (public.get_my_role() = 'shift_manager');
+
 
 -- Policies for 'shift_reports' and 'kpis'
 -- Assuming shift_reports and kpis have an 'employee_profile_id' column linking to profiles.id
