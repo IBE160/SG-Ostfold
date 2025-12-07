@@ -1,0 +1,99 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "Navigation" [level=2] [ref=e3]
+    - navigation [ref=e4]:
+      - list [ref=e5]:
+        - listitem [ref=e6]:
+          - link "Dashboard" [ref=e7] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e8]:
+          - link "Shift Reports" [ref=e9] [cursor=pointer]:
+            - /url: /reports
+        - listitem [ref=e10]:
+          - link "Historical Data" [ref=e11] [cursor=pointer]:
+            - /url: /historical
+  - main [ref=e12]:
+    - generic [ref=e14]:
+      - heading "404" [level=1] [ref=e15]
+      - heading "This page could not be found." [level=2] [ref=e17]
+  - region "Notifications alt+T"
+  - generic [active]:
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - navigation [ref=e23]:
+            - button "previous" [disabled] [ref=e24]:
+              - img "previous" [ref=e25]
+            - generic [ref=e27]:
+              - generic [ref=e28]: 1/
+              - text: "1"
+            - button "next" [disabled] [ref=e29]:
+              - img "next" [ref=e30]
+          - img
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - img [ref=e34]
+            - generic "Latest available version is detected (16.0.7)." [ref=e36]: Next.js 16.0.7
+            - generic [ref=e37]: Turbopack
+          - img
+      - dialog "Build Error" [ref=e39]:
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - generic [ref=e44]:
+              - generic [ref=e46]: Build Error
+              - generic [ref=e47]:
+                - button "Copy Error Info" [ref=e48] [cursor=pointer]:
+                  - img [ref=e49]
+                - link "Go to related documentation" [ref=e51] [cursor=pointer]:
+                  - /url: https://nextjs.org/docs/messages/module-not-found
+                  - img [ref=e52]
+                - link "Learn more about enabling Node.js inspector for server code with Chrome DevTools" [ref=e54] [cursor=pointer]:
+                  - /url: https://nextjs.org/docs/app/building-your-application/configuring/debugging#server-side-code
+                  - img [ref=e55]
+            - generic [ref=e64]: "Module not found: Can't resolve '@supabase/ssr'"
+          - generic [ref=e66]:
+            - generic [ref=e68]:
+              - img [ref=e70]
+              - generic [ref=e74]: ./middleware.ts (1:1)
+              - button "Open in editor" [ref=e75] [cursor=pointer]:
+                - img [ref=e77]
+            - generic [ref=e80]:
+              - generic [ref=e81]: Module not found
+              - generic [ref=e82]: ": Can't resolve"
+              - text: "'@supabase/ssr' >"
+              - generic [ref=e83]: 1 |
+              - text: import
+              - generic [ref=e84]: "{ createMiddlewareClient }"
+              - text: from '@supabase/ssr'
+              - generic [ref=e85]: "|"
+              - text: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              - generic [ref=e86]: 2 |
+              - text: import
+              - generic [ref=e87]: "{"
+              - text: NextResponse
+              - generic [ref=e88]: "}"
+              - text: from 'next/server'
+              - generic [ref=e89]: 3 |
+              - generic [ref=e90]: 4 |
+              - text: import
+              - generic [ref=e91]: "type {"
+              - text: NextRequest
+              - generic [ref=e92]: "}"
+              - text: from 'next/server'
+              - link "https://nextjs.org/docs/messages/module-not-found" [ref=e94] [cursor=pointer]:
+                - /url: https://nextjs.org/docs/messages/module-not-found
+        - generic [ref=e95]: "1"
+        - generic [ref=e96]: "2"
+    - generic [ref=e101] [cursor=pointer]:
+      - button "Open Next.js Dev Tools" [ref=e102]:
+        - img [ref=e103]
+      - button "Open issues overlay" [ref=e108]:
+        - generic [ref=e109]:
+          - generic [ref=e110]: "0"
+          - generic [ref=e111]: "1"
+        - generic [ref=e112]: Issue
+  - alert [ref=e113]
+```
