@@ -44,7 +44,7 @@ export interface ShiftReport {
   id: string;
   employee_profile_id?: string; // FK to Profile.id
   start_time: string; // TIMESTAMPTZ
-  end_time: string;   // TIMESTAMPTZ
+  end_time: string; // TIMESTAMPTZ
   notes?: string;
   created_at: string;
   updated_at: string;
@@ -69,7 +69,7 @@ export interface ProfileWithUser extends Profile {
 // Define the SupabaseClient type with custom schema types
 // This allows for type-safe Supabase queries.
 // If your schema is in a named schema (e.g., 'app_data'), adjust 'public' accordingly.
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export type Database = {
   public: {
@@ -99,28 +99,18 @@ export type Database = {
         Insert: Omit<KPI, 'id' | 'created_at' | 'updated_at'> & { id?: string };
         Update: Partial<KPI>;
       };
-      // ... add other tables
-    };
-    Views: {
-      // ...
     };
     Functions: {
       get_user_role: {
-        Args: {};
+        Args: Record<string, never>; // Function takes no arguments
         Returns: string;
       };
       get_user_department_id: {
-        Args: {};
-        Returns: string; // UUID
+        Args: Record<string, never>; // Function takes no arguments
+        Returns: string; // UUID is represented as string in TS
       };
-    };
-    Enums: {
-      // ...
-    };
-    CompositeTypes: {
-      // ...
     };
   };
 };
 
-export type SupabaseClientWithTypes = ReturnType<typeof createClient<Database>>;
+export type SupabaseClientWithTypes = SupabaseClient<Database>;
