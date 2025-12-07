@@ -34,6 +34,20 @@ NEXT_AGENT: pm
 
 
 
+## Ready for Development
+
+
+
+## In Progress
+
+
+
+## In Review
+
+* [E-2-security-and-access-control] S-2.4: Implement Supabase Row Level Security (RLS) policies
+
+
+
 ## Completed Stories
 
 
