@@ -34,6 +34,17 @@ NEXT_AGENT: sm
 
 
 
+## In Progress
+
+* [E-3-dashboard-and-reporting] S-3.1: Create & Submit Shift Report (SR1–SR9)
+
+
+
+## In Review
+
+* [E-3-dashboard-and-reporting] S-3.6: Add "Create Shift Report" Link to Dashboard
+
+
 ## Ready for Development
 
 * [E-3-dashboard-and-reporting] S-3.1: Create & Submit Shift Report (SR1–SR9)

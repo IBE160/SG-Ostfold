@@ -1,8 +1,7 @@
 // src/app/(main)/dashboard/page.tsx
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server"; // Use server client for protected route rendering
 import { redirect } from "next/navigation";
-import Link from "next/link"; // Import Link component
 
 export default async function DashboardPage() {
   const supabase = createClient();
@@ -12,24 +11,11 @@ export default async function DashboardPage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
+    // This check is redundant if middleware is correctly configured, but good for direct access/server rendering safety
     redirect("/auth/login");
   }
 
-  // Fetch user role from profiles table
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-
-  if (profileError) {
-    console.error("Error fetching user profile:", profileError.message);
-    // Handle error or redirect
-    redirect("/auth/login"); // Or show an error page
-  }
-
-  const userRole = profile?.role;
-
+  // Placeholder for logout action
   const logout = async () => {
     "use server";
     const supabase = createClient();
@@ -41,12 +27,6 @@ export default async function DashboardPage() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
       <h1 className="text-4xl font-bold mb-4">Welcome to the Dashboard!</h1>
       <p className="text-xl mb-8">You are logged in as {user.email}</p>
-
-      {userRole === "shift_leader" && (
-        <Link href="/shift-report/create">
-          <Button className="mb-4">Create New Shift Report</Button>
-        </Link>
-      )}
 
       <form action={logout}>
         <Button variant="outline">Logout</Button>

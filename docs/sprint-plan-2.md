@@ -15,6 +15,7 @@ Sprint 1 established the foundation (auth, database, RLS, basic forms). Sprint 2
 ## Stories in this Sprint
 
 * [E-3-dashboard-and-reporting] S-3.1: Create & Submit Shift Report (SR1–SR9)
+* [E-3-dashboard-and-reporting] S-3.6: Add "Create Shift Report" Link to Dashboard
 
 ## Completed Stories
 
