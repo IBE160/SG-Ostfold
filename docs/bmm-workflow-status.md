@@ -32,6 +32,13 @@ NEXT_AGENT: sm
 
 ## Story Backlog
 
+* [E-3-dashboard-and-reporting] S-3.5: Create & Submit Shift Report
+
+* [E-3-kpi-dashboard-visualization] S-3.1: Aggregate KPI Data (Backend)
+* [E-3-kpi-dashboard-visualization] S-3.2: Display KPI Cards (Frontend)
+* [E-3-kpi-dashboard-visualization] S-3.3: Implement Overtime Trend Graph (Frontend)
+* [E-3-kpi-dashboard-visualization] S-3.4: Dashboard Date Range Filter
+
 
 
 ## Ready for Development
