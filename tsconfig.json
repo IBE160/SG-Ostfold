@@ -15,5 +15,5 @@
       "@/*": ["./frontend/*"]
     }
   },
-  "include": ["frontend"]
+  "include": ["frontend", "docs/Gammelt/shift-report"]
 }
