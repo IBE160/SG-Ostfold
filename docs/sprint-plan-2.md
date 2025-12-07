@@ -14,11 +14,7 @@ Sprint 1 established the foundation (auth, database, RLS, basic forms). Sprint 2
 
 ## Stories in this Sprint
 
-* [E-3-kpi-dashboard-visualization] S-3.1: Aggregate KPI Data (Backend)
-* [E-3-kpi-dashboard-visualization] S-3.2: Display KPI Cards (Frontend)
-* [E-3-kpi-dashboard-visualization] S-3.3: Implement Overtime Trend Graph (Frontend)
-* [E-3-kpi-dashboard-visualization] S-3.4: Dashboard Date Range Filter
-* [E-3-dashboard-and-reporting] S-3.5: Create & Submit Shift Report
+* [E-3-dashboard-and-reporting] S-3.1: Create & Submit Shift Report (SR1–SR9)
 
 ## Completed Stories
 
