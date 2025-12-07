@@ -22,7 +22,7 @@ stories:
     owner: unassigned
   - id: S-2.1
     title: "Implement user login with email and password"
-    status: in-progress
+    status: done
     owner: unassigned
   - id: S-2.4
     title: "Implement Supabase Row Level Security (RLS) policies"

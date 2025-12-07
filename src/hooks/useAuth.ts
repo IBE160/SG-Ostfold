@@ -58,7 +58,7 @@ export function useAuth(): AuthState {
           router.replace("/dashboard"); // Redirect on successful login
         } else if (event === "SIGNED_OUT") {
           console.log("User signed out.");
-          router.replace("/auth/login"); // Redirect on logout
+          router.replace("/login"); // Redirect on logout
         } else if (event === "USER_UPDATED") {
           console.log("User data updated:", currentSession?.user.email);
         } else if (event === "TOKEN_REFRESHED") {

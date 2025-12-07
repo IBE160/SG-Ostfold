@@ -16,84 +16,19 @@
           - link "Historical Data" [ref=e11] [cursor=pointer]:
             - /url: /historical
   - main [ref=e12]:
-    - generic [ref=e14]:
-      - heading "404" [level=1] [ref=e15]
-      - heading "This page could not be found." [level=2] [ref=e17]
+    - main [ref=e13]:
+      - generic [ref=e14]:
+        - heading "Log in" [level=1] [ref=e15]
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - generic [ref=e18]: Email
+            - textbox "Email" [ref=e19]: test@example.com
+          - generic [ref=e20]:
+            - generic [ref=e21]: Password
+            - textbox "Password" [active] [ref=e22]: password123
+          - button "Logg inn" [ref=e23]
   - region "Notifications alt+T"
-  - generic [active]:
-    - generic [ref=e20]:
-      - generic [ref=e21]:
-        - generic [ref=e22]:
-          - navigation [ref=e23]:
-            - button "previous" [disabled] [ref=e24]:
-              - img "previous" [ref=e25]
-            - generic [ref=e27]:
-              - generic [ref=e28]: 1/
-              - text: "1"
-            - button "next" [disabled] [ref=e29]:
-              - img "next" [ref=e30]
-          - img
-        - generic [ref=e32]:
-          - generic [ref=e33]:
-            - img [ref=e34]
-            - generic "Latest available version is detected (16.0.7)." [ref=e36]: Next.js 16.0.7
-            - generic [ref=e37]: Turbopack
-          - img
-      - dialog "Build Error" [ref=e39]:
-        - generic [ref=e42]:
-          - generic [ref=e43]:
-            - generic [ref=e44]:
-              - generic [ref=e46]: Build Error
-              - generic [ref=e47]:
-                - button "Copy Error Info" [ref=e48] [cursor=pointer]:
-                  - img [ref=e49]
-                - link "Go to related documentation" [ref=e51] [cursor=pointer]:
-                  - /url: https://nextjs.org/docs/messages/module-not-found
-                  - img [ref=e52]
-                - link "Learn more about enabling Node.js inspector for server code with Chrome DevTools" [ref=e54] [cursor=pointer]:
-                  - /url: https://nextjs.org/docs/app/building-your-application/configuring/debugging#server-side-code
-                  - img [ref=e55]
-            - generic [ref=e64]: "Module not found: Can't resolve '@supabase/ssr'"
-          - generic [ref=e66]:
-            - generic [ref=e68]:
-              - img [ref=e70]
-              - generic [ref=e74]: ./middleware.ts (1:1)
-              - button "Open in editor" [ref=e75] [cursor=pointer]:
-                - img [ref=e77]
-            - generic [ref=e80]:
-              - generic [ref=e81]: Module not found
-              - generic [ref=e82]: ": Can't resolve"
-              - text: "'@supabase/ssr' >"
-              - generic [ref=e83]: 1 |
-              - text: import
-              - generic [ref=e84]: "{ createMiddlewareClient }"
-              - text: from '@supabase/ssr'
-              - generic [ref=e85]: "|"
-              - text: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-              - generic [ref=e86]: 2 |
-              - text: import
-              - generic [ref=e87]: "{"
-              - text: NextResponse
-              - generic [ref=e88]: "}"
-              - text: from 'next/server'
-              - generic [ref=e89]: 3 |
-              - generic [ref=e90]: 4 |
-              - text: import
-              - generic [ref=e91]: "type {"
-              - text: NextRequest
-              - generic [ref=e92]: "}"
-              - text: from 'next/server'
-              - link "https://nextjs.org/docs/messages/module-not-found" [ref=e94] [cursor=pointer]:
-                - /url: https://nextjs.org/docs/messages/module-not-found
-        - generic [ref=e95]: "1"
-        - generic [ref=e96]: "2"
-    - generic [ref=e101] [cursor=pointer]:
-      - button "Open Next.js Dev Tools" [ref=e102]:
-        - img [ref=e103]
-      - button "Open issues overlay" [ref=e107]:
-        - generic [ref=e108]:
-          - generic [ref=e109]: "0"
-          - generic [ref=e110]: "1"
-        - generic [ref=e111]: Issue
-  - alert [ref=e112]
+  - button "Open Next.js Dev Tools" [ref=e29] [cursor=pointer]:
+    - img [ref=e30]
+  - alert [ref=e33]
 ```

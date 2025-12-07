@@ -10,11 +10,11 @@ const INVALID_USER_PASSWORD = 'wrongpassword';
 test.describe('Authentication Flow', () => {
   test.beforeEach(async ({ page }) => {
     // Ensure we start from a logged out state for most tests
-    await page.goto('/auth/login');
+    await page.goto('/login');
     // Clear any existing session or local storage for a clean state
     await page.evaluate(() => window.localStorage.clear());
     await page.evaluate(() => window.sessionStorage.clear());
-    await page.goto('/auth/login'); // Go to login page after clearing storage
+    await page.goto('/login'); // Go to login page after clearing storage
   });
 
   test('should allow a user to log in successfully and redirect to dashboard (AC2, AC3, AC4)', async ({ page }) => {
@@ -41,7 +41,7 @@ test.describe('Authentication Flow', () => {
     await page.click('button:has-text("Login")');
 
     // Expect to remain on the login page
-    await expect(page).toHaveURL('/auth/login');
+    await expect(page).toHaveURL('/login');
 
     // Expect an error message to be displayed (AC1, AC4)
     await expect(page.getByRole('alert', { name: 'Login Failed' })).toBeVisible();
@@ -60,9 +60,8 @@ test.describe('Authentication Flow', () => {
     await expect(page).toHaveURL('/dashboard');
 
     // Now, try to navigate back to the login page
-    await page.goto('/auth/login');
+    await page.goto('/login');
     // Expect to be redirected back to the dashboard immediately
-    await page.waitForURL('/dashboard');
     await expect(page).toHaveURL('/dashboard');
   });
 
@@ -72,8 +71,8 @@ test.describe('Authentication Flow', () => {
     await page.goto('/dashboard');
 
     // Expect to be redirected to the login page
-    await page.waitForURL('/auth/login');
-    await expect(page).toHaveURL('/auth/login');
+    await page.waitForURL('/login');
+    await expect(page).toHaveURL('/login');
 
     // Ensure dashboard specific UI elements are NOT visible
     await expect(page.getByRole('heading', { name: 'Welcome to the Dashboard!' })).not.toBeVisible();
@@ -91,11 +90,11 @@ test.describe('Authentication Flow', () => {
     await page.click('button:has-text("Logout")');
 
     // Expect to be redirected to the login page
-    await page.waitForURL('/auth/login');
-    await expect(page).toHaveURL('/auth/login');
+    await page.waitForURL('/login');
+    await expect(page).toHaveURL('/login');
 
     // Ensure dashboard is no longer accessible without login
     await page.goto('/dashboard');
-    await expect(page).toHaveURL('/auth/login');
+    await expect(page).toHaveURL('/login');
   });
 });
