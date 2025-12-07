@@ -2,10 +2,15 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirectTo') || '/dashboard';
+
+  const supabase = createClient();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,18 +22,19 @@ export default function LoginPage() {
     setError(null);
     setIsLoading(true);
 
-    // 🔧 Midlertidig "fake auth" for å få E2E til å fungere
-    // Bytt dette ut med Supabase senere
-    await new Promise((r) => setTimeout(r, 300)); // liten delay for å simulere nettverk
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    if (email === 'test@example.com' && password === 'password123') {
-      setIsLoading(false);
-      router.push('/dashboard');
+    setIsLoading(false);
+
+    if (error) {
+      setError('Invalid email or password');
       return;
     }
 
-    setIsLoading(false);
-    setError('Invalid email or password');
+    router.push(redirectTo);
   }
 
   return (
