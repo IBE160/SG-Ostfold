@@ -6,7 +6,7 @@
     "dev": "cd frontend && pnpm dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "cd frontend && pnpm lint"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.8",
@@ -23,9 +23,11 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "autoprefixer": "^10.4.22",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "postcss": "latest",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +23,13 @@ export default function RootLayout({
           <nav>
             <ul>
               <li className="mb-2">
-                <a href="/" className="block text-muted-foreground hover:text-foreground">Dashboard</a>
+                <Link href="/" className="block text-muted-foreground hover:text-foreground">Dashboard</Link>
               </li>
               <li className="mb-2">
-                <a href="/reports" className="block text-muted-foreground hover:text-foreground">Shift Reports</a>
+                <Link href="/reports" className="block text-muted-foreground hover:text-foreground">Shift Reports</Link>
               </li>
               <li className="mb-2">
-                <a href="/historical" className="block text-muted-foreground hover:text-foreground">Historical Data</a>
+                <Link href="/historical" className="block text-muted-foreground hover:text-foreground">Historical Data</Link>
               </li>
             </ul>
           </nav>
