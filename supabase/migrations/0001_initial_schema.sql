@@ -101,6 +101,9 @@ BEFORE UPDATE ON public.kpis
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
+-- Ensure department_id exists on profiles even if the table was created earlier without it
+ALTER TABLE public.profiles
+  ADD COLUMN IF NOT EXISTS department_id UUID REFERENCES public.departments(id) ON DELETE SET NULL;
 
 -- Add indexes for common lookup fields to improve performance
 CREATE INDEX IF NOT EXISTS idx_profiles_department_id ON public.profiles (department_id);

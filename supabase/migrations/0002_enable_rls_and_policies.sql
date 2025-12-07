@@ -1,149 +1,248 @@
--- This migration enables Row-Level Security (RLS) and defines policies
--- for all user-facing tables as per Story S-1.3 specification, with fixes applied.
+-- Enable Row Level Security (RLS) on all relevant tables
+ALTER TABLE public.profiles       ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.departments    ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.employees      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.shift_reports  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.kpis           ENABLE ROW LEVEL SECURITY;
 
--- Enable RLS for all user-facing tables
-ALTER TABLE public.departments ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.employees ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.shift_reports ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.kpis ENABLE ROW LEVEL SECURITY;
+-- =========================================================
+-- PROFILES
+-- =========================================================
 
--- Helper function to get the current user's role
-CREATE OR REPLACE FUNCTION get_user_role()
-RETURNS TEXT LANGUAGE plpgsql SECURITY DEFINER AS $$
-BEGIN
-  RETURN (SELECT role FROM public.profiles WHERE id = auth.uid());
-END;
-$$;
+-- Clean up old policies if they exist
+DROP POLICY IF EXISTS "profiles_select_own" ON public.profiles;
+DROP POLICY IF EXISTS "profiles_insert_own" ON public.profiles;
+DROP POLICY IF EXISTS "profiles_update_own" ON public.profiles;
 
--- Helper function to get the current user's department ID
-CREATE OR REPLACE FUNCTION get_user_department_id()
-RETURNS UUID LANGUAGE plpgsql SECURITY DEFINER AS $$
-BEGIN
-  RETURN (SELECT department_id FROM public.profiles WHERE id = auth.uid());
-END;
-$$;
+-- Only the owner can SELECT their own profile
+CREATE POLICY "profiles_select_own"
+ON public.profiles
+FOR SELECT
+USING (id = auth.uid());
 
--- Policies for public.departments
--- All authenticated users can view departments
-CREATE POLICY "Departments: Select authenticated users"
-ON public.departments FOR SELECT
+-- Only the owner can INSERT their own profile row
+CREATE POLICY "profiles_insert_own"
+ON public.profiles
+FOR INSERT
+WITH CHECK (id = auth.uid());
+
+-- Only the owner can UPDATE their own profile
+CREATE POLICY "profiles_update_own"
+ON public.profiles
+FOR UPDATE
+USING (id = auth.uid())
+WITH CHECK (id = auth.uid());
+
+-- =========================================================
+-- DEPARTMENTS
+-- =========================================================
+
+DROP POLICY IF EXISTS "departments_select_authenticated" ON public.departments;
+DROP POLICY IF EXISTS "departments_insert_managers" ON public.departments;
+DROP POLICY IF EXISTS "departments_update_managers" ON public.departments;
+DROP POLICY IF EXISTS "departments_delete_managers" ON public.departments;
+
+-- Any authenticated user can read departments
+CREATE POLICY "departments_select_authenticated"
+ON public.departments
+FOR SELECT
 USING (auth.role() = 'authenticated');
 
--- Only admins can insert, update, or delete departments
-CREATE POLICY "Departments: Manage by admin"
-ON public.departments FOR ALL
-USING (get_user_role() = 'admin') WITH CHECK (get_user_role() = 'admin');
-
--- Policies for public.profiles
--- Users can only see their own profile
-CREATE POLICY "Profiles: Select own"
-ON public.profiles FOR SELECT
-USING (auth.uid() = id);
-
--- Users can insert their own profile
-CREATE POLICY "Profiles: Insert own"
-ON public.profiles FOR INSERT
-WITH CHECK (auth.uid() = id);
-
--- Users can update their own profile (removed redundant WITH CHECK)
-CREATE POLICY "Profiles: Update own"
-ON public.profiles FOR UPDATE
-USING (auth.uid() = id);
-
--- Managers and Admins can view profiles in their department (simplified)
-CREATE POLICY "Profiles: Select by manager/admin in department"
-ON public.profiles FOR SELECT
-USING (
-    get_user_role() = 'admin' OR
-    (
-        get_user_role() = 'manager' AND
-        department_id = get_user_department_id()
-    )
+-- Only managers/admin can INSERT departments (INSERT: only WITH CHECK allowed)
+CREATE POLICY "departments_insert_managers"
+ON public.departments
+FOR INSERT
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
 );
 
--- Policies for public.employees
--- Employees can view their own record (simplified)
-CREATE POLICY "Employees: Select own"
-ON public.employees FOR SELECT
-USING (profile_id = auth.uid());
-
--- Employees can insert their own employee record (if linked to their profile)
-CREATE POLICY "Employees: Insert own"
-ON public.employees FOR INSERT
-WITH CHECK (profile_id = auth.uid());
-
--- Employees can update their own employee record
-CREATE POLICY "Employees: Update own"
-ON public.employees FOR UPDATE
-USING (profile_id = auth.uid());
-
--- Managers and Admins can view employees in their department
-CREATE POLICY "Employees: Select by manager/admin in department"
-ON public.employees FOR SELECT
+-- Only managers/admin can UPDATE departments
+CREATE POLICY "departments_update_managers"
+ON public.departments
+FOR UPDATE
 USING (
-    get_user_role() = 'admin' OR
-    (
-        get_user_role() = 'manager' AND
-        (SELECT department_id FROM public.profiles WHERE id = employees.profile_id) = get_user_department_id()
-    )
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
+)
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
 );
 
--- Policies for public.shift_reports
--- Employees can view their own shift reports
-CREATE POLICY "Shift Reports: Select own"
-ON public.shift_reports FOR SELECT
-USING (auth.uid() = employee_profile_id);
-
--- Employees can manage their own shift reports
-CREATE POLICY "Shift Reports: Manage own"
-ON public.shift_reports FOR ALL
-USING (auth.uid() = employee_profile_id) WITH CHECK (auth.uid() = employee_profile_id);
-
--- Managers and Admins can view shift reports in their department
-CREATE POLICY "Shift Reports: Select by manager/admin in department"
-ON public.shift_reports FOR SELECT
+-- Only managers/admin can DELETE departments
+CREATE POLICY "departments_delete_managers"
+ON public.departments
+FOR DELETE
 USING (
-    get_user_role() = 'admin' OR
-    (
-        get_user_role() = 'manager' AND
-        (SELECT department_id FROM public.profiles WHERE id = employee_profile_id) = get_user_department_id()
-    )
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
 );
 
+-- =========================================================
+-- EMPLOYEES
+-- =========================================================
 
--- Policies for public.kpis
--- Employees can view KPIs associated with their reports or profile
-CREATE POLICY "KPIs: Select own"
-ON public.kpis FOR SELECT
+DROP POLICY IF EXISTS "employees_select_own" ON public.employees;
+DROP POLICY IF EXISTS "employees_insert_managers" ON public.employees;
+DROP POLICY IF EXISTS "employees_update_managers" ON public.employees;
+DROP POLICY IF EXISTS "employees_delete_managers" ON public.employees;
+
+-- Employees can view their own employee record (through profile link)
+CREATE POLICY "employees_select_own"
+ON public.employees
+FOR SELECT
 USING (
-    employee_profile_id = auth.uid() OR
-    EXISTS (
-        SELECT 1
-        FROM public.shift_reports sr
-        WHERE sr.id = shift_report_id AND sr.employee_profile_id = auth.uid()
-    )
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.id = employees.profile_id
+  )
 );
 
--- Only managers/admins can insert/update KPIs (refined to only INSERT/UPDATE)
-CREATE POLICY "KPIs: Insert/Update by manager/admin"
-ON public.kpis FOR INSERT, UPDATE
-USING (get_user_role() IN ('manager', 'admin')) WITH CHECK (get_user_role() IN ('manager', 'admin'));
+-- Only managers/admin can INSERT employee rows (INSERT: only WITH CHECK)
+CREATE POLICY "employees_insert_managers"
+ON public.employees
+FOR INSERT
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
+);
 
--- Managers and Admins can view KPIs in their department
-CREATE POLICY "KPIs: Select by manager/admin in department"
-ON public.kpis FOR SELECT
+-- Only managers/admin can UPDATE employee rows
+CREATE POLICY "employees_update_managers"
+ON public.employees
+FOR UPDATE
 USING (
-    get_user_role() = 'admin' OR
-    (
-        get_user_role() = 'manager' AND
-        (
-            (SELECT department_id FROM public.profiles WHERE id = employee_profile_id) = get_user_department_id()
-            OR EXISTS (
-                SELECT 1 FROM public.shift_reports sr
-                JOIN public.profiles p ON sr.employee_profile_id = p.id
-                WHERE sr.id = kpis.shift_report_id AND p.department_id = get_user_department_id()
-            )
-        )
-    )
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
+)
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
+);
+
+-- Only managers/admin can DELETE employee rows
+CREATE POLICY "employees_delete_managers"
+ON public.employees
+FOR DELETE
+USING (
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
+);
+
+-- =========================================================
+-- SHIFT REPORTS
+-- =========================================================
+
+DROP POLICY IF EXISTS "shift_reports_manage_own" ON public.shift_reports;
+
+-- Employees can manage (CRUD) only their own shift reports
+CREATE POLICY "shift_reports_manage_own"
+ON public.shift_reports
+FOR ALL
+USING (employee_profile_id = auth.uid())
+WITH CHECK (employee_profile_id = auth.uid());
+
+-- =========================================================
+-- KPIS
+-- =========================================================
+
+DROP POLICY IF EXISTS "kpis_select_own" ON public.kpis;
+DROP POLICY IF EXISTS "kpis_insert_managers" ON public.kpis;
+DROP POLICY IF EXISTS "kpis_update_managers" ON public.kpis;
+DROP POLICY IF EXISTS "kpis_delete_managers" ON public.kpis;
+
+-- Employees can read KPIs related to themselves
+CREATE POLICY "kpis_select_own"
+ON public.kpis
+FOR SELECT
+USING (
+  employee_profile_id = auth.uid()
+  OR EXISTS (
+    SELECT 1
+    FROM public.shift_reports sr
+    WHERE sr.id = kpis.shift_report_id
+      AND sr.employee_profile_id = auth.uid()
+  )
+);
+
+-- Only manager/admin can INSERT KPIs (INSERT: only WITH CHECK)
+CREATE POLICY "kpis_insert_managers"
+ON public.kpis
+FOR INSERT
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
+);
+
+-- Only manager/admin can UPDATE KPIs
+CREATE POLICY "kpis_update_managers"
+ON public.kpis
+FOR UPDATE
+USING (
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
+)
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
+);
+
+-- Only manager/admin can DELETE KPIs
+CREATE POLICY "kpis_delete_managers"
+ON public.kpis
+FOR DELETE
+USING (
+  EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role IN ('manager', 'admin')
+  )
 );
