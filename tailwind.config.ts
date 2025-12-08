@@ -36,13 +36,25 @@ const config = {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
+        "primary-accent": "hsl(var(--primary-accent))",
 
-        // Custom theme colors
-        "background-dark": "hsl(var(--background-dark))",
-        "content-bg": "hsl(var(--content-bg))",
-        "border-color": "hsl(var(--border-color))",
-        "text-primary": "hsl(var(--text-primary))",
-        "text-secondary": "hsl(var(--text-secondary))",
+        // Custom theme colors from mockup
+        "background-light": "hsl(var(--background-light-mockup))",
+        "background-dark": "hsl(var(--background-dark-mockup))",
+        "content-dark": "hsl(var(--content-dark-mockup))",
+        "border-dark": "hsl(var(--border-dark-mockup))",
+        "text-primary-dark": "hsl(var(--text-primary-dark-mockup))",
+        "text-secondary-dark": "hsl(var(--text-secondary-dark-mockup))",
+        // Existing core semantic colors
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+      },
+
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
       },
 
       borderRadius: {

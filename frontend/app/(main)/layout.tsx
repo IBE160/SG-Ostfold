@@ -1,7 +1,7 @@
 import React from 'react';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClientReadOnly } from '@/lib/supabase/server-read-only';
+import AppShell from '@/components/layout/AppShell'; // Import AppShell
 
 export default async function MainLayout({
   children,
@@ -20,26 +20,8 @@ export default async function MainLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-background text-foreground">
-      <aside className="w-72 bg-card border-r border-border p-4">
-        <h2 className="text-xl font-bold mb-4">Navigation</h2>
-        <nav>
-          <ul>
-            <li className="mb-2">
-              <Link href="/" className="block text-muted-foreground hover:text-foreground">Dashboard</Link>
-            </li>
-            <li className="mb-2">
-              <Link href="/reports" className="block text-muted-foreground hover:text-foreground">Shift Reports</Link>
-            </li>
-            <li className="mb-2">
-              <Link href="/historical" className="block text-muted-foreground hover:text-foreground">Historical Data</Link>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-      <main className="flex-1 p-8">
-        {children}
-      </main>
-    </div>
+    <AppShell>
+      {children}
+    </AppShell>
   );
 }
