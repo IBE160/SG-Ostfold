@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
 /* Fjernet: @import "tw-animate-css"; */
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -75,12 +78,6 @@
   --accent: oklch(0.967 0.001 286.375);           /* content-bg */
   --accent-foreground: oklch(0.21 0.006 285.885);
 
-  --border: oklch(0.92 0.004 286.32);             /* border #305869 */
-  --input: oklch(0.92 0.004 286.32);              /* border #305869 */
-
-  --ring: oklch(0.705 0.015 286.067);             /* primary #3abff8 */
-
-  /* Destructive – behold shadcn-lignende rød */
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
 
@@ -129,12 +126,12 @@
   --accent: oklch(0.274 0.006 286.033);
   --accent-foreground: oklch(0.985 0 0);
 
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.552 0.016 285.938);
-
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
 
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);

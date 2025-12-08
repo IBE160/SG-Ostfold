@@ -1,23 +1,9 @@
 "use server";
 
-import { createServerActionClient } from "@/lib/create-server-action-client";
-import { cookies } from 'next/headers';
-import * as z from "zod";
-
-const formSchema = z.object({
-    sr1_production_count: z.coerce.number().int().nonnegative(),
-    sr2_downtime_minutes: z.coerce.number().int().nonnegative(),
-    sr3_overtime_hours: z.coerce.number().nonnegative(),
-    sr4_incidents_count: z.coerce.number().int().nonnegative(),
-    sr5_safety_notes: z.string().optional(),
-    sr6_personnel_on_shift: z.string().min(1),
-    sr7_materials_used: z.string().optional(),
-    sr8_quality_checks: z.string().min(1),
-    sr9_general_notes: z.string().optional(),
-});
+import { createClientAction } from "@/lib/supabase/server-actions";
 
 export async function createShiftReport(values: z.infer<typeof formSchema>) {
-    const supabase = createServerActionClient({ cookies });
+    const supabase = await createClientAction();
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {

@@ -1,9 +1,10 @@
 // app/(auth)/login/page.tsx
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react'; // Import useEffect
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { Session } from '@supabase/supabase-js'; // Import Session type
 
 export default function LoginPage() {
   const router = useRouter();
@@ -13,13 +14,38 @@ export default function LoginPage() {
   const isE2E = searchParams.get('e2e') === '1';
   const redirectToParam = searchParams.get('redirectTo');
 
-  // Hvis vi er i E2E-modus, redirect til /dashboard?e2e=1
+  // If we are in E2E-modus, redirect til /dashboard?e2e=1
   const redirectTo = redirectToParam || (isE2E ? '/dashboard?e2e=1' : '/dashboard');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [session, setSession] = useState<Session | null>(null); // State to hold session
+
+  // Fetch session on component mount
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session) {
+        router.push(redirectTo); // Redirect if already logged in
+      }
+    });
+
+    // Listen for auth state changes
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, currentSession) => {
+        setSession(currentSession);
+        if (currentSession) {
+          router.push(redirectTo);
+        }
+      }
+    );
+
+    return () => {
+      authListener?.unsubscribe();
+    };
+  }, [supabase, router, redirectTo]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -48,13 +74,19 @@ export default function LoginPage() {
         return;
       }
 
+      // Session is now set via onAuthStateChange listener
       setIsLoading(false);
-      router.push(redirectTo);
+      // router.push(redirectTo); // Redirection handled by useEffect
     } catch (err) {
       console.error('UNEXPECTED LOGIN ERROR', err);
       setError('Unexpected error during login. Please try again.');
       setIsLoading(false);
     }
+  }
+
+  // Render a loading state or nothing if session is being checked
+  if (session === null) {
+    return null; // Or a loading spinner
   }
 
   return (

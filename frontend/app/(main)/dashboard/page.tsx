@@ -1,10 +1,11 @@
 // src/app/(main)/dashboard/page.tsx
-import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/server"; // Use server client for protected route rendering
-import { redirect } from "next/navigation";
+import { createClientReadOnly } from "@/lib/supabase/server-read-only"; 
+import { createClientAction } from "@/lib/supabase/server-actions";
+
+// ... rest of the code
 
 export default async function DashboardPage() {
-  const supabase = createClient();
+  const supabase = await createClientReadOnly();
 
   const {
     data: { user },
@@ -18,7 +19,7 @@ export default async function DashboardPage() {
   // Placeholder for logout action
   const logout = async () => {
     "use server";
-    const supabase = createClient();
+    const supabase = await createClientAction();
     await supabase.auth.signOut();
     redirect("/auth/login");
   };
