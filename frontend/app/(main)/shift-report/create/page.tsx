@@ -1,4 +1,4 @@
-import { CreateShiftReportForm } from "./create-form";
+import { CreateShiftReportForm } from "@/components/shift-report/create-form";
 
 export default function CreateShiftReportPage() {
   return (

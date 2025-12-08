@@ -1,3 +1,23 @@
-// frontend/components/ui/label.tsx
-// This is a placeholder for the shadcn/ui Label component.
-// In a real application, this file would contain the actual Label component code.
+"use client";
+
+import * as React from "react";
+
+export interface LabelProps
+  extends React.LabelHTMLAttributes<HTMLLabelElement> {}
+
+export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
+  function Label({ className, ...props }, ref) {
+    return (
+      <label
+        ref={ref}
+        className={[
+          "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        {...props}
+      />
+    );
+  },
+);

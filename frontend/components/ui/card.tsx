@@ -1,3 +1,95 @@
-// frontend/components/ui/card.tsx
-// This is a placeholder for the shadcn/ui Card component.
-// In a real application, this file would contain the actual Card component code.
+"use client";
+
+import * as React from "react";
+
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+export const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  function Card({ className, ...props }, ref) {
+    return (
+      <div
+        ref={ref}
+        className={[
+          "rounded-lg border bg-card text-card-foreground shadow-sm",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        {...props}
+      />
+    );
+  },
+);
+
+export const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(function CardHeader({ className, ...props }, ref) {
+  return (
+    <div
+      ref={ref}
+      className={["flex flex-col space-y-1.5 p-4", className]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    />
+  );
+});
+
+export const CardTitle = React.forwardRef<
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(function CardTitle({ className, ...props }, ref) {
+  return (
+    <h3
+      ref={ref}
+      className={["text-lg font-semibold leading-none tracking-tight", className]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    />
+  );
+});
+
+export const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(function CardDescription({ className, ...props }, ref) {
+  return (
+    <p
+      ref={ref}
+      className={["text-sm text-muted-foreground", className]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    />
+  );
+});
+
+export const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(function CardContent({ className, ...props }, ref) {
+  return (
+      <div
+        ref={ref}
+        className={["p-4 pt-0", className].filter(Boolean).join(" ")}
+        {...props}
+      />
+  );
+});
+
+export const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(function CardFooter({ className, ...props }, ref) {
+  return (
+    <div
+      ref={ref}
+      className={["flex items-center p-4 pt-0", className]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    />
+  );
+});
