@@ -1,94 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import "tailwindcss";
 @plugin "tailwindcss-animate";
 
+/* Egen variant for dark-mode basert på .dark på <html> */
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  --radius: 0.625rem;
+/* Tema: her definerer vi farger som gir bg-background, text-foreground osv. */
+@theme {
+  /* Font */
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 
-  /* Mockup Colors - light mode (if applicable, though dark-first) */
-  --background-light-mockup: oklch(96.9% 0.003 280.9); /* #f5f7f8 */
+  /* Farge-tokens (Tailwind lager utilities som bg-background, text-foreground osv.) */
+  --color-background: #101d23;          /* mørk bakgrunn (fra mockup: background-dark) */
+  --color-foreground: #e0e0e0;          /* primær tekst (text-primary-dark) */
+  --color-muted: #182c34;               /* content-dark */
+  --color-border: #305869;              /* border-dark */
+  --color-primary: #3abff8;             /* primary */
+  --color-secondary: #a0a0a0;           /* text-secondary-dark */
 
-  /* Default (light) values for shadcn/ui components - use mockup colors where appropriate */
-  --background: var(--background-light-mockup); /* Default background should be light for :root */
-  --foreground: oklch(0.141 0.005 285.823); /* Use existing dark foreground */
-
-  --primary: oklch(78.5% 0.176 200.7);           /* #3abff8 */
-  --primary-foreground: oklch(0.105 0.007 240.2); /* text-primary-dark */
-
-  --card: var(--background-light-mockup);
-  --card-foreground: var(--foreground);
-
-  --popover: var(--background-light-mockup);
-  --popover-foreground: var(--foreground);
-
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
-
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.552 0.016 285.938);
-
-  /* Mockup specific dark colors (for potential use in light mode components if needed) */
-  --background-dark-mockup: oklch(10.5% 0.007 240.2); /* #101d23 */
-  --content-dark-mockup: oklch(17.8% 0.008 240.5);    /* #182c34 */
-  --border-dark-mockup: oklch(35.5% 0.016 240.7);     /* #305869 */
-  --text-primary-dark-mockup: oklch(91.7% 0 0);      /* #e0e0e0 */
-  --text-secondary-dark-mockup: oklch(67.4% 0 0);    /* #a0a0a0 */
+  /* Du kan legge til flere hvis du vil bruke dem senere: */
+  --color-sidebar: #101d23;
+  --color-sidebar-foreground: #e0e0e0;
+  --color-sidebar-ring: #305869;
 }
 
-.dark {
-  /* Dark-mode-first values from mockup */
-  --background: var(--background-dark-mockup); /* #101d23 */
-  --foreground: var(--text-primary-dark-mockup); /* #e0e0e0 */
-
-  --primary: oklch(78.5% 0.176 200.7);           /* #3abff8 */
-  --primary-foreground: var(--background-dark-mockup); /* text on primary should be dark */
-
-  --card: var(--content-dark-mockup); /* #182c34 */
-  --card-foreground: var(--text-primary-dark-mockup);
-
-  --popover: var(--content-dark-mockup);
-  --popover-foreground: var(--text-primary-dark-mockup);
-
-  --secondary: var(--border-dark-mockup); /* using border-dark as secondary */
-  --secondary-foreground: var(--text-primary-dark-mockup);
-
-  --muted: var(--border-dark-mockup);
-  --muted-foreground: var(--text-secondary-dark-mockup);
-
-  --accent: var(--content-dark-mockup);
-  --accent-foreground: var(--text-primary-dark-mockup);
-
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-
-  --border: var(--border-dark-mockup);
-  --input: var(--content-dark-mockup);
-  --ring: var(--primary); /* using primary as ring */
+/* Base-styles – greit å ha, men ikke nødvendig hvis du vil holde det minimalt */
+*,
+::before,
+::after {
+  @apply border-border;
 }
 
-@layer base {
-  * {
-    border-color: hsl(var(--border));
-  }
-  body {
-    font-family: 'Inter', sans-serif;
-    @apply bg-background text-foreground;
-  }
+html,
+body {
+  height: 100%;
 }
+
+/* Her bruker vi bg-background og text-foreground – nå ER de definert i @theme over */
+body {
+  @apply bg-background text-foreground antialiased;
+  font-family: var(--font-sans);
+}
+
+/* Du kan ha flere globale ting her om du vil, f.eks. for scrollbars, focus osv. */
