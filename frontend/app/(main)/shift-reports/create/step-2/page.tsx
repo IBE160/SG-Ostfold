@@ -1,40 +1,12 @@
-
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import { v4 as uuidv4 } from 'uuid'; // For unique keys for rows
+import { v4 as uuidv4 } from 'uuid';
+import { useShiftReportStore, AbsentEmployee, HiredEmployee, HiredOutEmployee, OvertimeEmployee } from '@/lib/stores/shiftReportStore';
 
-// Interfaces for employee types
-interface AbsentEmployee {
-  id: string;
-  name: string;
-  code: string;
-  hours: number;
-}
-
-interface HiredEmployee {
-  id: string;
-  name: string;
-  shiftFrom: string;
-  hours: number;
-}
-
-interface HiredOutEmployee {
-  id: string;
-  name: string;
-  shiftTo: string;
-  hours: number;
-}
-
-interface OvertimeEmployee {
-  id: string;
-  name: string;
-  hours: number;
-}
-
-// Mock Data for "Copy from Yesterday"
-const previousDayData = {
+// Mock Data for "Copy from Yesterday" - now generates new IDs on each call
+const getPreviousDayData = () => ({
   absent: [
     { id: uuidv4(), name: 'Jane Doe', code: 'SICK', hours: 8 },
     { id: uuidv4(), name: 'John Smith', code: 'PTO', hours: 8 },
@@ -50,52 +22,40 @@ const previousDayData = {
     { id: uuidv4(), name: 'Chris Green', hours: 2 },
     { id: uuidv4(), name: 'David Brown', hours: 3 },
   ],
-};
+});
 
 
 export default function CreateShiftReportStep2Page() {
-  const [reportDate, setReportDate] = useState('2023-10-27');
-  const [reportShift, setReportShift] = useState('Evening (14:00-22:00)');
+  const {
+    draft,
+    setReportCriteria,
+    addStaffingRow,
+    removeStaffingRow,
+    updateStaffingRow,
+    setStaffingField,
+  } = useShiftReportStore();
 
-  const [absentEmployees, setAbsentEmployees] = useState<AbsentEmployee[]>(previousDayData.absent);
-  const [hiredEmployees, setHiredEmployees] = useState<HiredEmployee[]>(previousDayData.hired);
-  const [hiredOutEmployees, setHiredOutEmployees] = useState<HiredOutEmployee[]>(previousDayData.hiredOut);
-  const [overtimeEmployees, setOvertimeEmployees] = useState<OvertimeEmployee[]>(previousDayData.overtime);
+  const { reportCriteria, staffing } = draft;
 
-  // --- Generic Table Logic ---
-
-  const handleAddRow = useCallback((setter: any, defaultRow: any) => {
-    setter((prev: any[]) => [...prev, { id: uuidv4(), ...defaultRow }]);
-  }, []);
-
-  const handleRemoveRow = useCallback((id: string, setter: any) => {
-    setter((prev: any[]) => prev.filter((row: { id: string; }) => row.id !== id));
-  }, []);
-
-  const handleInputChange = useCallback((id: string, field: string, value: string | number, setter: any) => {
-    setter((prev: any[]) =>
-      prev.map((row: { id: string; }) => (row.id === id ? { ...row, [field]: value } : row))
-    );
-  }, []);
-
-  const handleCopyFromYesterday = useCallback((setter: any, data: any[]) => {
-    setter(data.map(item => ({ id: uuidv4(), ...item }))); // Ensure new IDs
-  }, []);
+  const handleCopyFromYesterday = useCallback((listName: keyof typeof staffing, data: any[]) => {
+    setStaffingField(listName, data.map(item => ({ id: uuidv4(), ...item }))); // Ensure new IDs
+  }, [setStaffingField]);
 
   // --- Totals Calculation ---
   const totalAbsentHours = useMemo(() =>
-    absentEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [absentEmployees]
+    staffing.absentEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.absentEmployees]
   );
   const totalHiredHours = useMemo(() =>
-    hiredEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [hiredEmployees]
+    staffing.hiredEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.hiredEmployees]
   );
   const totalHiredOutHours = useMemo(() =>
-    hiredOutEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [hiredOutEmployees]
+    staffing.hiredOutEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.hiredOutEmployees]
   );
   const totalOvertimeHours = useMemo(() =>
-    overtimeEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [overtimeEmployees]
+    staffing.overtimeEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.overtimeEmployees]
   );
 
+  const previousDay = getPreviousDayData();
 
   return (
     <main className="flex-1 p-8 overflow-y-auto transition-all duration-300">
@@ -122,8 +82,8 @@ export default function CreateShiftReportStep2Page() {
                   id="date-summary"
                   name="date"
                   type="date"
-                  value={reportDate}
-                  onChange={(e) => setReportDate(e.target.value)}
+                  value={reportCriteria.date ? reportCriteria.date.toISOString().split('T')[0] : ''}
+                  onChange={(e) => setReportCriteria({ date: new Date(e.target.value) })}
                 />
               </div>
               <div>
@@ -132,12 +92,12 @@ export default function CreateShiftReportStep2Page() {
                   className="block w-full rounded-md border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary text-sm"
                   id="shift-summary"
                   name="shift"
-                  value={reportShift}
-                  onChange={(e) => setReportShift(e.target.value)}
+                  value={reportCriteria.shift || ''}
+                  onChange={(e) => setReportCriteria({ shift: e.target.value })}
                 >
-                  <option>Morning (06:00-14:00)</option>
-                  <option>Evening (14:00-22:00)</option>
-                  <option>Night (22:00-06:00)</option>
+                  <option value="morning">Morning (06:00-14:00)</option>
+                  <option value="evening">Evening (14:00-22:00)</option>
+                  <option value="night">Night (22:00-06:00)</option>
                 </select>
               </div>
             </div>
@@ -178,14 +138,14 @@ export default function CreateShiftReportStep2Page() {
                         </tr>
                       </thead>
                       <tbody id="absent-employees-tbody" className="divide-y divide-border-light dark:divide-border-dark">
-                        {absentEmployees.map((emp) => (
+                        {staffing.absentEmployees.map((emp) => (
                           <tr key={emp.id}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
                               <input
                                 type="text"
                                 name="name"
                                 value={emp.name}
-                                onChange={(e) => handleInputChange(emp.id, 'name', e.target.value, setAbsentEmployees)}
+                                onChange={(e) => updateStaffingRow('absentEmployees', emp.id, 'name', e.target.value)}
                                 className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark"
                               />
                             </td>
@@ -194,7 +154,7 @@ export default function CreateShiftReportStep2Page() {
                                 type="text"
                                 name="code"
                                 value={emp.code}
-                                onChange={(e) => handleInputChange(emp.id, 'code', e.target.value, setAbsentEmployees)}
+                                onChange={(e) => updateStaffingRow('absentEmployees', emp.id, 'code', e.target.value)}
                                 className="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
                               />
                             </td>
@@ -203,12 +163,12 @@ export default function CreateShiftReportStep2Page() {
                                 type="number"
                                 name="hours"
                                 value={emp.hours}
-                                onChange={(e) => handleInputChange(emp.id, 'hours', parseInt(e.target.value) || 0, setAbsentEmployees)}
+                                onChange={(e) => updateStaffingRow('absentEmployees', emp.id, 'hours', parseInt(e.target.value) || 0)}
                                 className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
                               />
                             </td>
                             <td className="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                              <button type="button" className="text-error remove-btn font-bold" onClick={() => handleRemoveRow(emp.id, setAbsentEmployees)}>×</button>
+                              <button type="button" className="text-error remove-btn font-bold" onClick={() => removeStaffingRow('absentEmployees', emp.id)}>×</button>
                             </td>
                           </tr>
                         ))}
@@ -230,7 +190,7 @@ export default function CreateShiftReportStep2Page() {
                 id="add-absent-employee-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => handleAddRow(setAbsentEmployees, { name: '', code: '', hours: 0 })}
+                onClick={() => addStaffingRow('absentEmployees', { name: '', code: '', hours: 0 })}
               >
                 <span className="material-symbols-outlined text-base">add</span>
                 Add Employee
@@ -239,7 +199,7 @@ export default function CreateShiftReportStep2Page() {
                 id="copy-yesterday-absent-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => handleCopyFromYesterday(setAbsentEmployees, previousDayData.absent)}
+                onClick={() => handleCopyFromYesterday('absentEmployees', previousDay.absent)}
               >
                 <span className="material-symbols-outlined text-base">content_copy</span>
                 Copy from Yesterday
@@ -264,14 +224,14 @@ export default function CreateShiftReportStep2Page() {
                         </tr>
                       </thead>
                       <tbody id="hired-employees-tbody" className="divide-y divide-border-light dark:divide-border-dark">
-                        {hiredEmployees.map((emp) => (
+                        {staffing.hiredEmployees.map((emp) => (
                           <tr key={emp.id}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
                               <input
                                 type="text"
                                 name="full-name-hired"
                                 value={emp.name}
-                                onChange={(e) => handleInputChange(emp.id, 'name', e.target.value, setHiredEmployees)}
+                                onChange={(e) => updateStaffingRow('hiredEmployees', emp.id, 'name', e.target.value)}
                                 className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark"
                               />
                             </td>
@@ -280,7 +240,7 @@ export default function CreateShiftReportStep2Page() {
                                 type="text"
                                 name="shift-hired-from"
                                 value={emp.shiftFrom}
-                                onChange={(e) => handleInputChange(emp.id, 'shiftFrom', e.target.value, setHiredEmployees)}
+                                onChange={(e) => updateStaffingRow('hiredEmployees', emp.id, 'shiftFrom', e.target.value)}
                                 className="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
                               />
                             </td>
@@ -289,12 +249,12 @@ export default function CreateShiftReportStep2Page() {
                                 type="number"
                                 name="hours-worked"
                                 value={emp.hours}
-                                onChange={(e) => handleInputChange(emp.id, 'hours', parseInt(e.target.value) || 0, setHiredEmployees)}
+                                onChange={(e) => updateStaffingRow('hiredEmployees', emp.id, 'hours', parseInt(e.target.value) || 0)}
                                 className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
                               />
                             </td>
                             <td className="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                              <button type="button" className="text-error remove-btn font-bold" onClick={() => handleRemoveRow(emp.id, setHiredEmployees)}>×</button>
+                              <button type="button" className="text-error remove-btn font-bold" onClick={() => removeStaffingRow('hiredEmployees', emp.id)}>×</button>
                             </td>
                           </tr>
                         ))}
@@ -316,7 +276,7 @@ export default function CreateShiftReportStep2Page() {
                 id="add-hired-employee-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => handleAddRow(setHiredEmployees, { name: '', shiftFrom: '', hours: 0 })}
+                onClick={() => addStaffingRow('hiredEmployees', { name: '', shiftFrom: '', hours: 0 })}
               >
                 <span className="material-symbols-outlined text-base">add</span>
                 Add Employee
@@ -325,7 +285,7 @@ export default function CreateShiftReportStep2Page() {
                 id="copy-yesterday-hired-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => handleCopyFromYesterday(setHiredEmployees, previousDayData.hired)}
+                onClick={() => handleCopyFromYesterday('hiredEmployees', previousDay.hired)}
               >
                 <span className="material-symbols-outlined text-base">content_copy</span>
                 Copy from Yesterday
@@ -350,14 +310,14 @@ export default function CreateShiftReportStep2Page() {
                         </tr>
                       </thead>
                       <tbody id="hired-out-employees-tbody" className="divide-y divide-border-light dark:divide-border-dark">
-                        {hiredOutEmployees.map((emp) => (
+                        {staffing.hiredOutEmployees.map((emp) => (
                           <tr key={emp.id}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
                               <input
                                 type="text"
                                 name="full-name-hired-out"
                                 value={emp.name}
-                                onChange={(e) => handleInputChange(emp.id, 'name', e.target.value, setHiredOutEmployees)}
+                                onChange={(e) => updateStaffingRow('hiredOutEmployees', emp.id, 'name', e.target.value)}
                                 className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark"
                               />
                             </td>
@@ -366,7 +326,7 @@ export default function CreateShiftReportStep2Page() {
                                 type="text"
                                 name="shift-hired-to"
                                 value={emp.shiftTo}
-                                onChange={(e) => handleInputChange(emp.id, 'shiftTo', e.target.value, setHiredOutEmployees)}
+                                onChange={(e) => updateStaffingRow('hiredOutEmployees', emp.id, 'shiftTo', e.target.value)}
                                 className="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
                               />
                             </td>
@@ -375,12 +335,12 @@ export default function CreateShiftReportStep2Page() {
                                 type="number"
                                 name="hours-hired-out"
                                 value={emp.hours}
-                                onChange={(e) => handleInputChange(emp.id, 'hours', parseInt(e.target.value) || 0, setHiredOutEmployees)}
+                                onChange={(e) => updateStaffingRow('hiredOutEmployees', emp.id, 'hours', parseInt(e.target.value) || 0)}
                                 className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
                               />
                             </td>
                             <td className="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                              <button type="button" className="text-error remove-btn font-bold" onClick={() => handleRemoveRow(emp.id, setHiredOutEmployees)}>×</button>
+                              <button type="button" className="text-error remove-btn font-bold" onClick={() => removeStaffingRow('hiredOutEmployees', emp.id)}>×</button>
                             </td>
                           </tr>
                         ))}
@@ -402,7 +362,7 @@ export default function CreateShiftReportStep2Page() {
                 id="add-hired-out-employee-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => handleAddRow(setHiredOutEmployees, { name: '', shiftTo: '', hours: 0 })}
+                onClick={() => addStaffingRow('hiredOutEmployees', { name: '', shiftTo: '', hours: 0 })}
               >
                 <span className="material-symbols-outlined text-base">add</span>
                 Add Employee
@@ -411,7 +371,7 @@ export default function CreateShiftReportStep2Page() {
                 id="copy-yesterday-hired-out-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => handleCopyFromYesterday(setHiredOutEmployees, previousDayData.hiredOut)}
+                onClick={() => handleCopyFromYesterday('hiredOutEmployees', previousDay.hiredOut)}
               >
                 <span className="material-symbols-outlined text-base">content_copy</span>
                 Copy from Yesterday
@@ -435,14 +395,14 @@ export default function CreateShiftReportStep2Page() {
                         </tr>
                       </thead>
                       <tbody id="overtime-employees-tbody" className="divide-y divide-border-light dark:divide-border-dark">
-                        {overtimeEmployees.map((emp) => (
+                        {staffing.overtimeEmployees.map((emp) => (
                           <tr key={emp.id}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
                               <input
                                 type="text"
                                 name="full-name-overtime"
                                 value={emp.name}
-                                onChange={(e) => handleInputChange(emp.id, 'name', e.target.value, setOvertimeEmployees)}
+                                onChange={(e) => updateStaffingRow('overtimeEmployees', emp.id, 'name', e.target.value)}
                                 className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark"
                               />
                             </td>
@@ -451,12 +411,12 @@ export default function CreateShiftReportStep2Page() {
                                 type="number"
                                 name="hours-overtime"
                                 value={emp.hours}
-                                onChange={(e) => handleInputChange(emp.id, 'hours', parseInt(e.target.value) || 0, setOvertimeEmployees)}
+                                onChange={(e) => updateStaffingRow('overtimeEmployees', emp.id, 'hours', parseInt(e.target.value) || 0)}
                                 className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
                               />
                             </td>
                             <td className="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                              <button type="button" className="text-error remove-btn font-bold" onClick={() => handleRemoveRow(emp.id, setOvertimeEmployees)}>×</button>
+                              <button type="button" className="text-error remove-btn font-bold" onClick={() => removeStaffingRow('overtimeEmployees', emp.id)}>×</button>
                             </td>
                           </tr>
                         ))}
@@ -478,7 +438,7 @@ export default function CreateShiftReportStep2Page() {
                 id="add-overtime-employee-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => handleAddRow(setOvertimeEmployees, { name: '', hours: 0 })}
+                onClick={() => addStaffingRow('overtimeEmployees', { name: '', hours: 0 })}
               >
                 <span className="material-symbols-outlined text-base">add</span>
                 Add Employee
@@ -487,7 +447,7 @@ export default function CreateShiftReportStep2Page() {
                 id="copy-yesterday-overtime-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => handleCopyFromYesterday(setOvertimeEmployees, previousDayData.overtime)}
+                onClick={() => handleCopyFromYesterday('overtimeEmployees', previousDay.overtime)}
               >
                 <span className="material-symbols-outlined text-base">content_copy</span>
                 Copy from Yesterday
@@ -499,13 +459,13 @@ export default function CreateShiftReportStep2Page() {
           {/* Navigation Buttons */}
           <div className="flex justify-between pt-2">
             <Link
-              href="/shift-reports/create" // Back to SR2 (Select Report Criteria)
+              href="/shift-reports/create"
               className="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-12 px-6 bg-transparent border border-border-dark text-text-primary-dark text-base font-bold leading-normal tracking-wide hover:bg-content-dark transition-colors"
             >
               <span className="truncate">Back</span>
             </Link>
             <Link
-              href="/shift-reports/create/step-3" // Forward to SR4 (Workload & Volume)
+              href="/shift-reports/create/step-3"
               className="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-12 px-6 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors"
             >
               <span className="truncate">Continue</span>

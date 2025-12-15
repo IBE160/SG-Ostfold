@@ -1,10 +1,11 @@
-
 'use client';
 
 import Link from 'next/link';
 import { useMemo } from 'react';
+// No direct Zustand store interaction for displaying calculated efficiency.
+// This page primarily displays derived values and mock comparison data.
 
-// Mock data for efficiency comparisons
+// Mock data for efficiency comparisons (these are not direct inputs, so keeping them local for now)
 const todayData = {
   pallelager: 15.2,
   transitt: 12.8,
@@ -58,18 +59,14 @@ export default function CreateShiftReportStep6Page() {
 
   return (
     <div className="max-w-4xl mx-auto flex flex-col h-full">
-      {/* Header */}
       <div className="flex flex-wrap justify-between items-baseline gap-3 mb-8">
         <h1 className="text-text-primary-dark text-3xl font-black leading-tight tracking-[-0.03em]">
           Area Efficiency Summary
         </h1>
       </div>
-      {/* Card */}
       <div className="bg-content-dark rounded-xl flex-grow flex flex-col">
         <div className="p-6 sm:p-8 flex-grow">
-          {/* Data List */}
           <div className="space-y-2">
-            {/* Header */}
             <div className="flex justify-between gap-x-4 pb-2 border-b border-border-dark/50 text-xs text-text-secondary-dark uppercase tracking-wider">
               <p className="w-1/4">Area</p>
               <p className="w-1/4 text-right">Efficiency</p>
@@ -96,7 +93,6 @@ export default function CreateShiftReportStep6Page() {
                 </div>
               );
             })}
-            {/* Total */}
             <div className="flex justify-between items-center gap-x-4 py-4 mt-4 border-t border-border-dark/50">
               <p className="text-text-primary-dark text-base font-bold leading-normal">
                 Total/Overall Efficiency
@@ -108,7 +104,6 @@ export default function CreateShiftReportStep6Page() {
           </div>
         </div>
       </div>
-      {/* Action Buttons */}
       <div className="flex justify-between items-center gap-4 pt-6">
         <Link
           className="flex items-center justify-center rounded-lg px-6 py-3 text-base font-semibold leading-6 text-text-primary-dark bg-content-dark border border-border-dark hover:bg-border-dark/80 transition-colors"

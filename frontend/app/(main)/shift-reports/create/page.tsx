@@ -1,20 +1,12 @@
+
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { format, getDaysInMonth, getDay, startOfMonth, addMonths, subMonths, isSameDay } from 'date-fns';
+import { useShiftReportStore } from '@/lib/stores/shiftReportStore';
 
 const weekdays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-
-// Placeholder for completed report dates
-// In a real application, this would come from a backend or local storage
-const mockCompletedDates = [
-  new Date(2023, 9, 10), // October 10th, 2023
-  new Date(2023, 9, 15), // October 15th, 2023
-  new Date(2023, 9, 20), // October 20th, 2023
-  new Date(2023, 10, 5), // November 5th, 2023
-  new Date(2023, 10, 12), // November 12th, 2023
-];
 
 const mockShifts = [
   { id: 'morning', name: 'Morning', time: '06:00-14:00' },
@@ -23,48 +15,47 @@ const mockShifts = [
 ];
 
 export default function CreateShiftReportPage() {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [selectedShift, setSelectedShift] = useState<string | null>('evening'); // Mock initial selection
+  const { date, shift } = useShiftReportStore((state) => state.draft.reportCriteria);
+  const setReportCriteria = useShiftReportStore((state) => state.setReportCriteria);
+
+  // The month displayed in the calendar is derived from the selected date
+  const currentMonth = date || new Date();
 
   const handlePrevMonth = () => {
-    setCurrentMonth(subMonths(currentMonth, 1));
+    setReportCriteria({ date: subMonths(currentMonth, 1) });
   };
 
   const handleNextMonth = () => {
-    setCurrentMonth(addMonths(currentMonth, 1));
+    setReportCriteria({ date: addMonths(currentMonth, 1) });
   };
 
-  const handleDayClick = useCallback((date: Date) => {
-    const dayOfWeek = getDay(date); // 0 for Sunday, 6 for Saturday
+  const handleDayClick = useCallback((dayDate: Date) => {
+    const dayOfWeek = getDay(dayDate);
     if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Not Saturday or Sunday
-      setSelectedDate(date);
+      setReportCriteria({ date: dayDate });
     }
-  }, []);
+  }, [setReportCriteria]);
 
   const calendarDays = useMemo(() => {
     const startMonth = startOfMonth(currentMonth);
     const numDays = getDaysInMonth(currentMonth);
     const today = new Date();
 
-    let firstDayOfWeek = getDay(startMonth); // 0 for Sunday, 6 for Saturday
-    firstDayOfWeek = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1; // Adjust to start on Monday (0-indexed -> 6 for Sunday, 0 for Monday)
+    let firstDayOfWeek = getDay(startMonth);
+    firstDayOfWeek = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1;
 
     const days = [];
 
-    // Fill leading empty days
     for (let i = 0; i < firstDayOfWeek; i++) {
       days.push(<div key={`empty-prev-${i}`} className="calendar-day empty"></div>);
     }
 
-    // Fill days of the current month
     for (let i = 1; i <= numDays; i++) {
-      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
-      const dayOfWeek = getDay(date);
-      const isToday = isSameDay(date, today);
-      const isSelected = selectedDate ? isSameDay(date, selectedDate) : false;
+      const dayDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
+      const dayOfWeek = getDay(dayDate);
+      const isToday = isSameDay(dayDate, today);
+      const isSelected = date ? isSameDay(dayDate, date) : false;
       const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-      const isCompleted = mockCompletedDates.some(d => isSameDay(d, date));
 
       days.push(
         <div
@@ -74,16 +65,14 @@ export default function CreateShiftReportPage() {
             ${isToday ? 'today' : ''}
             ${isSelected ? 'selected' : ''}
             ${isWeekend ? 'greyed-out' : ''}
-            ${isCompleted ? 'completed-report' : ''}
           `}
-          onClick={() => handleDayClick(date)}
+          onClick={() => handleDayClick(dayDate)}
         >
           {i}
         </div>
       );
     }
-
-    // Fill trailing empty days (to complete the week grid)
+    
     const totalCells = days.length;
     const remainingCells = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
     for (let i = 0; i < remainingCells; i++) {
@@ -91,7 +80,7 @@ export default function CreateShiftReportPage() {
     }
 
     return days;
-  }, [currentMonth, selectedDate, handleDayClick]);
+  }, [currentMonth, date, handleDayClick]);
 
 
   return (
@@ -141,18 +130,18 @@ export default function CreateShiftReportPage() {
             <div className="flex flex-col gap-4">
               <h2 className="text-text-primary-dark text-xl font-bold leading-tight">Select Shift</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {mockShifts.map(shift => (
+                {mockShifts.map(shiftOption => (
                   <div
-                    key={shift.id}
+                    key={shiftOption.id}
                     className={`
                       shift-option flex flex-col items-center justify-center p-4 rounded-lg border
-                      ${selectedShift === shift.id ? 'border-primary bg-primary/10' : 'border-border-dark bg-background-dark hover:border-primary'}
+                      ${shift === shiftOption.id ? 'border-primary bg-primary/10' : 'border-border-dark bg-background-dark hover:border-primary'}
                       text-text-primary-dark cursor-pointer transition-colors h-24 text-center
                     `}
-                    onClick={() => setSelectedShift(shift.id)}
+                    onClick={() => setReportCriteria({ shift: shiftOption.id })}
                   >
-                    <p className="text-base font-medium">{shift.name}</p>
-                    <p className="text-sm text-text-secondary-dark">({shift.time})</p>
+                    <p className="text-base font-medium">{shiftOption.name}</p>
+                    <p className="text-sm text-text-secondary-dark">({shiftOption.time})</p>
                   </div>
                 ))}
               </div>
