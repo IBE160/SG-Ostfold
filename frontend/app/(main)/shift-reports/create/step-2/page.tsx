@@ -26,14 +26,13 @@ const getPreviousDayData = () => ({
 
 
 export default function CreateShiftReportStep2Page() {
-  const {
-    draft,
-    setReportCriteria,
-    addStaffingRow,
-    removeStaffingRow,
-    updateStaffingRow,
-    setStaffingField,
-  } = useShiftReportStore();
+  const reportCriteria = useShiftReportStore((state) => state.draft.reportCriteria);
+  const staffing = useShiftReportStore((state) => state.draft.staffing);
+  const setReportCriteria = useShiftReportStore((state) => state.setReportCriteria);
+  const addStaffingRow = useShiftReportStore((state) => state.addStaffingRow);
+  const removeStaffingRow = useShiftReportStore((state) => state.removeStaffingRow);
+  const updateStaffingRow = useShiftReportStore((state) => state.updateStaffingRow);
+  const setStaffingField = useShiftReportStore((state) => state.setStaffingField);
 
   const { reportCriteria, staffing } = draft;
 

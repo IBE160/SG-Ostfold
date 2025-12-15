@@ -4,10 +4,8 @@ import Link from 'next/link';
 import { useShiftReportStore } from '@/lib/stores/shiftReportStore';
 
 export default function CreateShiftReportStep7Page() {
-  const { issues, setIssues } = useShiftReportStore(state => ({
-    issues: state.draft.issues,
-    setIssues: state.setIssues,
-  }));
+  const issues = useShiftReportStore((state) => state.draft.issues);
+  const setIssues = useShiftReportStore((state) => state.setIssues);
 
   const handleInputChange = (field: keyof typeof issues, value: string) => {
     setIssues({ [field]: value === '' ? '' : value });

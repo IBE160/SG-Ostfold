@@ -5,10 +5,8 @@ import { useMemo } from 'react';
 import { useShiftReportStore } from '@/lib/stores/shiftReportStore';
 
 export default function CreateShiftReportStep3Page() {
-  const { orderlines, setOrderlines } = useShiftReportStore(state => ({
-    orderlines: state.draft.orderlines,
-    setOrderlines: state.setOrderlines,
-  }));
+  const orderlines = useShiftReportStore((state) => state.draft.orderlines);
+  const setOrderlines = useShiftReportStore((state) => state.setOrderlines);
 
   const handleInputChange = (field: keyof typeof orderlines, value: string) => {
     setOrderlines({ [field]: value === '' ? '' : Number(value) });

@@ -15,7 +15,8 @@ const mockShifts = [
 ];
 
 export default function CreateShiftReportPage() {
-  const { date, shift } = useShiftReportStore((state) => state.draft.reportCriteria);
+  const date = useShiftReportStore((state) => state.draft.reportCriteria.date);
+  const shift = useShiftReportStore((state) => state.draft.reportCriteria.shift);
   const setReportCriteria = useShiftReportStore((state) => state.setReportCriteria);
 
   // The month displayed in the calendar is derived from the selected date

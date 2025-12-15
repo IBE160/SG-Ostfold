@@ -5,10 +5,8 @@ import { useMemo } from 'react';
 import { useShiftReportStore } from '@/lib/stores/shiftReportStore';
 
 export default function CreateShiftReportStep4Page() {
-  const { moves, setMoves } = useShiftReportStore(state => ({
-    moves: state.draft.moves,
-    setMoves: state.setMoves,
-  }));
+  const moves = useShiftReportStore((state) => state.draft.moves);
+  const setMoves = useShiftReportStore((state) => state.setMoves);
 
   const handleInputChange = (field: keyof typeof moves, value: string) => {
     setMoves({ [field]: value === '' ? '' : Number(value) });

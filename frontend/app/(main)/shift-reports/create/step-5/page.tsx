@@ -5,10 +5,8 @@ import { useMemo } from 'react';
 import { useShiftReportStore } from '@/lib/stores/shiftReportStore';
 
 export default function CreateShiftReportStep5Page() {
-  const { hours, setHours } = useShiftReportStore(state => ({
-    hours: state.draft.hours,
-    setHours: state.setHours,
-  }));
+  const hours = useShiftReportStore((state) => state.draft.hours);
+  const setHours = useShiftReportStore((state) => state.setHours);
 
   const handleInputChange = (field: keyof typeof hours, value: string) => {
     setHours({ [field]: value === '' ? '' : Number(value) });
