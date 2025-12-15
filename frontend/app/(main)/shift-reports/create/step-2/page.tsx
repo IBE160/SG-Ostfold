@@ -34,7 +34,7 @@ export default function CreateShiftReportStep2Page() {
   const updateStaffingRow = useShiftReportStore((state) => state.updateStaffingRow);
   const setStaffingField = useShiftReportStore((state) => state.setStaffingField);
 
-  const { reportCriteria, staffing } = draft;
+
 
   const handleCopyFromYesterday = useCallback((listName: keyof typeof staffing, data: any[]) => {
     setStaffingField(listName, data.map(item => ({ id: uuidv4(), ...item }))); // Ensure new IDs

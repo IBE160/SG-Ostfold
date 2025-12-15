@@ -16,6 +16,7 @@ const getShiftDisplayName = (shiftId: string | null) => {
 export default function CreateShiftReportSummaryPage() {
   const draft = useShiftReportStore((state) => state.draft);
   const resetDraft = useShiftReportStore((state) => state.resetDraft);
+  const setDraft = useShiftReportStore((state) => state.setDraft);
 
   const handleSubmit = () => {
     // In a real application, this would send data to the backend.
