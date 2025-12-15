@@ -60,7 +60,7 @@ export default function AppShell({ children }: AppShellProps) {
           {['Dashboard', 'Shift Reports', 'Historical', 'Settings'].map((item) => (
             <Link
               key={item}
-              href={item === 'Shift Reports' ? '/shift-reports/create' : `/${item.toLowerCase().replace(' ', '-')}`}
+              href={item === 'Shift Reports' ? '/shift-reports' : `/${item.toLowerCase().replace(' ', '-')}`}
               className={`nav-link flex items-center gap-3 px-3 py-2 rounded-md hover:bg-content-dark transition-colors
                 ${isSidebarCollapsed ? 'justify-center' : ''}`}
             >
