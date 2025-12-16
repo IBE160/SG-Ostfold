@@ -1,15 +1,30 @@
+
 'use client';
 
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
-import { useShiftReportStore, AbsentEmployee, HiredEmployee, HiredOutEmployee, OvertimeEmployee } from '@/lib/stores/shiftReportStore';
+import { useShiftReportStore } from '@/lib/stores/shiftReportStore';
+import { createClient } from '@/lib/supabase/client';
+
+// Define the type for absence codes
+type AbsenceCode = {
+  code: string;
+  label: string;
+};
+
+// Fallback data in case Supabase fetch fails
+const fallbackAbsenceCodes: AbsenceCode[] = [
+  { code: 'S', label: 'Syk' },
+  { code: 'SM', label: 'Sykemeldt' },
+  { code: 'F', label: 'Ferie' },
+];
 
 // Mock Data for "Copy from Yesterday" - now generates new IDs on each call
 const getPreviousDayData = () => ({
   absent: [
-    { id: uuidv4(), name: 'Jane Doe', code: 'SICK', hours: 8 },
-    { id: uuidv4(), name: 'John Smith', code: 'PTO', hours: 8 },
+    { name: 'Jane Doe', code: 'S', hours: 8 },
+    { name: 'John Smith', code: 'F', hours: 7.5 },
   ],
   hired: [
     { id: uuidv4(), name: 'Mike Johnson', shiftFrom: 'Morning (06:00-14:00)', hours: 4 },
@@ -34,11 +49,52 @@ export default function CreateShiftReportStep2Page() {
   const updateStaffingRow = useShiftReportStore((state) => state.updateStaffingRow);
   const setStaffingField = useShiftReportStore((state) => state.setStaffingField);
 
+  const [absenceCodes, setAbsenceCodes] = useState<AbsenceCode[]>([]);
+  const [loadingCodes, setLoadingCodes] = useState(true);
 
+  // Fetch absence codes from Supabase
+  useEffect(() => {
+    const fetchAbsenceCodes = async () => {
+      try {
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from('absence_codes')
+          .select('code, label')
+          .eq('is_active', true)
+          .order('sort_order', { ascending: true });
+
+        if (error) throw error;
+        
+        setAbsenceCodes(data || fallbackAbsenceCodes);
+      } catch (error) {
+        console.error('Error fetching absence codes:', error);
+        setAbsenceCodes(fallbackAbsenceCodes);
+      } finally {
+        setLoadingCodes(false);
+      }
+    };
+
+    fetchAbsenceCodes();
+  }, []);
 
   const handleCopyFromYesterday = useCallback((listName: keyof typeof staffing, data: any[]) => {
     setStaffingField(listName, data.map(item => ({ id: uuidv4(), ...item }))); // Ensure new IDs
   }, [setStaffingField]);
+
+  // Handler for hours input to allow decimals and comma replacement
+  const handleHoursChange = (listName: keyof typeof staffing, id: string, value: string) => {
+    const sanitizedValue = value.replace(',', '.');
+    const parsedHours = parseFloat(sanitizedValue);
+
+    // Only update if it's a valid number within bounds, or if the input is empty (to clear the field)
+    if (!isNaN(parsedHours) && parsedHours >= 0 && parsedHours <= 24) {
+      updateStaffingRow(listName, id, 'hours', parsedHours); // Pass a number
+    } else if (sanitizedValue === '') {
+      updateStaffingRow(listName, id, 'hours', 0); // Pass 0 if field is empty
+    }
+    // If input is invalid (e.g. "abc"), do not update the store.
+  };
+
 
   // --- Totals Calculation ---
   const totalAbsentHours = useMemo(() =>
@@ -110,8 +166,8 @@ export default function CreateShiftReportStep2Page() {
                 <p id="summary-hired-hours" className="text-xl font-bold text-text-primary-dark">{totalHiredHours}</p>
               </div>
               <div className="bg-background-light dark:bg-background-dark p-4 rounded-md border border-border-light dark:border-border-dark">
-                <p className="text-sm font-medium text-text-secondary-dark">Hired Out Hours</p>
-                <p id="summary-hired-out-hours" className="text-xl font-bold text-text-primary-dark">{totalHiredOutHours}</p>
+                <p id="summary-hired-out-hours" className="text-sm font-medium text-text-secondary-dark">Hired Out Hours</p>
+                <p className="text-xl font-bold text-text-primary-dark">{totalHiredOutHours}</p>
               </div>
               <div className="bg-background-light dark:bg-background-dark p-4 rounded-md border border-border-light dark:border-border-dark">
                 <p className="text-sm font-medium text-text-secondary-dark">Overtime Hours</p>
@@ -121,13 +177,13 @@ export default function CreateShiftReportStep2Page() {
           </div>
 
           {/* Absent Employees */}
-          <div className="bg-content-light dark:bg-content-dark p-6 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
+          <div className="bg-content-dark p-8 rounded-lg shadow-xl border-2 border-border-dark/70">
             <h3 className="text-xl font-semibold text-text-primary-dark mb-4">Absent Employees</h3>
-            <div className="rounded-md border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark">
+            <div className="rounded-md border border-border-dark bg-background-dark">
               <div className="flow-root">
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <table className="min-w-full divide-y divide-border-light dark:divide-border-dark">
+                    <table className="min-w-full divide-y divide-border-dark">
                       <thead>
                         <tr>
                           <th className="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-text-secondary-dark uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
@@ -136,7 +192,7 @@ export default function CreateShiftReportStep2Page() {
                           <th className="relative py-3.5 pl-3 pr-4 sm:pr-0" scope="col"><span className="sr-only">Remove</span></th>
                         </tr>
                       </thead>
-                      <tbody id="absent-employees-tbody" className="divide-y divide-border-light dark:divide-border-dark">
+                      <tbody id="absent-employees-tbody" className="divide-y divide-border-dark">
                         {staffing.absentEmployees.map((emp) => (
                           <tr key={emp.id}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
@@ -145,29 +201,48 @@ export default function CreateShiftReportStep2Page() {
                                 name="name"
                                 value={emp.name}
                                 onChange={(e) => updateStaffingRow('absentEmployees', emp.id, 'name', e.target.value)}
-                                className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark"
+                                className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark p-2"
+                                placeholder="Employee name"
                               />
                             </td>
                             <td className="whitespace-nowrap px-3 py-2 text-sm">
-                              <input
-                                type="text"
+                              <select
                                 name="code"
                                 value={emp.code}
                                 onChange={(e) => updateStaffingRow('absentEmployees', emp.id, 'code', e.target.value)}
-                                className="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
-                              />
+                                className="w-full bg-background-dark border border-border-dark rounded-md focus:border-primary focus:ring-primary text-text-primary-dark font-medium p-2"
+                                disabled={loadingCodes}
+                              >
+                                {loadingCodes ? (
+                                  <option value="">Loading...</option>
+                                ) : (
+                                  <>
+                                    <option value="">Select code...</option>
+                                    {absenceCodes.map((ac) => (
+                                      <option key={ac.code} value={ac.code}>
+                                        {ac.code} - {ac.label}
+                                      </option>
+                                    ))}
+                                  </>
+                                )}
+                              </select>
                             </td>
                             <td className="whitespace-nowrap px-3 py-2 text-sm">
                               <input
                                 type="number"
                                 name="hours"
                                 value={emp.hours}
-                                onChange={(e) => updateStaffingRow('absentEmployees', emp.id, 'hours', parseInt(e.target.value) || 0)}
-                                className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
+                                onChange={(e) => handleHoursChange('absentEmployees', emp.id, e.target.value)}
+                                className="w-24 bg-transparent border-0 focus:ring-0 text-text-secondary-dark p-2"
+                                placeholder="e.g. 7.5"
+                                step="0.1"
+                                min="0"
+                                max="24"
+                                inputMode="decimal"
                               />
                             </td>
                             <td className="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                              <button type="button" className="text-error remove-btn font-bold" onClick={() => removeStaffingRow('absentEmployees', emp.id)}>×</button>
+                              <button type="button" className="text-red-500 hover:text-red-400 font-bold" onClick={() => removeStaffingRow('absentEmployees', emp.id)}>×</button>
                             </td>
                           </tr>
                         ))}
@@ -189,9 +264,8 @@ export default function CreateShiftReportStep2Page() {
                 id="add-absent-employee-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => addStaffingRow('absentEmployees', { name: '', code: '', hours: 0 })}
+                onClick={() => addStaffingRow('absentEmployees', { id: uuidv4(), name: '', code: '', hours: 0 })}
               >
-                <span className="material-symbols-outlined text-base">add</span>
                 Add Employee
               </button>
               <button
@@ -200,7 +274,6 @@ export default function CreateShiftReportStep2Page() {
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => handleCopyFromYesterday('absentEmployees', previousDay.absent)}
               >
-                <span className="material-symbols-outlined text-base">content_copy</span>
                 Copy from Yesterday
               </button>
             </div>
@@ -248,12 +321,16 @@ export default function CreateShiftReportStep2Page() {
                                 type="number"
                                 name="hours-worked"
                                 value={emp.hours}
-                                onChange={(e) => updateStaffingRow('hiredEmployees', emp.id, 'hours', parseInt(e.target.value) || 0)}
+                                onChange={(e) => handleHoursChange('hiredEmployees', emp.id, e.target.value)}
                                 className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
+                                step="0.1"
+                                min="0"
+                                max="24"
+                                inputMode="decimal"
                               />
                             </td>
                             <td className="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                              <button type="button" className="text-error remove-btn font-bold" onClick={() => removeStaffingRow('hiredEmployees', emp.id)}>×</button>
+                              <button type="button" className="text-red-500 hover:text-red-400 font-bold" onClick={() => removeStaffingRow('hiredEmployees', emp.id)}>×</button>
                             </td>
                           </tr>
                         ))}
@@ -277,7 +354,6 @@ export default function CreateShiftReportStep2Page() {
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => addStaffingRow('hiredEmployees', { name: '', shiftFrom: '', hours: 0 })}
               >
-                <span className="material-symbols-outlined text-base">add</span>
                 Add Employee
               </button>
               <button
@@ -286,7 +362,6 @@ export default function CreateShiftReportStep2Page() {
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => handleCopyFromYesterday('hiredEmployees', previousDay.hired)}
               >
-                <span className="material-symbols-outlined text-base">content_copy</span>
                 Copy from Yesterday
               </button>
             </div>
@@ -334,12 +409,16 @@ export default function CreateShiftReportStep2Page() {
                                 type="number"
                                 name="hours-hired-out"
                                 value={emp.hours}
-                                onChange={(e) => updateStaffingRow('hiredOutEmployees', emp.id, 'hours', parseInt(e.target.value) || 0)}
+                                onChange={(e) => handleHoursChange('hiredOutEmployees', emp.id, e.target.value)}
                                 className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
+                                step="0.1"
+                                min="0"
+                                max="24"
+                                inputMode="decimal"
                               />
                             </td>
                             <td className="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                              <button type="button" className="text-error remove-btn font-bold" onClick={() => removeStaffingRow('hiredOutEmployees', emp.id)}>×</button>
+                              <button type="button" className="text-red-500 hover:text-red-400 font-bold" onClick={() => removeStaffingRow('hiredOutEmployees', emp.id)}>×</button>
                             </td>
                           </tr>
                         ))}
@@ -363,7 +442,6 @@ export default function CreateShiftReportStep2Page() {
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => addStaffingRow('hiredOutEmployees', { name: '', shiftTo: '', hours: 0 })}
               >
-                <span className="material-symbols-outlined text-base">add</span>
                 Add Employee
               </button>
               <button
@@ -372,7 +450,6 @@ export default function CreateShiftReportStep2Page() {
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => handleCopyFromYesterday('hiredOutEmployees', previousDay.hiredOut)}
               >
-                <span className="material-symbols-outlined text-base">content_copy</span>
                 Copy from Yesterday
               </button>
             </div>
@@ -410,19 +487,23 @@ export default function CreateShiftReportStep2Page() {
                                 type="number"
                                 name="hours-overtime"
                                 value={emp.hours}
-                                onChange={(e) => updateStaffingRow('overtimeEmployees', emp.id, 'hours', parseInt(e.target.value) || 0)}
+                                onChange={(e) => handleHoursChange('overtimeEmployees', emp.id, e.target.value)}
                                 className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
+                                step="0.1"
+                                min="0"
+                                max="24"
+                                inputMode="decimal"
                               />
                             </td>
                             <td className="whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm sm:pr-0">
-                              <button type="button" className="text-error remove-btn font-bold" onClick={() => removeStaffingRow('overtimeEmployees', emp.id)}>×</button>
+                              <button type="button" className="text-red-500 hover:text-red-400 font-bold" onClick={() => removeStaffingRow('overtimeEmployees', emp.id)}>×</button>
                             </td>
                           </tr>
                         ))}
                       </tbody>
                       <tfoot>
                         <tr>
-                          <td className="py-3 pl-4 pr-3 text-left text-sm font-semibold text-text-primary-dark sm:pl-0" colSpan={2}>Total Overtime Hours</td>
+                          <td className="py-3 pl-4 pr-3 text-left text-sm font-semibold text-text-primary-dark sm:pl-0">Total Overtime Hours</td>
                           <td id="total-overtime-hours-cell" className="px-3 py-3 text-left text-sm font-semibold text-text-primary-dark">{totalOvertimeHours}</td>
                           <td className="py-3 pl-3 pr-4 sm:pr-0"></td>
                         </tr>
@@ -439,7 +520,6 @@ export default function CreateShiftReportStep2Page() {
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => addStaffingRow('overtimeEmployees', { name: '', hours: 0 })}
               >
-                <span className="material-symbols-outlined text-base">add</span>
                 Add Employee
               </button>
               <button
@@ -448,7 +528,6 @@ export default function CreateShiftReportStep2Page() {
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => handleCopyFromYesterday('overtimeEmployees', previousDay.overtime)}
               >
-                <span className="material-symbols-outlined text-base">content_copy</span>
                 Copy from Yesterday
               </button>
             </div>
