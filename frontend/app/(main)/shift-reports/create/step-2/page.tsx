@@ -7,11 +7,20 @@ import { v4 as uuidv4 } from 'uuid';
 import { useShiftReportStore } from '@/lib/stores/shiftReportStore';
 import { createClient } from '@/lib/supabase/client';
 
-// Define the type for absence codes
+// Define types for lookup data
 type AbsenceCode = {
   code: string;
   label: string;
 };
+
+type HiredFromSource = {
+  name: string;
+};
+
+type HiredToDestination = {
+  name: string;
+};
+
 
 // Fallback data in case Supabase fetch fails
 const fallbackAbsenceCodes: AbsenceCode[] = [
@@ -20,22 +29,33 @@ const fallbackAbsenceCodes: AbsenceCode[] = [
   { code: 'F', label: 'Ferie' },
 ];
 
-// Mock Data for "Copy from Yesterday" - now generates new IDs on each call
+const fallbackHiredFromSources: HiredFromSource[] = [
+  { name: 'Drift 1' }, { name: 'Drift 2' }, { name: 'Drift 3' },
+  { name: 'Ute' }, { name: 'Rørhall' }, { name: 'Sampakk' },
+  { name: 'Vedlikehold' }, { name: 'Varemottak' },
+];
+
+const fallbackHiredToDestinations: HiredToDestination[] = [
+    { name: 'Drift 1' }, { name: 'Drift 2' }, { name: 'Drift 3' },
+    { name: 'Ute' }, { name: 'Rørhall' }, { name: 'Sampakk' },
+    { name: 'Vedlikehold' }, { name: 'Varemottak' },
+];
+
+// Mock Data for "Copy from Yesterday"
 const getPreviousDayData = () => ({
   absent: [
     { name: 'Jane Doe', code: 'S', hours: 8 },
     { name: 'John Smith', code: 'F', hours: 7.5 },
   ],
   hired: [
-    { id: uuidv4(), name: 'Mike Johnson', shiftFrom: 'Morning (06:00-14:00)', hours: 4 },
-    { id: uuidv4(), name: 'Sarah Miller', shiftFrom: 'Morning (06:00-14:00)', hours: 8 },
+    { name: 'Mike Johnson', shiftFrom: 'Drift 1', hours: 4 },
+    { name: 'Sarah Miller', shiftFrom: 'Vedlikehold', hours: 8 },
   ],
   hiredOut: [
-    { id: uuidv4(), name: 'Emily White', shiftTo: 'Night (22:00-06:00)', hours: 4 },
+    { name: 'Emily White', shiftTo: 'Drift 2', hours: 4 },
   ],
   overtime: [
-    { id: uuidv4(), name: 'Chris Green', hours: 2 },
-    { id: uuidv4(), name: 'David Brown', hours: 3 },
+    { name: 'Chris Green', hours: 2 },
   ],
 });
 
@@ -49,36 +69,47 @@ export default function CreateShiftReportStep2Page() {
   const updateStaffingRow = useShiftReportStore((state) => state.updateStaffingRow);
   const setStaffingField = useShiftReportStore((state) => state.setStaffingField);
 
+  // State for lookup data
   const [absenceCodes, setAbsenceCodes] = useState<AbsenceCode[]>([]);
-  const [loadingCodes, setLoadingCodes] = useState(true);
+  const [hiredFromSources, setHiredFromSources] = useState<HiredFromSource[]>([]);
+  const [hiredToDestinations, setHiredToDestinations] = useState<HiredToDestination[]>([]);
+  const [loadingLookups, setLoadingLookups] = useState(true);
 
-  // Fetch absence codes from Supabase
+  // Fetch lookup data from Supabase
   useEffect(() => {
-    const fetchAbsenceCodes = async () => {
+    const fetchLookups = async () => {
       try {
         const supabase = createClient();
-        const { data, error } = await supabase
-          .from('absence_codes')
-          .select('code, label')
-          .eq('is_active', true)
-          .order('sort_order', { ascending: true });
+        const [absenceCodesRes, hiredFromSourcesRes, hiredToDestinationsRes] = await Promise.all([
+          supabase.from('absence_codes').select('code, label').eq('is_active', true).order('sort_order'),
+          supabase.from('hired_from_sources').select('name').eq('is_active', true).order('sort_order'),
+          supabase.from('hired_to_destinations').select('name').eq('is_active', true).order('sort_order'),
+        ]);
 
-        if (error) throw error;
-        
-        setAbsenceCodes(data || fallbackAbsenceCodes);
+        if (absenceCodesRes.error) console.error('Error fetching absence codes:', absenceCodesRes.error);
+        setAbsenceCodes(absenceCodesRes.data || fallbackAbsenceCodes);
+
+        if (hiredFromSourcesRes.error) console.error('Error fetching hired from sources:', hiredFromSourcesRes.error);
+        setHiredFromSources(hiredFromSourcesRes.data || fallbackHiredFromSources);
+
+        if (hiredToDestinationsRes.error) console.error('Error fetching hired to destinations:', hiredToDestinationsRes.error);
+        setHiredToDestinations(hiredToDestinationsRes.data || fallbackHiredToDestinations);
+
       } catch (error) {
-        console.error('Error fetching absence codes:', error);
+        console.error('Error fetching lookup data:', error);
         setAbsenceCodes(fallbackAbsenceCodes);
+        setHiredFromSources(fallbackHiredFromSources);
+        setHiredToDestinations(fallbackHiredToDestinations);
       } finally {
-        setLoadingCodes(false);
+        setLoadingLookups(false);
       }
     };
 
-    fetchAbsenceCodes();
+    fetchLookups();
   }, []);
 
   const handleCopyFromYesterday = useCallback((listName: keyof typeof staffing, data: any[]) => {
-    setStaffingField(listName, data.map(item => ({ id: uuidv4(), ...item }))); // Ensure new IDs
+    setStaffingField(listName, data.map(item => ({ ...item, id: uuidv4() })));
   }, [setStaffingField]);
 
   // Handler for hours input to allow decimals and comma replacement
@@ -86,29 +117,18 @@ export default function CreateShiftReportStep2Page() {
     const sanitizedValue = value.replace(',', '.');
     const parsedHours = parseFloat(sanitizedValue);
 
-    // Only update if it's a valid number within bounds, or if the input is empty (to clear the field)
     if (!isNaN(parsedHours) && parsedHours >= 0 && parsedHours <= 24) {
-      updateStaffingRow(listName, id, 'hours', parsedHours); // Pass a number
+      updateStaffingRow(listName, id, 'hours', parsedHours);
     } else if (sanitizedValue === '') {
-      updateStaffingRow(listName, id, 'hours', 0); // Pass 0 if field is empty
+      updateStaffingRow(listName, id, 'hours', 0);
     }
-    // If input is invalid (e.g. "abc"), do not update the store.
   };
 
-
   // --- Totals Calculation ---
-  const totalAbsentHours = useMemo(() =>
-    staffing.absentEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.absentEmployees]
-  );
-  const totalHiredHours = useMemo(() =>
-    staffing.hiredEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.hiredEmployees]
-  );
-  const totalHiredOutHours = useMemo(() =>
-    staffing.hiredOutEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.hiredOutEmployees]
-  );
-  const totalOvertimeHours = useMemo(() =>
-    staffing.overtimeEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.overtimeEmployees]
-  );
+  const totalAbsentHours = useMemo(() => staffing.absentEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.absentEmployees]);
+  const totalHiredHours = useMemo(() => staffing.hiredEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.hiredEmployees]);
+  const totalHiredOutHours = useMemo(() => staffing.hiredOutEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.hiredOutEmployees]);
+  const totalOvertimeHours = useMemo(() => staffing.overtimeEmployees.reduce((sum, emp) => sum + (Number(emp.hours) || 0), 0), [staffing.overtimeEmployees]);
 
   const previousDay = getPreviousDayData();
 
@@ -211,9 +231,9 @@ export default function CreateShiftReportStep2Page() {
                                 value={emp.code}
                                 onChange={(e) => updateStaffingRow('absentEmployees', emp.id, 'code', e.target.value)}
                                 className="w-full bg-background-dark border border-border-dark rounded-md focus:border-primary focus:ring-primary text-text-primary-dark font-medium p-2"
-                                disabled={loadingCodes}
+                                disabled={loadingLookups}
                               >
-                                {loadingCodes ? (
+                                {loadingLookups ? (
                                   <option value="">Loading...</option>
                                 ) : (
                                   <>
@@ -261,7 +281,6 @@ export default function CreateShiftReportStep2Page() {
             </div>
             <div className="mt-4 flex gap-x-4">
               <button
-                id="add-absent-employee-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => addStaffingRow('absentEmployees', { id: uuidv4(), name: '', code: '', hours: 0 })}
@@ -269,7 +288,6 @@ export default function CreateShiftReportStep2Page() {
                 Add Employee
               </button>
               <button
-                id="copy-yesterday-absent-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => handleCopyFromYesterday('absentEmployees', previousDay.absent)}
@@ -280,22 +298,22 @@ export default function CreateShiftReportStep2Page() {
           </div>
 
           {/* Hired Employees */}
-          <div className="bg-content-light dark:bg-content-dark p-6 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
+          <div className="bg-content-dark p-8 rounded-lg shadow-xl border-2 border-border-dark/70">
             <h3 className="text-xl font-semibold text-text-primary-dark mb-4">Hired Employees</h3>
-            <div className="rounded-md border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark">
+            <div className="rounded-md border border-border-dark bg-background-dark">
               <div className="flow-root">
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <table className="min-w-full divide-y divide-border-light dark:divide-border-dark">
+                    <table className="min-w-full divide-y divide-border-dark">
                       <thead>
                         <tr>
                           <th className="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-text-secondary-dark uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
-                          <th className="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-dark uppercase tracking-wider" scope="col">Shift Hired From</th>
+                          <th className="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-dark uppercase tracking-wider" scope="col">Hired From</th>
                           <th className="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-dark uppercase tracking-wider" scope="col">Hours Worked</th>
                           <th className="relative py-3.5 pl-3 pr-4 sm:pr-0" scope="col"><span className="sr-only">Remove</span></th>
                         </tr>
                       </thead>
-                      <tbody id="hired-employees-tbody" className="divide-y divide-border-light dark:divide-border-dark">
+                      <tbody id="hired-employees-tbody" className="divide-y divide-border-dark">
                         {staffing.hiredEmployees.map((emp) => (
                           <tr key={emp.id}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
@@ -304,17 +322,31 @@ export default function CreateShiftReportStep2Page() {
                                 name="full-name-hired"
                                 value={emp.name}
                                 onChange={(e) => updateStaffingRow('hiredEmployees', emp.id, 'name', e.target.value)}
-                                className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark"
+                                className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark p-2"
+                                placeholder="Employee name"
                               />
                             </td>
                             <td className="whitespace-nowrap px-3 py-2 text-sm">
-                              <input
-                                type="text"
+                              <select
                                 name="shift-hired-from"
                                 value={emp.shiftFrom}
                                 onChange={(e) => updateStaffingRow('hiredEmployees', emp.id, 'shiftFrom', e.target.value)}
-                                className="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
-                              />
+                                className="w-full bg-background-dark border border-border-dark rounded-md focus:border-primary focus:ring-primary text-text-primary-dark font-medium p-2"
+                                disabled={loadingLookups}
+                              >
+                                {loadingLookups ? (
+                                  <option value="">Loading...</option>
+                                ) : (
+                                  <>
+                                    <option value="">Select source...</option>
+                                    {hiredFromSources.map((source) => (
+                                      <option key={source.name} value={source.name}>
+                                        {source.name}
+                                      </option>
+                                    ))}
+                                  </>
+                                )}
+                              </select>
                             </td>
                             <td className="whitespace-nowrap px-3 py-2 text-sm">
                               <input
@@ -322,7 +354,8 @@ export default function CreateShiftReportStep2Page() {
                                 name="hours-worked"
                                 value={emp.hours}
                                 onChange={(e) => handleHoursChange('hiredEmployees', emp.id, e.target.value)}
-                                className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
+                                className="w-24 bg-transparent border-0 focus:ring-0 text-text-secondary-dark p-2"
+                                placeholder="e.g. 8"
                                 step="0.1"
                                 min="0"
                                 max="24"
@@ -349,15 +382,13 @@ export default function CreateShiftReportStep2Page() {
             </div>
             <div className="mt-4 flex gap-x-4">
               <button
-                id="add-hired-employee-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => addStaffingRow('hiredEmployees', { name: '', shiftFrom: '', hours: 0 })}
+                onClick={() => addStaffingRow('hiredEmployees', { id: uuidv4(), name: '', shiftFrom: '', hours: 0 })}
               >
                 Add Employee
               </button>
               <button
-                id="copy-yesterday-hired-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => handleCopyFromYesterday('hiredEmployees', previousDay.hired)}
@@ -368,22 +399,22 @@ export default function CreateShiftReportStep2Page() {
           </div>
 
           {/* Hired Out Employees */}
-          <div className="bg-content-light dark:bg-content-dark p-6 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
+          <div className="bg-content-dark p-8 rounded-lg shadow-xl border-2 border-border-dark/70">
             <h3 className="text-xl font-semibold text-text-primary-dark mb-4">Hired Out Employees</h3>
-            <div className="rounded-md border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark">
+            <div className="rounded-md border border-border-dark bg-background-dark">
               <div className="flow-root">
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <table className="min-w-full divide-y divide-border-light dark:divide-border-dark">
+                    <table className="min-w-full divide-y divide-border-dark">
                       <thead>
                         <tr>
                           <th className="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-text-secondary-dark uppercase tracking-wider sm:pl-0" scope="col">Full Name</th>
-                          <th className="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-dark uppercase tracking-wider" scope="col">Shift Hired To</th>
+                          <th className="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-dark uppercase tracking-wider" scope="col">Hired Out To</th>
                           <th className="px-3 py-3.5 text-left text-xs font-semibold text-text-secondary-dark uppercase tracking-wider" scope="col">Hours Hired Out</th>
                           <th className="relative py-3.5 pl-3 pr-4 sm:pr-0" scope="col"><span className="sr-only">Remove</span></th>
                         </tr>
                       </thead>
-                      <tbody id="hired-out-employees-tbody" className="divide-y divide-border-light dark:divide-border-dark">
+                      <tbody id="hired-out-employees-tbody" className="divide-y divide-border-dark">
                         {staffing.hiredOutEmployees.map((emp) => (
                           <tr key={emp.id}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium sm:pl-0">
@@ -392,17 +423,31 @@ export default function CreateShiftReportStep2Page() {
                                 name="full-name-hired-out"
                                 value={emp.name}
                                 onChange={(e) => updateStaffingRow('hiredOutEmployees', emp.id, 'name', e.target.value)}
-                                className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark"
+                                className="w-full bg-transparent border-0 focus:ring-0 text-text-primary-dark p-2"
+                                placeholder="Employee name"
                               />
                             </td>
                             <td className="whitespace-nowrap px-3 py-2 text-sm">
-                              <input
-                                type="text"
+                              <select
                                 name="shift-hired-to"
                                 value={emp.shiftTo}
                                 onChange={(e) => updateStaffingRow('hiredOutEmployees', emp.id, 'shiftTo', e.target.value)}
-                                className="w-full bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
-                              />
+                                className="w-full bg-background-dark border border-border-dark rounded-md focus:border-primary focus:ring-primary text-text-primary-dark font-medium p-2"
+                                disabled={loadingLookups}
+                              >
+                                {loadingLookups ? (
+                                  <option value="">Loading...</option>
+                                ) : (
+                                  <>
+                                    <option value="">Select destination...</option>
+                                    {hiredToDestinations.map((dest) => (
+                                      <option key={dest.name} value={dest.name}>
+                                        {dest.name}
+                                      </option>
+                                    ))}
+                                  </>
+                                )}
+                              </select>
                             </td>
                             <td className="whitespace-nowrap px-3 py-2 text-sm">
                               <input
@@ -410,7 +455,8 @@ export default function CreateShiftReportStep2Page() {
                                 name="hours-hired-out"
                                 value={emp.hours}
                                 onChange={(e) => handleHoursChange('hiredOutEmployees', emp.id, e.target.value)}
-                                className="w-20 bg-transparent border-0 focus:ring-0 text-text-secondary-dark"
+                                className="w-24 bg-transparent border-0 focus:ring-0 text-text-secondary-dark p-2"
+                                placeholder="e.g. 4"
                                 step="0.1"
                                 min="0"
                                 max="24"
@@ -437,15 +483,13 @@ export default function CreateShiftReportStep2Page() {
             </div>
             <div className="mt-4 flex gap-x-4">
               <button
-                id="add-hired-out-employee-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => addStaffingRow('hiredOutEmployees', { name: '', shiftTo: '', hours: 0 })}
+                onClick={() => addStaffingRow('hiredOutEmployees', { id: uuidv4(), name: '', shiftTo: '', hours: 0 })}
               >
                 Add Employee
               </button>
               <button
-                id="copy-yesterday-hired-out-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => handleCopyFromYesterday('hiredOutEmployees', previousDay.hiredOut)}
@@ -507,7 +551,7 @@ export default function CreateShiftReportStep2Page() {
                           <td id="total-overtime-hours-cell" className="px-3 py-3 text-left text-sm font-semibold text-text-primary-dark">{totalOvertimeHours}</td>
                           <td className="py-3 pl-3 pr-4 sm:pr-0"></td>
                         </tr>
-                      </tfoot>
+</tfoot>
                     </table>
                   </div>
                 </div>
@@ -515,15 +559,13 @@ export default function CreateShiftReportStep2Page() {
             </div>
             <div className="mt-4 flex gap-x-4">
               <button
-                id="add-overtime-employee-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
-                onClick={() => addStaffingRow('overtimeEmployees', { name: '', hours: 0 })}
+                onClick={() => addStaffingRow('overtimeEmployees', { id: uuidv4(), name: '', hours: 0 })}
               >
                 Add Employee
               </button>
               <button
-                id="copy-yesterday-overtime-btn"
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border-dark px-4 py-2 text-sm font-medium text-text-secondary-dark hover:bg-background-dark hover:border-solid hover:text-text-primary-dark transition-all"
                 onClick={() => handleCopyFromYesterday('overtimeEmployees', previousDay.overtime)}
