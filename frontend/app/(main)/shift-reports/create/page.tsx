@@ -1,10 +1,10 @@
-
 'use client';
 
-import { useEffect, useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import Link from 'next/link';
-import { format, getDaysInMonth, getDay, startOfMonth, addMonths, subMonths, isSameDay } from 'date-fns';
+import { format, getDaysInMonth, getDay, startOfMonth, addMonths, subMonths, isSameDay, setDate } from 'date-fns';
 import { useShiftReportStore } from '@/lib/stores/shiftReportStore';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const weekdays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
@@ -15,73 +15,102 @@ const mockShifts = [
 ];
 
 export default function CreateShiftReportPage() {
-  const date = useShiftReportStore((state) => state.draft.reportCriteria.date);
-  const shift = useShiftReportStore((state) => state.draft.reportCriteria.shift);
+  const selectedDate = useShiftReportStore((state) => state.draft.reportCriteria.date) || new Date();
+  const selectedShift = useShiftReportStore((state) => state.draft.reportCriteria.shift);
   const setReportCriteria = useShiftReportStore((state) => state.setReportCriteria);
 
-  // The month displayed in the calendar is derived from the selected date
-  const currentMonth = date || new Date();
+  // The month currently displayed in the calendar view
+  const currentMonthDate = useShiftReportStore((state) => state.draft.reportCriteria.date) || new Date();
 
   const handlePrevMonth = () => {
-    setReportCriteria({ date: subMonths(currentMonth, 1) });
+    // We update the date in the store, which causes the component to re-render
+    setReportCriteria({ date: subMonths(currentMonthDate, 1) });
   };
 
   const handleNextMonth = () => {
-    setReportCriteria({ date: addMonths(currentMonth, 1) });
+    setReportCriteria({ date: addMonths(currentMonthDate, 1) });
   };
 
-  const handleDayClick = useCallback((dayDate: Date) => {
-    const dayOfWeek = getDay(dayDate);
-    if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Not Saturday or Sunday
-      setReportCriteria({ date: dayDate });
+  const handleDayClick = (day: number) => {
+    const newDate = setDate(currentMonthDate, day);
+    const dayOfWeek = getDay(newDate);
+    // Allow selection only for weekdays
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      setReportCriteria({ date: newDate });
     }
-  }, [setReportCriteria]);
+  };
 
-  const calendarDays = useMemo(() => {
-    const startMonth = startOfMonth(currentMonth);
-    const numDays = getDaysInMonth(currentMonth);
+  const handleShiftClick = (shiftId: string) => {
+    setReportCriteria({ shift: shiftId });
+  };
+  
+  const { calendarGrid, monthLabel } = useMemo(() => {
+    const monthStart = startOfMonth(currentMonthDate);
+    const daysInMonth = getDaysInMonth(currentMonthDate);
     const today = new Date();
 
-    let firstDayOfWeek = getDay(startMonth);
-    firstDayOfWeek = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1;
+    // Adjust start of week to be Monday (0) to Sunday (6)
+    let firstDayOfWeek = getDay(monthStart); // 0=Sun, 1=Mon
+    firstDayOfWeek = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1; // 0=Mon, 6=Sun
+    
+    const grid = [];
 
-    const days = [];
-
+    // Add weekday labels
+    for (const day of weekdays) {
+      grid.push(
+        <div key={`weekday-${day}`} className="text-center font-medium text-text-secondary-dark text-sm">
+          {day}
+        </div>
+      );
+    }
+    
+    // Add empty cells for days before the first day of the month
     for (let i = 0; i < firstDayOfWeek; i++) {
-      days.push(<div key={`empty-prev-${i}`} className="calendar-day empty"></div>);
+      grid.push(<div key={`empty-start-${i}`} />);
     }
 
-    for (let i = 1; i <= numDays; i++) {
-      const dayDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
-      const dayOfWeek = getDay(dayDate);
+    // Add day cells
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dayDate = setDate(currentMonthDate, i);
+      const isWeekend = getDay(dayDate) === 0 || getDay(dayDate) === 6;
+      const isSelected = isSameDay(dayDate, selectedDate) && !isWeekend;
       const isToday = isSameDay(dayDate, today);
-      const isSelected = date ? isSameDay(dayDate, date) : false;
-      const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
 
-      days.push(
-        <div
-          key={`day-${i}`}
-          className={`
-            calendar-day current-month
-            ${isToday ? 'today' : ''}
-            ${isSelected ? 'selected' : ''}
-            ${isWeekend ? 'greyed-out' : ''}
-          `}
-          onClick={() => handleDayClick(dayDate)}
-        >
+      let dayClasses = "flex items-center justify-center h-10 rounded-lg transition-colors font-bold ";
+
+      if (isWeekend) {
+        dayClasses += "text-text-secondary-dark cursor-not-allowed";
+      } else {
+        dayClasses += "cursor-pointer text-text-primary-dark ";
+        if (isSelected) {
+          dayClasses += "bg-primary text-background-dark";
+        } else {
+          dayClasses += "hover:bg-border-dark";
+        }
+      }
+      
+      if (isToday && !isSelected) {
+        dayClasses += " border-2 border-primary";
+      }
+
+      grid.push(
+        <div key={`day-${i}`} className={dayClasses} onClick={() => handleDayClick(i)}>
           {i}
         </div>
       );
     }
     
-    const totalCells = days.length;
-    const remainingCells = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
-    for (let i = 0; i < remainingCells; i++) {
-      days.push(<div key={`empty-next-${i}`} className="calendar-day empty"></div>);
+    // Fill remaining cells to complete the grid (42 cells = 6 rows * 7 days + 7 weekdays)
+    const totalCells = grid.length;
+    for (let i = totalCells; i < 49; i++) {
+        grid.push(<div key={`empty-end-${i-totalCells}`} />);
     }
 
-    return days;
-  }, [currentMonth, date, handleDayClick]);
+    return {
+      calendarGrid: grid,
+      monthLabel: format(currentMonthDate, 'MMMM yyyy'),
+    };
+  }, [currentMonthDate, selectedDate]);
 
 
   return (
@@ -97,33 +126,28 @@ export default function CreateShiftReportPage() {
               <h2 className="text-text-primary-dark text-xl font-bold leading-tight">Select Date</h2>
               <p className="text-text-secondary-dark mt-1 text-sm">Choose the date for the new report.</p>
             </div>
-            <div className="flex flex-col gap-4">
-              <div className="w-full">
-                <div className="flex items-center justify-between pb-4">
-                  <button
-                    id="prev-month"
-                    className="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark"
-                    onClick={handlePrevMonth}
-                  >
-                    <span className="material-symbols-outlined text-2xl">arrow_back_ios</span>
-                  </button>
-                  <h3 id="current-month-year" className="text-text-primary-dark text-lg font-semibold">
-                    {format(currentMonth, 'MMMM yyyy')}
-                  </h3>
-                  <button
-                    id="next-month"
-                    className="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark"
-                    onClick={handleNextMonth}
-                  >
-                    <span className="material-symbols-outlined text-2xl">arrow_forward_ios</span>
-                  </button>
-                </div>
-                <div id="calendar-body" className="calendar-grid text-sm">
-                    {weekdays.map(day => (
-                        <div key={day} className="calendar-weekday">{day}</div>
-                    ))}
-                    {calendarDays}
-                </div>
+            <div className="w-full">
+              <div className="flex items-center justify-between pb-4">
+                <button
+                  className="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark"
+                  onClick={handlePrevMonth}
+                  aria-label="Previous month"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <h3 className="text-text-primary-dark text-lg font-semibold">
+                  {monthLabel}
+                </h3>
+                <button
+                  className="text-text-secondary-dark hover:text-text-primary-dark transition-colors rounded-full p-2 hover:bg-border-dark"
+                  onClick={handleNextMonth}
+                  aria-label="Next month"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+              </div>
+              <div className="grid grid-cols-7 gap-2 text-sm">
+                  {calendarGrid}
               </div>
             </div>
 
@@ -135,11 +159,11 @@ export default function CreateShiftReportPage() {
                   <div
                     key={shiftOption.id}
                     className={`
-                      shift-option flex flex-col items-center justify-center p-4 rounded-lg border
-                      ${shift === shiftOption.id ? 'border-primary bg-primary/10' : 'border-border-dark bg-background-dark hover:border-primary'}
+                      flex flex-col items-center justify-center p-4 rounded-lg border
+                      ${selectedShift === shiftOption.id ? 'border-primary bg-primary/10' : 'border-border-dark bg-background-dark hover:border-primary'}
                       text-text-primary-dark cursor-pointer transition-colors h-24 text-center
                     `}
-                    onClick={() => setReportCriteria({ shift: shiftOption.id })}
+                    onClick={() => handleShiftClick(shiftOption.id)}
                   >
                     <p className="text-base font-medium">{shiftOption.name}</p>
                     <p className="text-sm text-text-secondary-dark">({shiftOption.time})</p>
@@ -157,7 +181,7 @@ export default function CreateShiftReportPage() {
                 <span className="truncate">Back</span>
               </Link>
               <Link
-                href="/shift-reports/create/step-2" // Link to SR3
+                href="/shift-reports/create/step-2"
                 className="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors"
               >
                 <span className="truncate">Continue</span>
